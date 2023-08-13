@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mist.cloud.dao.FileMapper">
+    <resultMap id="fileMap" type="File">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="size" property="size"/>
+        <result column="type" property="type"/>
+        <result column="folder_id" property="folderId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="deleted" property="deleted"/>
+        <result column="deletede_time" property="deletedTime"/>
+        <result column="duplicate_times" property="duplicateTimes"/>
+        <result column="origin_name" property="originName"/>
+    </resultMap>
+
+
+    <insert id="addFile" parameterType="File">
+        INSERT INTO sys_file(id, name, size, type, folder_id, origin_name, create_time)
+        VALUES (#{id} ,#{name}, #{size}, #{type}, #{folderId}, #{originName}, NOW())
+    </insert>
+
+    <update id="updateFileDuplicateTimes" parameterType="FileSelectReq">
+        UPDATE sys_file
+        SET duplicate_times = duplicate_times + 1
+        WHERE name = #{fileName}
+          AND folder_id = #{folderId}
+          AND deleted = 0
+    </update>
+
+    <update id="renameFile" parameterType="FileSelectReq">
+        UPDATE sys_file
+        SET name = #{fileName}
+        WHERE id = #{id}
+          AND deleted = 0
+    </update>
+
+    <update id="deleteFile">
+        UPDATE sys_file
+        SET deleted = 1
+        WHERE id = #{id}
+    </update>
+
+    <update id="copyFile">
+        INSERT INTO sys_file (id, name, size, type,folder_id,  origin_name)
+        SELECT #{newFileId}, name, size, type, #{targetFolderId}, origin_name
+        FROM sys_file
+        WHERE id = #{fileId} AND deleted = 0;
+    </update>
+
+    <select id="getFiles" parameterType="FileSelectReq" resultMap="fileMap">
+        SELECT *
+        FROM sys_file
+        WHERE folder_id = #{folderId}
+          AND deleted = 0
+    </select>
+
+    <select id="fileExist" parameterType="FileSelectReq" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM sys_file
+        WHERE folder_id = #{folderId}
+          AND name = #{fileName}
+          AND deleted = 0
+    </select>
+
+    <select id="getSingleFile" parameterType="FileSelectReq" resultMap="fileMap">
+        SELECT *
+        FROM sys_file
+        <where>
+            <if test="fileName != null">
+                name = #{fileName}
+            </if>
+            <if test="folderId != null">
+                AND folder_id = #{folderId}
+            </if>
+            <if test="id  != null">
+                AND id = #{id}
+            </if>
+        </where>
+        AND deleted = 0
+    </select>
+
+
+    <select id="getFileIds" resultType="java.lang.Long">
+        SELECT id
+        FROM sys_file
+        WHERE folder_id = #{folderId}
+          AND deleted = 0
+    </select>
+
+
+</mapper>
