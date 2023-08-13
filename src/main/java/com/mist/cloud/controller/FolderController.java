@@ -1,6 +1,7 @@
 package com.mist.cloud.controller;
 
 import com.mist.cloud.common.Constants;
+import com.mist.cloud.common.DataType;
 import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Lang;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +45,8 @@ public class FolderController {
     @GetMapping("/folder/create")
     @ApiOperation(value = "创建文件夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "parentId", value = "创建文件夹时所在的文件夹 Id"),
-            @ApiImplicitParam(name = "folderName", value = "文件夹的名字")})
+            @ApiImplicitParam(name = "parentId", value = "创建文件夹时所在的文件夹 Id", dataTypeClass = Lang.class),
+            @ApiImplicitParam(name = "folderName", value = "文件夹的名字", dataTypeClass = String.class)})
     public Result createFolder(@RequestParam("parentId") Long parentId, @RequestParam("folderName") String folderName) {
         FolderDto folderDto;
         folderDto = folderService.createFolder(parentId, folderName);
@@ -53,7 +55,7 @@ public class FolderController {
 
     @GetMapping("/folder/{folderId}")
     @ApiOperation(value = "获取一个文件夹下所有的文件与文件夹")
-    @ApiImplicitParam(name = "folderId", value = "文件夹 Id")
+    @ApiImplicitParam(name = "folderId", value = "文件夹 Id", dataTypeClass = Lang.class)
     public Result getFiles(@PathVariable("folderId") Long folderId) {
 
         FolderDetail folderDetail = folderService.getFiles(folderId);
@@ -70,8 +72,8 @@ public class FolderController {
     @GetMapping(value = "/folder/rename")
     @ApiOperation(value = "重命名文件夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "folderId", value = "要修改的文件夹 id"),
-            @ApiImplicitParam(name = "folderName", value = "修改后的文件名")})
+            @ApiImplicitParam(name = "folderId", value = "要修改的文件夹 id", dataTypeClass = Lang.class),
+            @ApiImplicitParam(name = "folderName", value = "修改后的文件名", dataTypeClass = String.class)})
     public Result rename(@RequestParam("folderId") Long folderId, @RequestParam("folderName") String folderName) {
         folderService.rename(folderId, folderName);
         return new SuccessResult();
@@ -80,8 +82,8 @@ public class FolderController {
     @GetMapping(value = "/folder/delete")
     @ApiOperation(value = "删除文件夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "folderId", value = "要删除的文件夹 id"),
-            @ApiImplicitParam(name = "realDelete", value = "是否真实删除")
+            @ApiImplicitParam(name = "folderId", value = "要删除的文件夹 id", dataTypeClass = Lang.class),
+            @ApiImplicitParam(name = "realDelete", value = "是否真实删除", dataTypeClass = Long.class)
     })
     public Result delete(@RequestParam("folderId") Long folderId, @RequestParam("realDelete") Boolean realDelete) {
         folderService.deleteFolder(folderId, realDelete);
@@ -91,8 +93,8 @@ public class FolderController {
     @GetMapping(value = "/folder/copy")
     @ApiOperation(value = "复制文件夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "targetFolderId", value = "目标文件夹 id"),
-            @ApiImplicitParam(name = "folderId", value = "当前文件夹 id")})
+            @ApiImplicitParam(name = "targetFolderId", value = "目标文件夹 id", dataTypeClass = Lang.class),
+            @ApiImplicitParam(name = "folderId", value = "当前文件夹 id", dataTypeClass = Lang.class)})
     public Result copy(@RequestParam("targetFolderId") Long targetFolderId, @RequestParam("folderId") Long folderId) {
         folderService.copyFolder(folderId, targetFolderId);
         return new SuccessResult();
