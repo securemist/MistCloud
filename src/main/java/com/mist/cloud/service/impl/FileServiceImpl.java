@@ -1,16 +1,12 @@
 package com.mist.cloud.service.impl;
 
-import com.mist.cloud.common.Constants;
 import com.mist.cloud.config.IdGenerator;
 import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.dao.FolderMapper;
 import com.mist.cloud.exception.FileException;
 import com.mist.cloud.exception.RequestParmException;
 import com.mist.cloud.model.po.File;
-import com.mist.cloud.model.po.Folder;
 import com.mist.cloud.model.pojo.FileSelectReq;
-import com.mist.cloud.model.pojo.FolderDetail;
-import com.mist.cloud.model.pojo.FolderSelectReq;
 import com.mist.cloud.service.IFileService;
 import com.mist.cloud.utils.FileUtils;
 import org.springframework.stereotype.Service;
@@ -18,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author: securemist
@@ -124,12 +119,17 @@ public class FileServiceImpl implements IFileService {
     }
 
     @Override
-    public void deleteFile(Long fileId) {
+    public void deleteFile(Long fileId, Boolean realDelete) {
         FileSelectReq fileSelectReq = FileSelectReq.builder()
                 .id(fileId)
                 .build();
 
-        fileMapper.deleteFile(fileSelectReq);
+        if(realDelete){
+            fileMapper.realDeleteFile(fileSelectReq);
+        } else {
+            fileMapper.deleteFile(fileSelectReq);
+        }
+
     }
 
     @Override

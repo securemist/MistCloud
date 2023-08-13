@@ -17,7 +17,7 @@
 
     <insert id="addFile" parameterType="File">
         INSERT INTO sys_file(id, name, size, type, folder_id, origin_name, create_time)
-        VALUES (#{id} ,#{name}, #{size}, #{type}, #{folderId}, #{originName}, NOW())
+        VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{originName}, NOW())
     </insert>
 
     <update id="updateFileDuplicateTimes" parameterType="FileSelectReq">
@@ -42,10 +42,16 @@
     </update>
 
     <update id="copyFile">
-        INSERT INTO sys_file (id, name, size, type,folder_id,  origin_name)
+        INSERT INTO sys_file (id, name, size, type, folder_id, origin_name)
         SELECT #{newFileId}, name, size, type, #{targetFolderId}, origin_name
         FROM sys_file
         WHERE id = #{fileId} AND deleted = 0;
+    </update>
+
+    <update id="realDeleteFile">
+        DELETE
+        FROM sys_file
+        WHERE id = #{id}
     </update>
 
     <select id="getFiles" parameterType="FileSelectReq" resultMap="fileMap">

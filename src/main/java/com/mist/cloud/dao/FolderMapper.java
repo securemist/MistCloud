@@ -46,4 +46,6 @@ public interface FolderMapper {
     int getChildNums(Long folderId);
 
     List<Long> getChildFolderIds(Long folderId);
+
+    void realDeleteFolderRecursive(Long folderId);
 }

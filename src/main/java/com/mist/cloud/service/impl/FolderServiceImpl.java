@@ -1,6 +1,5 @@
 package com.mist.cloud.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.mist.cloud.common.Constants;
 import com.mist.cloud.config.IdGenerator;
 import com.mist.cloud.dao.FileMapper;
@@ -23,8 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,13 +108,20 @@ public class FolderServiceImpl implements IFolderService {
     }
 
     @Override
-    public void deleteFolder(Long folderId) {
+    public void deleteFolder(Long folderId, Boolean realDelete) {
         /**
          * 递归删除该文件夹下所有的子文件夹和文件
          * 这个 sql 语句很复杂，用到了自定函数，具体的放在 doc 目录下了
          * 这个 sql 放在 doc 目录下了
          */
-        folderMapper.deleteFolderRecursive(folderId);
+
+        if(realDelete){
+            folderMapper.realDeleteFolderRecursive(folderId);
+        } else {
+            folderMapper.deleteFolderRecursive(folderId);
+        }
+
+
     }
 
     @Override

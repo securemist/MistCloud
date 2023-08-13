@@ -10,6 +10,7 @@ import com.mist.cloud.model.pojo.FolderDetail;
 import com.mist.cloud.model.tree.FolderTreeNode;
 import com.mist.cloud.model.tree.SubFolder;
 import com.mist.cloud.service.IFolderService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
+@Api(description = "文件夹操作")
 public class FolderController {
 
     @Resource
@@ -66,7 +68,7 @@ public class FolderController {
     }
 
     @GetMapping(value = "/folder/rename")
-    @ApiOperation(value = "文件夹重命名")
+    @ApiOperation(value = "重命名文件夹")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "folderId", value = "要修改的文件夹 id"),
             @ApiImplicitParam(name = "folderName", value = "修改后的文件名")})
@@ -76,10 +78,13 @@ public class FolderController {
     }
 
     @GetMapping(value = "/folder/delete")
-    @ApiOperation(value = "文件夹删除")
-    @ApiImplicitParam(name = "folderId", value = "要修改的文件夹 id")
-    public Result delete(@RequestParam("folderId") Long folderId) {
-        folderService.deleteFolder(folderId);
+    @ApiOperation(value = "删除文件夹")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "folderId", value = "要删除的文件夹 id"),
+            @ApiImplicitParam(name = "realDelete", value = "是否真实删除")
+    })
+    public Result delete(@RequestParam("folderId") Long folderId, @RequestParam("realDelete") Boolean realDelete) {
+        folderService.deleteFolder(folderId, realDelete);
         return new SuccessResult();
     }
 
@@ -98,6 +103,7 @@ public class FolderController {
     public Result folderTree() {
         // 查找的文件夹 id，默认为根目录
         FolderTreeNode tree = folderService.getFolderTree();
+
         // 返回给前端数组形式，arr[0]=tree
         ArrayList<FolderTreeNode> arr = new ArrayList<>();
         arr.add(tree);

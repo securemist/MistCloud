@@ -16,19 +16,9 @@
 
     <update id="deleteFolderRecursive" parameterType="java.lang.Long">
         <![CDATA[
-        SET
-        @folder_ids = (SELECT GROUP_CONCAT(id)
-                   FROM sys_folder
-                   WHERE FIND_IN_SET(id, get_chlid_lists(
-        #{folderId}
-        )
-        )
-        );
+        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
 
-        SET
-        @file_ids = (SELECT GROUP_CONCAT(id)
-                 FROM sys_file
-                 WHERE FIND_IN_SET(folder_id, @folder_ids));
+        SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
 
         UPDATE sys_folder
         SET deleted      = 1,
@@ -95,6 +85,7 @@
         SELECT id, name, parent_id
         FROM sys_folder
         WHERE FIND_IN_SET(id, @ids)
+        AND deleted = 0
         ORDER BY FIND_IN_SET(id, @ids);
     </select>
 
@@ -168,5 +159,18 @@
         FROM sys_folder
         WHERE id = #{folderId}
           AND deleted = 0;
+    </update>
+
+
+    <update id="realDeleteFolderRecursive">
+        <![CDATA[
+        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
+
+        SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
+
+        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @folder_ids);
+
+        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @file_ids);
+        ]]>
     </update>
 </mapper>

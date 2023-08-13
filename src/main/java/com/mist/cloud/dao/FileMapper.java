@@ -29,4 +29,6 @@ public interface FileMapper {
     void copyFile(Long newFileId, Long fileId, Long targetFolderId);
 
     List<Long> getFileIds(Long folderId);
+
+    void realDeleteFile(FileSelectReq fileSelectReq);
 }

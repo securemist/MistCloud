@@ -17,7 +17,7 @@ public interface IFolderService {
 
     void rename(Long folderId, String folderName);
 
-    void deleteFolder(Long folderId);
+    void deleteFolder(Long folderId, Boolean realDelete);
 
 
     FolderTreeNode getFolderTree();
