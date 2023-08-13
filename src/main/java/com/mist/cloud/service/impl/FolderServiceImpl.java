@@ -223,6 +223,7 @@ public class FolderServiceImpl implements IFolderService {
 
     /**
      * 生成树形结构
+     * TODO 这里使用递归，面对大数据量可能会产生性能问题
      *
      * @param folderTreeVoList 树形结构的 list 形式 [id, parentId]
      *                         <==        Row: 1, ab, 0
@@ -242,9 +243,16 @@ public class FolderServiceImpl implements IFolderService {
 
         Long currentId = currentNode.id;
 
-        while (folderTreeVoList.size() != 0 && folderTreeVoList.get(0).getParentId().equals(currentId)) {
-            currentNode.children.add(new FolderTreeNode(folderTreeVoList.get(0).getId(), folderTreeVoList.remove(0).getName()));
-        }
+        folderTreeVoList= folderTreeVoList.stream()
+                .map(folder -> {
+                    if (folder.getParentId().equals(currentId)) {
+                        currentNode.children.add(new FolderTreeNode(folder.getId(), folder.getName()));
+                    }
+                    return folder;
+                })
+                .filter(folder -> !folder.getParentId().equals(currentId)) // 排除掉已经加入到子节点的元素
+                .collect(Collectors.toList());
+
 
         for (FolderTreeNode folderChild : currentNode.children) {
             folderTreeVoList = recur(folderTreeVoList, folderChild);
