@@ -3,7 +3,8 @@ package com.mist.cloud.service.impl;
 import com.mist.cloud.config.IdGenerator;
 import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.dao.FolderMapper;
-import com.mist.cloud.exception.FileException;
+import com.mist.cloud.exception.file.FileCommonException;
+import com.mist.cloud.exception.file.FileException;
 import com.mist.cloud.exception.RequestParmException;
 import com.mist.cloud.model.po.File;
 import com.mist.cloud.model.pojo.FileSelectReq;
@@ -133,12 +134,12 @@ public class FileServiceImpl implements IFileService {
     }
 
     @Override
-    public void copyFile(Long fileId, Long targetFolderId) {
+    public void copyFile(Long fileId, Long targetFolderId) throws FileCommonException {
         // 判断移动的目标文件夹是否存在当前文件
         int r = folderMapper.existFile(fileId, targetFolderId);
 
         if( r != 0) { // 已存在
-            throw new FileException("文件已存在");
+            throw new FileCommonException("文件已存在");
         }
 
         Long newFileId = idGenerator.nextId();

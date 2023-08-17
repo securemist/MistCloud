@@ -1,5 +1,6 @@
 package com.mist.cloud.service;
 
+import com.mist.cloud.exception.file.FolderException;
 import com.mist.cloud.model.dto.FolderDto;
 import com.mist.cloud.model.dto.UserCapacityDto;
 import com.mist.cloud.model.pojo.FolderDetail;
@@ -11,7 +12,7 @@ import com.mist.cloud.model.tree.FolderTreeNode;
  * @Description:
  */
 public interface IFolderService {
-    FolderDto createFolder(Long parentId, String folderName);
+    FolderDto createFolder(Long parentId, String folderName) throws FolderException;
 
     UserCapacityDto getCapacityInfo();
 
@@ -24,5 +25,5 @@ public interface IFolderService {
 
     FolderDetail getFiles(Long folderId);
 
-    void copyFolder(Long folderId, Long targetFolderId);
+    void copyFolder(Long folderId, Long targetFolderId) throws FolderException;
 }

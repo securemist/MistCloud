@@ -5,6 +5,7 @@ import com.mist.cloud.common.DataType;
 import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
+import com.mist.cloud.exception.file.FolderException;
 import com.mist.cloud.model.dto.FolderDto;
 import com.mist.cloud.model.dto.UserCapacityDto;
 import com.mist.cloud.model.pojo.FolderDetail;
@@ -47,7 +48,7 @@ public class FolderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "parentId", value = "创建文件夹时所在的文件夹 Id", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "folderName", value = "文件夹的名字", dataTypeClass = String.class)})
-    public Result createFolder(@RequestParam("parentId") Long parentId, @RequestParam("folderName") String folderName) {
+    public Result createFolder(@RequestParam("parentId") Long parentId, @RequestParam("folderName") String folderName) throws FolderException {
         FolderDto folderDto;
         folderDto = folderService.createFolder(parentId, folderName);
         return new SuccessResult(folderDto);
@@ -95,7 +96,7 @@ public class FolderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "targetFolderId", value = "目标文件夹 id", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "folderId", value = "当前文件夹 id", dataTypeClass = Lang.class)})
-    public Result copy(@RequestParam("targetFolderId") Long targetFolderId, @RequestParam("folderId") Long folderId) {
+    public Result copy(@RequestParam("targetFolderId") Long targetFolderId, @RequestParam("folderId") Long folderId) throws FolderException {
         folderService.copyFolder(folderId, targetFolderId);
         return new SuccessResult();
     }

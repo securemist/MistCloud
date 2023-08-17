@@ -5,7 +5,7 @@ import com.mist.cloud.config.IdGenerator;
 import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.dao.FolderMapper;
 import com.mist.cloud.dao.UserMapper;
-import com.mist.cloud.exception.FolderException;
+import com.mist.cloud.exception.file.FolderException;
 import com.mist.cloud.exception.RequestParmException;
 import com.mist.cloud.model.dto.FolderDto;
 import com.mist.cloud.model.dto.UserCapacityDto;
@@ -43,7 +43,7 @@ public class FolderServiceImpl implements IFolderService {
     private IdGenerator idGenerator;
 
     @Override
-    public FolderDto createFolder(Long parentId, String folderName) {
+    public FolderDto createFolder(Long parentId, String folderName) throws FolderException {
 
 
         FolderSelectReq folderSelectReq = FolderSelectReq.builder()
@@ -192,7 +192,7 @@ public class FolderServiceImpl implements IFolderService {
      *                       但是因为 id 使用到是雪花 id，复制记录需要传入 id，数据库无法自己生成
      */
     @Override
-    public void copyFolder(Long folderId, Long targetFolderId) {
+    public void copyFolder(Long folderId, Long targetFolderId) throws FolderException {
         // 判断目标文件夹内是否已存在同名的文件夹
         int r = folderMapper.existFolder(folderId, targetFolderId);
         if (r != 0) {
