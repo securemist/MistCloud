@@ -57,4 +57,7 @@ public class File implements Serializable {
     @ApiModelProperty(value = "重名次数")
     private Integer duplicateTimes;
 
+    @ApiModelProperty(value = "文件 md5 值")
+    private String md5;
+
 }

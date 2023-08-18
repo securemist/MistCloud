@@ -1,16 +1,12 @@
 package com.mist.cloud.controller;
 
-import cn.dev33.satoken.stp.StpUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.mist.cloud.common.*;
 import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
 import com.mist.cloud.config.FileConfig;
-import com.mist.cloud.config.context.UploadTaskContext;
 import com.mist.cloud.exception.file.FileCommonException;
 import com.mist.cloud.exception.file.FileUploadException;
-import com.mist.cloud.model.pojo.FolderDetail;
 import com.mist.cloud.service.IFileService;
 import com.mist.cloud.utils.FileUtils;
 import io.swagger.annotations.Api;
@@ -20,11 +16,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Lang;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +26,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -79,11 +71,11 @@ public class FileController {
             // 文件上传
             FileUtils.upload(file, fileConfig.getBase_path());
             // 数据库写入数据
-            fileService.insertFile(file, folderId);
+//            fileService.insertFile(file, folderId);
         } catch (Exception e) {
             if (!(e instanceof FileUploadException)) {
                 log.info("file upload error when insert data to database",e.getMessage());
-                throw new FileUploadException(e.getMessage(), uid);
+                throw new FileUploadException(e.getMessage(), uid, e);
             }
         }
 

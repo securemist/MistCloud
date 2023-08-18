@@ -1,5 +1,6 @@
 package com.mist.cloud.service;
 
+import com.mist.cloud.config.context.Task;
 import com.mist.cloud.exception.file.FileCommonException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,14 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface IFileService {
 
-    /**
-     * 用户上传文件
-     *
-     * @param file     文件
-     * @param folderId 文件夹 Id
-     */
-    void insertFile(MultipartFile file, Long folderId);
 
+    /**
+     * 创建文件
+     * @param fileName 文件名
+     * @param md5 md5 值
+     */
+    void addFile(Task task);
 
     /**
      * 下载文件
@@ -48,4 +48,6 @@ public interface IFileService {
      * @param targetFolderId 目标文件夹 id
      */
     void copyFile(Long fileId, Long targetFolderId) throws FileCommonException;
+
+
 }

@@ -38,6 +38,7 @@ public class DefaultUploadTaskContext extends AbstractUploadContext implements U
         }
         return uploadContexts.get(getLoginId());
     }
+
     @Override
     protected void setUploadContext(Map<String, Task> taskMap) {
         uploadContexts.put(getLoginId(), taskMap);
@@ -63,24 +64,6 @@ public class DefaultUploadTaskContext extends AbstractUploadContext implements U
         return task;
     }
 
-    @Override
-    protected void updateTask(ChunkVo chunk) {
-        Map<String, Task> uploadContext = getUploadContext();
-        Task task = getTask(chunk.getIdentifier());
-
-        // 在第一次创建 task 的时候并不会创建 uploadChunks 数组，需要在上传分片的时候创建
-        if(task.uploadChunks == null){
-            synchronized (DefaultUploadTaskContext.class){
-                if(task.uploadChunks == null){
-                    task.uploadChunks = new boolean[chunk.getTotalChunks() + 1];
-                }
-            }
-        }
-        task.uploadChunks[chunk.getChunkNumber()] = true;
-
-        uploadContext.put(chunk.getIdentifier(), task);
-        setUploadContext(uploadContext);
-    }
 
 
 }

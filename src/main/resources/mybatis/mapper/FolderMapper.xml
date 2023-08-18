@@ -136,13 +136,6 @@
         VALUES (#{id}, #{userId}, #{folderName}, #{parentId}, NOW(), NOW());
     </insert>
 
-    <update id="addFolderSize" parameterType="FolderSelectReq">
-        UPDATE sys_folder
-        SET folder_size = folder_size + #{fileSize}
-        WHERE user_id = #{userId}
-          AND id = #{folderId}
-          AND deleted = 0
-    </update>
 
     <update id="renameFolder" parameterType="FolderSelectReq">
         UPDATE sys_folder

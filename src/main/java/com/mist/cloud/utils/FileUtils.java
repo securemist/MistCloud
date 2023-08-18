@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 /**
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class FileUtils {
     // 获取文件类型
-    public static String getFileType(MultipartFile file) {
+    public static String getFileType(String fileName) {
 
         return Constants.FileType.IMG.getType();
     }
@@ -134,15 +135,27 @@ public class FileUtils {
         } catch (IOException e) {
             log.debug("合并文件出错，已删除原文件 {} , {}", folder, e.getMessage());
             Files.deleteIfExists(Paths.get(targetFile));
-            throw new IOException(e);
-        } finally {
-            // 删除原文件夹
-            Files.deleteIfExists(Paths.get(folder));
+            throw new FileUploadException(e);
         }
-
+        // 删除原文件夹
+        FileUtils.deleteDirectoryIfExist(Paths.get(folder));
 
         // 读取文件 md5 值
         File file = new File(targetFile);
         return DigestUtil.md5Hex(file);
+    }
+
+    /**
+     * 删除指定路径
+     * @param dir
+     */
+    public static void deleteDirectoryIfExist(Path dir) throws IOException {
+        if (Files.exists(dir)) {
+            try (Stream<Path> pathStream = Files.walk(dir)) {
+                pathStream.sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            }
+        }
     }
 }

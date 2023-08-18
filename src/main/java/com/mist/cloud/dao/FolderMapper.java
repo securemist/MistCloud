@@ -19,7 +19,6 @@ public interface FolderMapper {
 
     int folderExist(FolderSelectReq folderSelectReq);
 
-    void addFolderSize(FileSelectReq fileSelectReq);
 
     Long getRootDirFolderSize(Long UserId);
 

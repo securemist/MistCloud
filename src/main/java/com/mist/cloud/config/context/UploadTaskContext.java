@@ -14,20 +14,11 @@ import javax.annotation.Resource;
  */
 public interface UploadTaskContext {
 
-
-
     /**
      * 添加文件分片
      * @param chunk
      */
     public void addChunk(ChunkVo chunk);
-
-    /**
-     * 检验该分片是否已上传
-     * @param chunk
-     * @return
-     */
-    public boolean checkChunkUploaded(ChunkVo chunk);
 
     /**
      * 完成任务
@@ -43,6 +34,7 @@ public interface UploadTaskContext {
      * @param identifier
      */
     public void cancelTask(String identifier) throws FileUploadException;
+
 
     /**
      * 获取任务信息

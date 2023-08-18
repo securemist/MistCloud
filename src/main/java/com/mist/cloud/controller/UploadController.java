@@ -1,6 +1,5 @@
 package com.mist.cloud.controller;
 
-import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
 import com.mist.cloud.config.FileConfig;
@@ -21,8 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.mist.cloud.utils.FileUtils.generatePath;
-import static com.mist.cloud.utils.FileUtils.merge;
+import static com.mist.cloud.utils.FileUtils.*;
 
 /**
  * @Author: securemist
@@ -43,7 +41,7 @@ public class UploadController {
     private UploadTaskContext uploadTaskContext;
 
     @PostMapping("/chunk")
-    public Result uploadChunk(ChunkVo chunk) {
+    public Result uploadChunk(ChunkVo chunk) throws FileUploadException {
 
         MultipartFile file = chunk.getFile();
         log.debug("file originName: {}, chunkNumber: {}", file.getOriginalFilename(), chunk.getChunkNumber());
@@ -59,19 +57,20 @@ public class UploadController {
             return new SuccessResult();
 
         } catch (IOException e) {
-            log.info("文件分片 {} 写入失败, 分片标识:{} , 原因: ", chunk.getFilename(), chunk.getIdentifier(), e.getMessage());
-            return new FailedResult("分片上传失败");
+            throw new FileUploadException("this chunk upload failed", chunk.getIdentifier(), e);
         }
     }
 
-    // 这个方法不是必须的，无非是一次多余的重传，建议不要谨慎修改
+    // 检验给分片是否已经上传 为什么不用 Result 返回，是前端这里只能根据 http 状态码判断结果
     @GetMapping("/chunk")
     public void checkChunk(ChunkVo chunk, HttpServletResponse response) {
-        // 该分片已上传
-        if (uploadTaskContext.checkChunkUploaded(chunk)) {
+        Task task = uploadTaskContext.getTask(chunk.getIdentifier());
+
+        if(task == null || (task.uploadChunks != null && !task.uploadChunks[chunk.getChunkNumber()])){
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        } else {
             response.setStatus(HttpServletResponse.SC_OK);
         }
-        response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
     }
 
     @GetMapping("/mergeFile")
@@ -86,7 +85,7 @@ public class UploadController {
         try {
             md5 = merge(file, folder, fileName);
         } catch (IOException e) {
-            return new FailedResult("文件上传失败");
+            throw new FileUploadException("file merge error in IO", identifier, e);
         }
 
         boolean res = uploadTaskContext.completeTask(identifier, md5);
@@ -94,10 +93,7 @@ public class UploadController {
             log.info("文件上传成功, 文件位置: {}", file);
             return new SuccessResult("文件上传成功");
         } else {
-            Files.deleteIfExists(Paths.get(folder));
-            Files.deleteIfExists(Paths.get(file));
-            log.info("文件上传失败, 文件名: {}，已删除原有分片", fileName);
-            return new FailedResult("文件上传失败");
+            throw new FileUploadException("file merge error because md5 is not equal", identifier);
         }
     }
 
@@ -113,14 +109,6 @@ public class UploadController {
 
     @GetMapping("/cancel")
     public Result cancel(String identifier) throws FileUploadException, IOException {
-        uploadTaskContext.cancelTask(identifier);
-
-        Task task = uploadTaskContext.getTask(identifier);
-
-        Files.deleteIfExists(Paths.get(task.getFolderPath()));
-        Files.deleteIfExists(Paths.get(task.getTargetFilePath()));
-        log.info("取消文件上传任务, 已删除相关文件 {}", identifier);
-
-        return new SuccessResult();
+        throw new FileUploadException("取消上传",identifier);
     }
 }

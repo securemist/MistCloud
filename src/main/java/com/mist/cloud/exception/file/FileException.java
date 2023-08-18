@@ -6,7 +6,13 @@ package com.mist.cloud.exception.file;
  * @Description:
  */
 public  class FileException extends Exception{
-    public FileException(String message) {
-        super(message);
+    private String msg;
+
+    public FileException(String msg) {
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 }

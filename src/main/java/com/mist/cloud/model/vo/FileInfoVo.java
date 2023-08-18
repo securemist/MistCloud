@@ -27,4 +27,6 @@ public class FileInfoVo implements Serializable {
     private String md5;
 
     private Integer totalChunks;
+
+    private Long folderId;
 }

@@ -12,12 +12,13 @@
         <result column="deletede_time" property="deletedTime"/>
         <result column="duplicate_times" property="duplicateTimes"/>
         <result column="origin_name" property="originName"/>
+        <result column="md5" property="md5"/>
     </resultMap>
 
 
     <insert id="addFile" parameterType="File">
-        INSERT INTO sys_file(id, name, size, type, folder_id, origin_name, create_time)
-        VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{originName}, NOW())
+        INSERT INTO sys_file(id, name, size, type, folder_id, md5,  origin_name, create_time)
+        VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5} ,#{originName}, NOW())
     </insert>
 
     <update id="updateFileDuplicateTimes" parameterType="FileSelectReq">

@@ -31,9 +31,16 @@ public class Task {
 
     private String fileType;
 
+    // 文件分片的所在文件夹路径
     private String folderPath;
 
+    // 目标文件的路径
     private String targetFilePath;
+
+    // 上传的文件夹 id
+    private Long folderId;
+
+    private Long fileSize;
 
     public Task(String identifier, Integer chunkSize) {
         this.identifier = identifier;
