@@ -1,13 +1,13 @@
 package com.mist.cloud.utils;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.mist.cloud.common.Constants;
-import com.mist.cloud.model.po.Chunk;
+import com.mist.cloud.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,12 +78,12 @@ public class FileUtils {
         return capacityInGB;
     }
 
-    public static String generatePath(String uploadFolder, Chunk chunk) {
+    public static String generatePath(String uploadFolder, ChunkVo chunk) {
         StringBuilder sb = new StringBuilder();
         sb.append(uploadFolder).append("/").append(chunk.getIdentifier());
         //判断uploadFolder/identifier 路径是否存在，不存在则创建
         if (!Files.isWritable(Paths.get(sb.toString()))) {
-            log.info("path not exist,create path: {}", sb.toString());
+            log.debug("path not exist,create path: {}", sb.toString());
             try {
                 Files.createDirectories(Paths.get(sb.toString()));
             } catch (IOException e) {
@@ -102,10 +102,12 @@ public class FileUtils {
      *
      * @param targetFile
      * @param folder
+     * @return md5 文件的 md5
      */
-    public static void merge(String targetFile, String folder, String filename) {
+    public static String merge(String targetFile, String folder, String filename) {
         try {
-            // 创建文件
+            // 创建文件，已存在就覆盖
+            Files.deleteIfExists(Paths.get(targetFile));
             Files.createFile(Paths.get(targetFile));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -134,11 +136,20 @@ public class FileUtils {
             log.error(e.getMessage(), e);
         }
 
+
+        // 读取文件 md5 值
+        File file = new File(targetFile);
+        String md5 = DigestUtil.md5Hex(file);
+
+
         // 删除原文件夹
         try {
             Files.deleteIfExists(Paths.get(folder));
+            return md5;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
+
+        return null;
     }
 }

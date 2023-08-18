@@ -29,8 +29,6 @@ public class FileServiceImpl implements IFileService {
     @Resource
     private FolderMapper folderMapper;
 
-    @Resource
-    private IdGenerator idGenerator;
 
     @Override
     @Transactional
@@ -60,7 +58,7 @@ public class FileServiceImpl implements IFileService {
         // 真实的文件 ID
         File newFile = new File()
                 .builder()
-                .id(idGenerator.nextId())
+                .id(IdGenerator.fileId())
                 .name(fileName)
                 .size(file.getSize())
                 .type(FileUtils.getFileType(file))
@@ -142,7 +140,7 @@ public class FileServiceImpl implements IFileService {
             throw new FileCommonException("文件已存在");
         }
 
-        Long newFileId = idGenerator.nextId();
+        Long newFileId = IdGenerator.fileId();
         fileMapper.copyFile(newFileId, fileId, targetFolderId);
     }
 }

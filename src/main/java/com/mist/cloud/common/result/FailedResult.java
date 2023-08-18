@@ -34,5 +34,9 @@ public class FailedResult implements Result{
         this.data = data;
     }
 
+    public FailedResult() {
+
+    }
+
 
 }

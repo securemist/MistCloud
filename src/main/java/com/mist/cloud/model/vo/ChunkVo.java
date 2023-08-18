@@ -1,27 +1,26 @@
-package com.mist.cloud.model.po;
+package com.mist.cloud.model.vo;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import nonapi.io.github.classgraph.json.Id;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.beans.Transient;
-import java.io.Serializable;
 
 /**
  * @Author: securemist
- * @Datetime: 2023/8/17 09:01
+ * @Datetime: 2023/8/17 13:43
  * @Description:
  */
 @Data
 @Getter
 @Setter
 @Builder
-public class Chunk implements Serializable {
+public class ChunkVo {
+    /**
+     * 唯一标识
+     */
+    private String uid;
 
-    private Long id;
     /**
      * 当前文件块，从1开始
      */

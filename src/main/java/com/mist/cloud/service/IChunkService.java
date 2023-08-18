@@ -1,6 +1,7 @@
 package com.mist.cloud.service;
 
 import com.mist.cloud.model.po.Chunk;
+import com.mist.cloud.model.vo.ChunkVo;
 
 /**
  * @Author: securemist
@@ -13,7 +14,7 @@ public interface IChunkService {
      *
      * @param chunk
      */
-    void saveChunk(Chunk chunk);
+    void saveChunk(ChunkVo chunk);
 
     /**
      * 检查文件块是否存在

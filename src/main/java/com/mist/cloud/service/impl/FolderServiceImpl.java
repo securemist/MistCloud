@@ -39,8 +39,6 @@ public class FolderServiceImpl implements IFolderService {
     private FileMapper fileMapper;
     @Resource
     private UserMapper userMapper;
-    @Resource
-    private IdGenerator idGenerator;
 
     @Override
     public FolderDto createFolder(Long parentId, String folderName) throws FolderException {
@@ -65,7 +63,7 @@ public class FolderServiceImpl implements IFolderService {
         }
 
         // 创建文件夹,返回创建之后的主键 ID
-        Long id = idGenerator.nextId();
+        Long id = IdGenerator.fileId();
         folderSelectReq.setId(id);
         folderMapper.createFolder(folderSelectReq);
 
@@ -206,7 +204,7 @@ public class FolderServiceImpl implements IFolderService {
     // TODO 这里递归操作数据库，暂时没想到更好的方法
     private void copyFolderRecur(Long folderId, Long targetFolderId) {
         // 复制当前文件夹
-        Long newFolderId = idGenerator.nextId();
+        Long newFolderId = IdGenerator.fileId();
         folderMapper.copyFolder(folderId, newFolderId, targetFolderId);
 
         // 复制当前文件夹的所有子文件夹和子文件
@@ -215,7 +213,7 @@ public class FolderServiceImpl implements IFolderService {
         List<Long> fileIds = fileMapper.getFileIds(folderId);
 
         for (Long fileId : fileIds) {
-            Long newFileId = idGenerator.nextId();
+            Long newFileId = IdGenerator.fileId();
             fileMapper.copyFile(newFileId, fileId, newFolderId);
         }
 

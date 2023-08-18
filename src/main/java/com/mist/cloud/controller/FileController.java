@@ -51,8 +51,8 @@ public class FileController {
     private FileConfig fileConfig;
     @Resource
     private IFileService fileService;
-    @Resource
-    private UploadTaskContext uploadTaskContext;
+//    @Resource
+//    private UploadTaskContext uploadTaskContext;
 
     @PostMapping(value = "/file/upload")
     @ApiOperation(value = "上传单个文件")

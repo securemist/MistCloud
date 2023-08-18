@@ -34,8 +34,8 @@ public class UserController {
         // TODO 登录逻辑
 
         Long rootFolderId = 1L;
-
-        StpUtil.login(1L);
+        Long userId = 1L;
+        StpUtil.login(userId);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
 
 
