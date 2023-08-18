@@ -100,6 +100,7 @@ public class ExceptionHandlerConfig {
         }
 
         return new FailedResult(e.getMessage());
+
     }
 
 }

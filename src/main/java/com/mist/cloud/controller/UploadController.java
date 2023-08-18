@@ -75,8 +75,20 @@ public class UploadController {
 
     @GetMapping("/mergeFile")
     public Result mergeFile(String identifier) throws FileUploadException, IOException {
-        Task task = uploadTaskContext.getTask(identifier);
+        // setInfo 请求可能会在合并请求之后到达。这里需要等待
+        // 正常情况下不会，本机测试的时候文件发送太快了会发生这种情况
+        while (true){
+            if(uploadTaskContext.getTask(identifier).isSetInfo()){
+                break;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
+        Task task = uploadTaskContext.getTask(identifier);
         String fileName = task.getFileName();
         String file = task.getTargetFilePath();
         String folder = task.getFolderPath();

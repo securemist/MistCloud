@@ -103,6 +103,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
         task.setFolderId(fileInfo.getFolderId());
         task.setFileSize(fileInfo.getTotalSize());
+        task.setSetInfo(true);
 
         uploadContext.put(fileInfo.getIdentifier(), task);
         setUploadContext(uploadContext);

@@ -40,7 +40,11 @@ public class Task {
     // 上传的文件夹 id
     private Long folderId;
 
+    // 文件大小
     private Long fileSize;
+
+    // 是否已经被 setInfo
+    private boolean setInfo;
 
     public Task(String identifier, Integer chunkSize) {
         this.identifier = identifier;
