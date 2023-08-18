@@ -48,7 +48,9 @@ public class ExceptionHandlerConfig {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(Exception e) {
-        log.error(e.getClass() + ": {}", e.getMessage());
+        if(!(e instanceof NotLoginException)) {
+            log.error(e.getClass() + ": {}", e.getMessage());
+        }
         return new FailedResult(Constants.DEFAULT_FAILED_MSG);
     }
 
@@ -66,7 +68,7 @@ public class ExceptionHandlerConfig {
         // 文件上传失败要返回任务的 uid
         if (e instanceof FileUploadException){
             HashMap<String, String> map = new HashMap<>();
-            map.put("uid",((FileUploadException) e).getTaskId());
+            map.put("identifier",((FileUploadException) e).getTaskId());
             return new FailedResult(e.getMessage(), map);
         }
 

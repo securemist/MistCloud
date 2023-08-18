@@ -100,20 +100,19 @@ public class FileUtils {
     /**
      * 文件合并
      *
-     * @param targetFile
-     * @param folder
+     * @param targetFile 目标文件位置
+     * @param folder 要合并的文件所在的文件夹
+     * @param filename 文件名
      * @return md5 文件的 md5
      */
-    public static String merge(String targetFile, String folder, String filename) {
-        try {
-            // 创建文件，已存在就覆盖
-            Files.deleteIfExists(Paths.get(targetFile));
-            Files.createFile(Paths.get(targetFile));
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
+    public static String merge(String targetFile, String folder, String filename) throws IOException {
+        // 创建文件，已存在就覆盖
+        Files.deleteIfExists(Paths.get(targetFile));
+        Files.createFile(Paths.get(targetFile));
+
         // 合并文件
-        try (Stream<Path> stream = Files.list(Paths.get(folder))) {
+        try {
+            Stream<Path> stream = Files.list(Paths.get(folder));
             stream.filter(path -> !path.getFileName().toString().equals(filename))
                     .sorted((o1, o2) -> {
                         String p1 = o1.getFileName().toString();
@@ -133,23 +132,17 @@ public class FileUtils {
                         }
                     });
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+            log.debug("合并文件出错，已删除原文件 {} , {}", folder, e.getMessage());
+            Files.deleteIfExists(Paths.get(targetFile));
+            throw new IOException(e);
+        } finally {
+            // 删除原文件夹
+            Files.deleteIfExists(Paths.get(folder));
         }
 
 
         // 读取文件 md5 值
         File file = new File(targetFile);
-        String md5 = DigestUtil.md5Hex(file);
-
-
-        // 删除原文件夹
-        try {
-            Files.deleteIfExists(Paths.get(folder));
-            return md5;
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return null;
+        return DigestUtil.md5Hex(file);
     }
 }

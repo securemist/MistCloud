@@ -16,7 +16,6 @@ spring:
       max-file-size: 10024MB
       max-request-size: 1024MB
 
-
 # swagger地址
 # localhost:9000/swagger-ui/index.html#/
 
@@ -24,7 +23,11 @@ mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   type-aliases-package: com.mist.cloud.model
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  level:
+    com.mist.cloud.dao : INFO
 
 file:
   base_path: /Users/securemist/Downloads/File
@@ -44,7 +47,8 @@ sa-token:
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
   token-style: uuid
   # 是否输出操作日志
-  is-log: true
+  is-log: false
+#  log-level: DEBUG
 
 
 

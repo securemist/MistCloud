@@ -4,10 +4,10 @@ import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
 import com.mist.cloud.config.FileConfig;
+import com.mist.cloud.config.context.Task;
 import com.mist.cloud.config.context.UploadTaskContext;
 import com.mist.cloud.exception.file.FileUploadException;
-import com.mist.cloud.model.po.Chunk;
-import com.mist.cloud.model.po.FileInfo;
+import com.mist.cloud.model.vo.FileInfoVo;
 import com.mist.cloud.model.vo.ChunkVo;
 import com.mist.cloud.service.IChunkService;
 import lombok.extern.slf4j.Slf4j;
@@ -74,36 +74,53 @@ public class UploadController {
         response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
     }
 
-    @PostMapping("/mergeFile")
-    public Result mergeFile(@RequestBody FileInfo fileInfo) throws FileUploadException, IOException {
-        String filename = fileInfo.getFilename();
-        String file = fileConfig.getBase_path() + "/" + filename;
-        String folder = fileConfig.getBase_path() + "/" + fileInfo.getIdentifier();
+    @GetMapping("/mergeFile")
+    public Result mergeFile(String identifier) throws FileUploadException, IOException {
+        Task task = uploadTaskContext.getTask(identifier);
 
-        String md5 = merge(file, folder, filename);
+        String fileName = task.getFileName();
+        String file = task.getTargetFilePath();
+        String folder = task.getFolderPath();
 
-        boolean res = uploadTaskContext.completeTask(fileInfo.getIdentifier(), md5);
+        String md5 = null;
+        try {
+            md5 = merge(file, folder, fileName);
+        } catch (IOException e) {
+            return new FailedResult("文件上传失败");
+        }
+
+        boolean res = uploadTaskContext.completeTask(identifier, md5);
         if (res) {
             log.info("文件上传成功, 文件位置: {}", file);
             return new SuccessResult("文件上传成功");
         } else {
             Files.deleteIfExists(Paths.get(folder));
-            log.info("文件上传失败, 文件名: {}，已删除原有分片", filename);
+            Files.deleteIfExists(Paths.get(file));
+            log.info("文件上传失败, 文件名: {}，已删除原有分片", fileName);
             return new FailedResult("文件上传失败");
         }
     }
 
 
-    @PostMapping("/md5")
-    public Result getMd5(String identifier, String md5, String totalChunks) {
-        ChunkVo chunk = ChunkVo.builder()
-                .totalChunks(Integer.parseInt(totalChunks))
-                .identifier(identifier)
-                .build();
+    @PostMapping("/info")
+    public Result getInfo(@RequestBody FileInfoVo fileInfo) throws FileUploadException {
+        uploadTaskContext.setTaskInfo(fileInfo);
 
         // 将拿到的 md5 值交给任务队列
-        uploadTaskContext.SetMD5(chunk, md5);
         return new SuccessResult();
     }
 
+
+    @GetMapping("/cancel")
+    public Result cancel(String identifier) throws FileUploadException, IOException {
+        uploadTaskContext.cancelTask(identifier);
+
+        Task task = uploadTaskContext.getTask(identifier);
+
+        Files.deleteIfExists(Paths.get(task.getFolderPath()));
+        Files.deleteIfExists(Paths.get(task.getTargetFilePath()));
+        log.info("取消文件上传任务, 已删除相关文件 {}", identifier);
+
+        return new SuccessResult();
+    }
 }

@@ -1,6 +1,8 @@
 package com.mist.cloud.config.context;
 
 import com.mist.cloud.model.vo.ChunkVo;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -9,12 +11,14 @@ import java.util.Date;
  * @Datetime: 2023/8/17 15:02
  * @Description:
  */
+@Setter
+@Getter
 public class Task {
-
+    // 文件标识，同时为临时的分片文件夹名称
     private String identifier;
 
     // 已经上传的分片
-    public boolean[] uploadChunks;
+    public volatile boolean[] uploadChunks;
 
     private Date startTime;
 
@@ -23,22 +27,23 @@ public class Task {
     // 文件md5值，用来验证文件传输之后是否完好
     private String MD5 = null;
 
+    private String fileName;
+
+    private String fileType;
+
+    private String folderPath;
+
+    private String targetFilePath;
+
     public Task(String identifier, Integer chunkSize) {
         this.identifier = identifier;
         this.uploadChunks = new boolean[chunkSize + 1];
         this.startTime = new Date();
     }
 
-
-    public void completeTask() {
-        this.completeTime = new Date();
+    public Task(String identifier) {
+        this.identifier = identifier;
+        this.startTime = new Date();
     }
 
-    public void setMD5(String md5) {
-        this.MD5 = md5;
-    }
-
-    public String getMD5() {
-        return this.MD5;
-    }
 }
