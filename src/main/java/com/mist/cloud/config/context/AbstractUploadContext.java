@@ -1,15 +1,14 @@
 package com.mist.cloud.config.context;
 
 import com.mist.cloud.config.FileConfig;
-import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.exception.file.FileUploadException;
 import com.mist.cloud.model.vo.ChunkVo;
 import com.mist.cloud.model.vo.FileInfoVo;
 import com.mist.cloud.service.IFileService;
-import com.mist.cloud.service.impl.FileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -30,15 +29,24 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
     protected abstract void setUploadContext(Map<String, Task> taskMap);
 
+    protected abstract void writeChunk(ChunkVo chunkVo) throws IOException;
+
     @Override
     public void addChunk(ChunkVo chunk) {
+        try {
+            writeChunk(chunk);
+        } catch (IOException e) {
+            new FileUploadException("File chunk write failed : " + chunk.getFilename()
+                    + "-" + chunk.getChunkNumber(), chunk.getIdentifier(), e);
+        }
+
         Map<String, Task> uploadContext = getUploadContext();
         Task task = getTask(chunk.getIdentifier());
 
         // 在第一次创建 task 的时候并不会创建 uploadChunks 数组，需要在上传分片的时候创建
-        if(task.uploadChunks == null){
-            synchronized (DefaultUploadTaskContext.class){
-                if(task.uploadChunks == null){
+        if (task.uploadChunks == null) {
+            synchronized (AbstractUploadContext.class) {
+                if (task.uploadChunks == null) {
                     task.uploadChunks = new boolean[chunk.getTotalChunks() + 1];
                 }
             }
@@ -51,16 +59,11 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
 
     @Override
-    public boolean completeTask(String identifier, String md5) throws FileUploadException {
+    public void completeTask(String identifier) throws FileUploadException {
         Task task = getUploadContext().get(identifier);
 
         if (task == null) {
             throw new FileUploadException("file upload complete error because task is null, file identifier ", identifier);
-        }
-
-        // md5 不匹配，上传失败 s
-        if (!task.getMD5().equals(md5)) {
-            return false;
         }
 
         // 上传成功
@@ -71,7 +74,6 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         fileService.addFile(task);
 
         setUploadContext(uploadContext);
-        return true;
     }
 
 
@@ -90,22 +92,41 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
     }
 
     @Override
-    public void setTaskInfo(FileInfoVo fileInfo) throws FileUploadException {
-        Map<String, Task> uploadContext = getUploadContext();
+    public abstract void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException;
 
-        // 设置 task 有关信息，如果获取不到 task 会自动创建(线程安全)
-        Task task = getTask(fileInfo.getIdentifier());
-        task.setFileName(fileInfo.getFileName());
-        task.setMD5(fileInfo.getMd5());
-        task.setFileType(fileInfo.getType());
-        task.setFolderPath(fileConfig.getBase_path() + "/" + fileInfo.getIdentifier());
-        task.setTargetFilePath(fileConfig.getBase_path() + "/" + fileInfo.getFileName());
-        task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
-        task.setFolderId(fileInfo.getFolderId());
-        task.setFileSize(fileInfo.getTotalSize());
-        task.setSetInfo(true);
-
-        uploadContext.put(fileInfo.getIdentifier(), task);
-        setUploadContext(uploadContext);
-    }
+//    @Override
+//    public void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException {
+//        Map<String, Task> uploadContext = getUploadContext();
+//
+//        for (FileInfoVo fileInfo : fileInfoList) {
+//            // 文件存储的真实路径   base_path/path.../filename  不带有base_path
+//            StringBuilder path = new StringBuilder("/");
+//
+//            String relativePath = fileInfo.getRelativePath();
+//            // 文件夹中的文件
+//            if (!relativePath.equals(fileInfo.getFileName())) {
+//                String substring = relativePath.substring(0, relativePath.lastIndexOf('/'));
+//                path.append(substring);
+//            }
+//
+//            // 设置 task 有关信息，如果获取不到 task 会自动创建(线程安全)
+//            Task task = getTask(fileInfo.getIdentifier());
+//            task.setFileName(fileInfo.getFileName());
+//            task.setMD5(fileInfo.getMd5());
+//            task.setFileType(fileInfo.getType());
+//            task.setFolderPath(path + "/" +  fileInfo.getIdentifier());
+//            task.setTargetFilePath(path + "/" + fileInfo.getFileName());
+//            task.setFolderId(fileInfo.getFolderId());
+//            task.setFileSize(fileInfo.getTotalSize());
+//            task.setSetInfo(true);
+//            task.setRelativePath(path.toString());
+//            if (task.uploadChunks == null) {
+//                task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
+//            }
+//
+//            uploadContext.put(fileInfo.getIdentifier(), task);
+//        }
+//
+//        setUploadContext(uploadContext);
+//    }
 }

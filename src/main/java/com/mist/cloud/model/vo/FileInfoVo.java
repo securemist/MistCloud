@@ -29,4 +29,6 @@ public class FileInfoVo implements Serializable {
     private Integer totalChunks;
 
     private Long folderId;
+
+    private String relativePath;
 }

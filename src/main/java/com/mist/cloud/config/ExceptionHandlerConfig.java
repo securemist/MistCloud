@@ -4,6 +4,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import com.mist.cloud.common.Constants;
 import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
+import com.mist.cloud.config.context.DefaultFileUploadContext;
 import com.mist.cloud.config.context.Task;
 import com.mist.cloud.config.context.UploadTaskContext;
 import com.mist.cloud.exception.file.FileCommonException;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 @ControllerAdvice
 @Slf4j
 public class ExceptionHandlerConfig {
-    @Resource
+    @Resource(type = DefaultFileUploadContext.class)
     private UploadTaskContext uploadTaskContext;
 
     /**
@@ -91,7 +92,7 @@ public class ExceptionHandlerConfig {
 
             }
 
-            log.error("文件上传失败 {} , {}", ((FileUploadException) e).getMsg(), e.getMessage());
+            log.error("文件上传失败: {} , {}", ((FileUploadException) e).getMsg(), e.getMessage());
 
             // 构造返回信息
             HashMap<String, String> map = new HashMap<>();

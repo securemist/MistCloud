@@ -35,7 +35,6 @@ public class FileServiceImpl implements IFileService {
     public void addFile(Task task) {
         String fileName = this.checkFileName(task.getFileName(), task.getFolderId());
 
-
         // 添加记录
         File newFile = File.builder()
                 .id(IdGenerator.fileId())

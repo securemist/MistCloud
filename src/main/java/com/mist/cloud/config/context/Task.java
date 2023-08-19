@@ -43,6 +43,9 @@ public class Task {
     // 文件大小
     private Long fileSize;
 
+    // 文件真实路径，主要适用于文件夹上传
+    private String relativePath;
+
     // 是否已经被 setInfo
     private boolean setInfo;
 

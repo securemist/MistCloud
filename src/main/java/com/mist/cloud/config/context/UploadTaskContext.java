@@ -1,11 +1,8 @@
 package com.mist.cloud.config.context;
 
-import com.mist.cloud.config.FileConfig;
 import com.mist.cloud.exception.file.FileUploadException;
 import com.mist.cloud.model.vo.ChunkVo;
 import com.mist.cloud.model.vo.FileInfoVo;
-
-import javax.annotation.Resource;
 
 /**
  * @Author: securemist
@@ -20,14 +17,14 @@ public interface UploadTaskContext {
      */
     public void addChunk(ChunkVo chunk);
 
+
+
     /**
      * 完成任务
      * @param identifier 任务标识
-     * @param md5 文件的 md5 值
-     * @return 会校验文件的 md5 值，失败返回 false
      * @throws FileUploadException 这个请求必须确保任务已经建立，否则抛出该异常
      */
-    public boolean completeTask(String identifier, String md5) throws FileUploadException;
+    public void completeTask(String identifier) throws FileUploadException;
 
     /**
      * 取消上传任务
@@ -47,7 +44,11 @@ public interface UploadTaskContext {
 
     /**
      * 设置任务文件相关信息
-     * @param fileInfo
+     *
+     * @param fileInfoList
      */
-    void setTaskInfo(FileInfoVo fileInfo) throws FileUploadException;
+    void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException;
+
+
+
 }

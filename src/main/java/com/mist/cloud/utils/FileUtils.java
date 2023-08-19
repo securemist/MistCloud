@@ -2,9 +2,9 @@ package com.mist.cloud.utils;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.mist.cloud.common.Constants;
+import com.mist.cloud.exception.file.FileUploadException;
 import com.mist.cloud.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -63,7 +63,7 @@ public class FileUtils {
             file.transferTo(new File(String.valueOf(path)));
         } catch (IOException e) {
             log.error("upload file error when tranfer to local, fileName: {}", file.getOriginalFilename());
-            throw new FileUploadException(e.getMessage());
+//            throw new FileUploadException();
         }
     }
 
@@ -79,38 +79,48 @@ public class FileUtils {
         return capacityInGB;
     }
 
-    public static String generatePath(String uploadFolder, ChunkVo chunk) {
+
+    public static String generatePath(String uploadFolder, ChunkVo chunk) throws FileUploadException {
         StringBuilder sb = new StringBuilder();
-        sb.append(uploadFolder).append("/").append(chunk.getIdentifier());
-        //判断uploadFolder/identifier 路径是否存在，不存在则创建
-        if (!Files.isWritable(Paths.get(sb.toString()))) {
-            log.debug("path not exist,create path: {}", sb.toString());
-            try {
-                Files.createDirectories(Paths.get(sb.toString()));
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
+
+        String relativePath = chunk.getRelativePath();
+        sb.append(uploadFolder);
+        // 真实路径与文件名不相同，说明是上传的是文件夹中的文件，需要手动拼接文件夹路径
+        if (!relativePath.equals(chunk.getFilename())) {
+            String[] splits = relativePath.split("/");
+            for (int i = 0; i < splits.length - 1; i++) {
+                sb.append("/").append(splits[i]);
             }
         }
 
+        sb.append("/").append(chunk.getIdentifier());
+
+        //判断路径是否存在，不存在则创建
+        if (!Files.isWritable(Paths.get(sb.toString()))) {
+            try {
+                Files.createDirectories(Paths.get(sb.toString()));
+            } catch (IOException e) {
+                throw new FileUploadException("File chunk's folder create failed :" + sb, chunk.getIdentifier(), e);
+            }
+        }
         return sb.append("/")
                 .append(chunk.getFilename())
                 .append("-")
                 .append(chunk.getChunkNumber()).toString();
     }
 
+
     /**
      * 文件合并
      *
      * @param targetFile 目标文件位置
-     * @param folder 要合并的文件所在的文件夹
-     * @param filename 文件名
+     * @param folder     要合并的文件所在的文件夹
+     * @param filename   文件名
      * @return md5 文件的 md5
      */
     public static String merge(String targetFile, String folder, String filename) throws IOException {
-        // 创建文件，已存在就覆盖
         Files.deleteIfExists(Paths.get(targetFile));
         Files.createFile(Paths.get(targetFile));
-
         // 合并文件
         try {
             Stream<Path> stream = Files.list(Paths.get(folder));
@@ -126,7 +136,7 @@ public class FileUtils {
                         try {
                             //以追加的形式写入文件
                             Files.write(Paths.get(targetFile), Files.readAllBytes(path), StandardOpenOption.APPEND);
-                            //合并后删除该块
+                            //合并后删除该块`
                             Files.delete(path);
                         } catch (IOException e) {
                             log.error(e.getMessage(), e);
@@ -135,7 +145,6 @@ public class FileUtils {
         } catch (IOException e) {
             log.debug("合并文件出错，已删除原文件 {} , {}", folder, e.getMessage());
             Files.deleteIfExists(Paths.get(targetFile));
-            throw new FileUploadException(e);
         }
         // 删除原文件夹
         FileUtils.deleteDirectoryIfExist(Paths.get(folder));
@@ -146,7 +155,25 @@ public class FileUtils {
     }
 
     /**
+     * 创建文件，如果文件存在就覆盖掉
+     *
+     * @param path
+     */
+    public static void createFileOrOverwrite(String path) throws IOException {
+
+        //判断路径是否存在，不存在则创建
+        if (!Files.isWritable(Paths.get(path))) {
+            Files.createDirectories(Paths.get(path));
+        }
+
+        // 创建文件，已存在就覆盖
+//        Files.deleteIfExists(Paths.get(path));
+//        Files.createFile(Paths.get(path));
+    }
+
+    /**
      * 删除指定路径
+     *
      * @param dir
      */
     public static void deleteDirectoryIfExist(Path dir) throws IOException {

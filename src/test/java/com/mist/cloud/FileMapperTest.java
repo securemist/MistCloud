@@ -29,4 +29,11 @@ public class FileMapperTest {
         System.out.println(fileConfig.getBase_path());
         System.out.println(2);
     }
+
+
+    @Test
+    public void test_string(){
+        String a = "/application/set/asdd";
+        System.out.println(a.substring(0,a.lastIndexOf("/")));
+    }
 }

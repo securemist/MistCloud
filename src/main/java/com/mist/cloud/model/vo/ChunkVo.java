@@ -50,5 +50,10 @@ public class ChunkVo {
      */
     private Integer totalChunks;
 
+    /**
+     * 真实路径
+     */
+    private String relativePath;
+
     private MultipartFile file;
 }
