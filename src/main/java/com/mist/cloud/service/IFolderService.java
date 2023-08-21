@@ -5,6 +5,9 @@ import com.mist.cloud.model.dto.FolderDto;
 import com.mist.cloud.model.dto.UserCapacityDto;
 import com.mist.cloud.model.pojo.FolderDetail;
 import com.mist.cloud.model.tree.FolderTreeNode;
+import com.mist.cloud.service.impl.UploadServiceImpl;
+
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -26,4 +29,7 @@ public interface IFolderService {
     FolderDetail getFiles(Long folderId);
 
     void copyFolder(Long folderId, Long targetFolderId) throws FolderException;
+
+    void createFolders(List<UploadServiceImpl.Folder> folderList);
+
 }

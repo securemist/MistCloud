@@ -82,32 +82,6 @@ public class FileController {
         res.put("uid",uid);
         return new SuccessResult(Constants.Response.FILE_UPLOAD_SUCCESS.getMsg(), res);
     }
-//
-//    @PostMapping(value = "/file/upload")
-//    @ApiOperation(value = "上传单个文件")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "file", value = "上传的文件", dataTypeClass = MultipartFile.class),
-//            @ApiImplicitParam(name = "folderId", value = "文件所在的文件夹 id", dataTypeClass = Lang.class)
-//    })
-//    public Result singleFilesUpload(@RequestPart("file") MultipartFile[] file, @RequestParam("folderId") Long folderId) {
-//
-////        if (file.isEmpty()) {
-////            return new FailedResult(Constants.Response.FILE_EMPTY.getMsg());
-////        }
-////
-////        log.info("收到文件：" + file.getOriginalFilename() + "上传文件夹 id为:" + folderId);
-//
-//        try {
-//            // 文件上传
-////            FileUtils.upload(file, fileConfig.getBase_path());
-//            // 数据库写入数据
-////            fileService.insertFile(file, folderId);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new FailedResult(Constants.Response.FILE_UPLOAD_FAILED.getMsg());
-//        }
-//        return new SuccessResult(Constants.Response.FILE_UPLOAD_SUCCESS.getMsg());
-//    }
 
     @GetMapping("/file/download")
     @ApiImplicitParam(name = "fileId", value = "文件 id", dataTypeClass = Lang.class)

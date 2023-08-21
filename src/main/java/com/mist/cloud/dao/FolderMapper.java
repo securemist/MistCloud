@@ -1,9 +1,9 @@
 package com.mist.cloud.dao;
 
 import com.mist.cloud.model.po.Folder;
-import com.mist.cloud.model.pojo.FileSelectReq;
 import com.mist.cloud.model.pojo.FolderSelectReq;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,4 +47,6 @@ public interface FolderMapper {
     List<Long> getChildFolderIds(Long folderId);
 
     void realDeleteFolderRecursive(Long folderId);
+
+    void createFolders(ArrayList<FolderSelectReq> folders);
 }

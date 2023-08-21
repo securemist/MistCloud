@@ -70,9 +70,6 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         Map<String, Task> uploadContext = getUploadContext();
         uploadContext.remove(identifier);
 
-        // 数据库添加记录
-        fileService.addFile(task);
-
         setUploadContext(uploadContext);
     }
 

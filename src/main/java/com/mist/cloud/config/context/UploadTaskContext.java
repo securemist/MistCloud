@@ -18,7 +18,6 @@ public interface UploadTaskContext {
     public void addChunk(ChunkVo chunk);
 
 
-
     /**
      * 完成任务
      * @param identifier 任务标识

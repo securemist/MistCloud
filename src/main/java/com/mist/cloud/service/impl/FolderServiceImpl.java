@@ -200,6 +200,20 @@ public class FolderServiceImpl implements IFolderService {
         copyFolderRecur(folderId, targetFolderId);
     }
 
+    @Override
+    public void createFolders(List<UploadServiceImpl.Folder> folderList) {
+        ArrayList<FolderSelectReq> folders = new ArrayList<>();
+        for (UploadServiceImpl.Folder folder : folderList) {
+            FolderSelectReq folder0 = FolderSelectReq.builder()
+                    .id(folder.id)
+                    .folderName(folder.name)
+                    .parentId(folder.parentId)
+                    .userId(Constants.DEFAULT_USERID).build();
+            folders.add(folder0);
+        }
+        folderMapper.createFolders(folders);
+    }
+
 
     // TODO 这里递归操作数据库，暂时没想到更好的方法
     private void copyFolderRecur(Long folderId, Long targetFolderId) {

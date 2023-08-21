@@ -166,4 +166,12 @@
         DELETE FROM sys_folder WHERE FIND_IN_SET(id, @file_ids);
         ]]>
     </update>
+
+    <update id="createFolders" parameterType="FolderSelectReq">
+        <foreach collection="list" item="item" separator=";">
+            INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
+            VALUES
+            (#{item.id}, #{item.userId}, #{item.folderName}, #{item.parentId}, NOW(), NOW())
+        </foreach>
+    </update>
 </mapper>

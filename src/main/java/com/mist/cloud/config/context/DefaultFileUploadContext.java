@@ -91,7 +91,7 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
             task.setFolderId(fileInfo.getFolderId());
             task.setFileSize(fileInfo.getTotalSize());
             task.setSetInfo(true);
-            task.setRelativePath("/");
+            task.setRelativePath("/" + fileInfo.getRelativePath());
             if (task.uploadChunks == null) {
                 task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
             }
