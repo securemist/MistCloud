@@ -32,8 +32,7 @@ logging:
     com.mist.cloud.dao: DEBUG
 
 file:
-  base_path: /Users/securemist/Downloads/mist_cloud/File
-  download_path: /Users/securemist/Downloads/mist_cloud/download
+  base_path: /Users/securemist/Downloads/mist_cloud
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

@@ -20,10 +20,10 @@
         VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5}, #{originName}, NOW())
     </insert>
 
-    <update id="updateFileDuplicateTimes" parameterType="Long">
+    <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq">
         UPDATE sys_file
         SET duplicate_times = duplicate_times + 1
-        WHERE id = #{fileId}
+        WHERE id = #{id}
           AND deleted = 0
     </update>
 

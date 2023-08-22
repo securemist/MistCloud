@@ -9,12 +9,32 @@ import org.springframework.stereotype.Component;
  * @Datetime: 2023/7/18 15:11
  * @Description:
  */
-@Data
 @Component
 public class FileConfig {
     @Value("${file.base_path}")
-    private String base_path;
+    private String path;
 
-    @Value("${file.download_path}")
-    private String download_path;
+    /**
+     * 文件上传之后最终存储的位置
+     * @return
+     */
+    public String getBasePath() {
+        return path + "/file";
+    }
+
+    /**
+     * 文件下载时的临时存储位置
+     * @return
+     */
+    public String getDownloadPath() {
+        return path + "/download";
+    }
+
+    /**
+     * 文件上传时的临时存储位置
+     * @return
+     */
+    public String getUploadPath() {
+        return path + "/upload";
+    }
 }

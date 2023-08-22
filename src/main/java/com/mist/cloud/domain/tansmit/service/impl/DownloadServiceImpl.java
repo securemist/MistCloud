@@ -26,7 +26,7 @@ public class DownloadServiceImpl extends TransmitSupport implements IDownloadSer
     @Override
     public String downloadFolder(Long folderId) {
         String folderName = folderRepository.findFolder(folderId).getName();
-        String source = super.fileConfig.getDownload_path() + "/" + folderName;
+        String source = super.fileConfig.getDownloadPath() + "/" + folderName;
         recur(folderId, "");
 
         String zipSource = source + ".zip";
@@ -45,14 +45,14 @@ public class DownloadServiceImpl extends TransmitSupport implements IDownloadSer
         List<File> files = folderRepository.findFiles(folderId);
         Folder folder = folderRepository.findFolder(folderId);
 
-        String folderPath = fileConfig.getDownload_path() + currentPath + "/" + folder.getName();
+        String folderPath = fileConfig.getDownloadPath() + currentPath + "/" + folder.getName();
         try {
             // 创建文件夹
             FileUtils.createDirectory(Paths.get(folderPath));
             // 遍历文件列表，创建文件
             for (File file : files) {
                 String filePath = folderPath + "/" + file.getName();
-                String sourcePath = fileConfig.getBase_path() + "/" + fileRepository.findFile(file.getId()).getOriginName();
+                String sourcePath = fileConfig.getBasePath() + "/" + fileRepository.findFile(file.getId()).getOriginName();
 
                 Files.deleteIfExists(Paths.get(filePath));
                 // copy资源

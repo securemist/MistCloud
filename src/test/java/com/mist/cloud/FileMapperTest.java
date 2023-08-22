@@ -25,7 +25,7 @@ public class FileMapperTest {
     @Test
     public void test_insert() {
 
-        System.out.println(fileConfig.getBase_path());
+        System.out.println(fileConfig.getBasePath()()());
         System.out.println(2);
     }
 

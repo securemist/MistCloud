@@ -60,7 +60,7 @@ public class FileController {
 
         try {
             // 文件上传
-//            FileUtils.upload(file, fileConfig.getBase_path());
+//            FileUtils.upload(file, fileConfig.getBasePath()()());
             // 数据库写入数据
 //            fileService.insertFile(file, folderId);
         } catch (Exception e) {

@@ -50,7 +50,7 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
 
     @Override
     protected void writeChunk(ChunkVo chunk) throws IOException {
-        StringBuilder path = new StringBuilder(fileConfig.getBase_path());
+        StringBuilder path = new StringBuilder(fileConfig.getUploadPath());
 
         path = path.append("/").append(chunk.getIdentifier());
 
@@ -62,8 +62,8 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
         // 创建分片
         path = path.append("/").append(chunk.getFilename())
                 .append("-").append(chunk.getChunkNumber());
-        Files.deleteIfExists(Paths.get(path.toString())
-        );
+
+        Files.deleteIfExists(Paths.get(path.toString()));
         Files.createFile(Paths.get(path.toString()));
 
         // 写入文件

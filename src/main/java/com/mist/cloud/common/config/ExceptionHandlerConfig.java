@@ -87,8 +87,8 @@ public class ExceptionHandlerConfig {
                     return new FailedResult();
                 }
 
-                FileUtils.deleteDirectoryIfExist(Paths.get(fileConfig.getBase_path() + "/" + task.getFolderPath()));
-                Files.deleteIfExists(Paths.get(fileConfig.getBase_path() + "/" + task.getTargetFilePath()));
+                FileUtils.deleteDirectoryIfExist(Paths.get(fileConfig.getUploadPath() + "/" + task.getFolderPath()));
+                Files.deleteIfExists(Paths.get(fileConfig.getBasePath() + "/" + task.getTargetFilePath()));
 
                 // 从任务列表删除该任务
                 try {

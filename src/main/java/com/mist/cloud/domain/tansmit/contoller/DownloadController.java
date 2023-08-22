@@ -51,7 +51,7 @@ public class DownloadController {
             downloadService.downloadFile(fileId);
 
             // 读取文件
-            String filePath = fileConfig.getBase_path() + "/" + trueFileName;
+            String filePath = fileConfig.getBasePath() + "/" + trueFileName;
             byte[] bytes = Files.readAllBytes(Paths.get(filePath));
             ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
 

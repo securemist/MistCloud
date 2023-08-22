@@ -73,7 +73,12 @@ public class UploadController {
             Task task = uploadTaskContext.getTask(identifier);
             String relativePath = task.getRelativePath();
             parentId = task.getFolderId();
-            pathSet.add(relativePath);
+
+            // 排除掉单文件上传的情况
+            // 这里的 relativePath 总是会带有 / 的，即使是单文件上传，也会是 /filename，需要排除这种情况
+            if(relativePath.substring(1, relativePath.length()).contains("/")){
+                pathSet.add(relativePath);
+            }
         }
 
         // 创建所有的文件夹，拿到各个路径对应的文件夹 id
@@ -93,14 +98,17 @@ public class UploadController {
                  * 全部文件/java   |  全部文件/java/java.md
                  * relativePath.substring(0, relativePath.lastIndexOf('/'))
                  */
-                String relativePath = task.getRelativePath();
-                if (relativePath.substring(1, relativePath.length()).contains("/")) {
-                    task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
+                if(idMap.size() != 0){
+                    String relativePath = task.getRelativePath();
+                    if (relativePath.substring(1, relativePath.length()).contains("/")) {
+                        task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
+                    }
                 }
 
+
                 String fileName = task.getFileName();
-                String file = fileConfig.getBase_path() + "/" + task.getTargetFilePath();
-                String folder = fileConfig.getBase_path() + "/" + task.getFolderPath();
+                String file = fileConfig.getBasePath() + "/" + task.getTargetFilePath();
+                String folder = fileConfig.getUploadPath() + "/" + task.getFolderPath();
 
                 // 合并文件并且算出 md5 值
                 String newMD5 = "";

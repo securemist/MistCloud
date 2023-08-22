@@ -18,7 +18,7 @@ class MistCloudApplicationTests {
     private FileConfig fileConfig;
     @Test
     void contextLoads() {
-        System.out.println(fileConfig.getBase_path());
+        System.out.println(fileConfig.getBasePath());
     }
 
     @Resource

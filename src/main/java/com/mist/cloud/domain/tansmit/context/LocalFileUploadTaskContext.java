@@ -57,7 +57,7 @@ public class LocalFileUploadTaskContext extends AbstractUploadContext implements
         StringBuilder sb = new StringBuilder();
 
         String relativePath = chunk.getRelativePath();
-        sb.append(fileConfig.getBase_path());
+        sb.append(fileConfig.getBasePath());
         // 真实路径与文件名不相同，说明是上传的是文件夹中的文件，需要手动拼接文件夹路径
         if(!relativePath.equals(chunk.getFilename())){
             String[] splits = relativePath.split("/");

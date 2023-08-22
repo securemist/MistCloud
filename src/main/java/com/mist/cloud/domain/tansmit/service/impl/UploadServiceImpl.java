@@ -51,7 +51,6 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadSevice 
         fileRepository.addFile(file);
     }
 
-
     /**
      * "/全部文件/视频/满江红" => ["全部文件", "视频", "满江红"]
      *
@@ -63,6 +62,10 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadSevice 
     public Map<String, Long> uploadFolder(Long parentId, Set<String> pathSet) {
         List<List<String>> list = new ArrayList<>();
         HashSet<List<String>> cache = new HashSet<>();
+        if(pathSet == null || pathSet.size() == 0){
+            return new HashMap<>();
+        }
+
         int maxLen = 0;
         for (String path : pathSet) {
             List<String> list0 = Arrays.asList(path.substring(1, path.lastIndexOf('/')).split("/"));
