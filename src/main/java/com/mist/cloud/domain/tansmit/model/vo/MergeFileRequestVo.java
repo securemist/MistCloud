@@ -1,8 +1,8 @@
 package com.mist.cloud.domain.tansmit.model.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * @Author: securemist
@@ -12,7 +12,9 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class MergeFileRequestVo {
+@AllArgsConstructor
+@NoArgsConstructor
+public class MergeFileRequestVo implements Serializable {
     private String identifier;
     private String md5;
 }

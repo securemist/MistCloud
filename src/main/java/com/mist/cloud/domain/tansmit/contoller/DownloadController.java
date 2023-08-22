@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -37,49 +38,48 @@ public class DownloadController {
     @Resource
     private IFileRepository fileRepository;
 
-    // TODO 设计大文件下载，这里必须得使用流式下载
+
+    /**
+     * 使用  StreamingResponseBody 处理异步 IO 流，会把流异步写入到 response 的输出流中返回并且不会占用 Servlet 容器线程
+     */
+
     @GetMapping("/download")
     @ApiImplicitParam(name = "fileId", value = "文件(夹) id", dataTypeClass = Lang.class)
-    public ResponseEntity<ByteArrayResource> download(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<StreamingResponseBody> download2(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
         File file = fileRepository.findFile(fileId);
+        String filePath = "";
         // 文件下载
-        if(file != null){
+        if (file != null) {
             // 获取真实的文件名
             String trueFileName = file.getOriginName();
-
-            // 并添加下载记录
+            // 文件下载
             downloadService.downloadFile(fileId);
-
-            // 读取文件
-            String filePath = fileConfig.getBasePath() + "/" + trueFileName;
-            byte[] bytes = Files.readAllBytes(Paths.get(filePath));
-            ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
-
-            // 设置响应头，指定文件名和类型 文件名由前段控制
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentDispositionFormData("attachment", trueFileName);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-
-            // 返回响应实体
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(byteArrayResource);
+            filePath = fileConfig.getBasePath() + "/" + trueFileName;
         } else {
             // 文件夹下载
-            String zipSource = downloadService.downloadFolder(fileId);
-
-            byte[] bytes = Files.readAllBytes(Paths.get(zipSource));
-            ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
-
-            // 设置响应头，指定文件名和类型 文件名由前段控制
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentDispositionFormData("attachment", zipSource.substring(zipSource.lastIndexOf('/'), zipSource.length()));
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-
-            // 返回响应实体
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(byteArrayResource);
+            filePath = downloadService.downloadFolder(fileId);
         }
+
+        java.io.File fileSource = new java.io.File(filePath);
+
+        // 设置响应头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", fileSource.getName());
+
+        // 创建 StreamingResponseBody
+        StreamingResponseBody responseBody = outputStream -> {
+            try {
+                // 使用 Files.copy 方法将文件内容写入输出流
+                Files.copy(fileSource.toPath(), outputStream);
+            } catch (IOException e) {
+                // 处理异常
+                e.printStackTrace();
+            }
+        };
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(responseBody);
     }
 }
