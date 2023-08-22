@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mist.cloud.dao.FileMapper">
+<mapper namespace="com.mist.cloud.infrastructure.dao.FileMapper">
     <resultMap id="fileMap" type="File">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
@@ -15,21 +15,19 @@
         <result column="md5" property="md5"/>
     </resultMap>
 
-
-    <insert id="addFile" parameterType="File">
+    <insert id="insertFile" parameterType="File">
         INSERT INTO sys_file(id, name, size, type, folder_id, md5, origin_name, create_time)
         VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5}, #{originName}, NOW())
     </insert>
 
-    <update id="updateFileDuplicateTimes" parameterType="FileSelectReq">
+    <update id="updateFileDuplicateTimes" parameterType="Long">
         UPDATE sys_file
         SET duplicate_times = duplicate_times + 1
-        WHERE name = #{fileName}
-          AND folder_id = #{folderId}
+        WHERE id = #{fileId}
           AND deleted = 0
     </update>
 
-    <update id="renameFile" parameterType="FileSelectReq">
+    <update id="renameFile" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq">
         UPDATE sys_file
         SET name = #{fileName}
         WHERE id = #{id}
@@ -42,35 +40,28 @@
         WHERE id = #{id}
     </update>
 
-    <update id="copyFile">
-        INSERT INTO sys_file (id, name, size, type, folder_id, md5, origin_name)
-        SELECT #{newFileId}, name, size, type, #{targetFolderId}, md5, origin_name
-        FROM sys_file
-        WHERE id = #{fileId} AND deleted = 0;
-    </update>
-
     <update id="realDeleteFile">
         DELETE
         FROM sys_file
         WHERE id = #{id}
     </update>
 
-    <select id="getFiles" parameterType="FileSelectReq" resultMap="fileMap">
+    <update id="copyFile" parameterType="com.mist.cloud.domain.file.model.entity.FileCopyReq">
+        INSERT INTO sys_file (id, name, size, type, folder_id, md5, origin_name)
+        SELECT #{newFileId}, name, size, type, #{targetFolderId}, md5, origin_name
+        FROM sys_file
+        WHERE id = #{fileId} AND deleted = 0;
+    </update>
+
+    <select id="selectFileById" resultMap="fileMap">
         SELECT *
         FROM sys_file
-        WHERE folder_id = #{folderId}
+        WHERE id = #{id}
           AND deleted = 0
     </select>
 
-    <select id="fileExist" parameterType="FileSelectReq" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM sys_file
-        WHERE folder_id = #{folderId}
-          AND name = #{fileName}
-          AND deleted = 0
-    </select>
 
-    <select id="getSingleFile" parameterType="FileSelectReq" resultMap="fileMap">
+    <select id="selectFileByObj" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq" resultMap="fileMap">
         SELECT *
         FROM sys_file
         <where>
@@ -87,8 +78,8 @@
         AND deleted = 0
     </select>
 
-    <select id="getFileIds" resultType="java.lang.Long">
-        SELECT id
+    <select id="selectFilesByFolderId" resultMap="fileMap">
+        SELECT *
         FROM sys_file
         WHERE folder_id = #{folderId}
           AND deleted = 0

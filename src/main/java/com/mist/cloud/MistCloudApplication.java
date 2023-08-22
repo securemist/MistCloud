@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.mist.cloud.dao")
+@MapperScan("com.mist.cloud.infrastructure.dao")
 public class MistCloudApplication {
 
     public static void main(String[] args) {

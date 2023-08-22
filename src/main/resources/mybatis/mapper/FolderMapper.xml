@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mist.cloud.dao.FolderMapper">
+<mapper namespace="com.mist.cloud.infrastructure.dao.FolderMapper">
 
     <resultMap id="folderMap" type="Folder">
         <result column="id" property="id"/>
@@ -13,6 +13,89 @@
         <result column="deleted" property="deleted"/>
         <result column="deletede_time" property="deletedTime"/>
     </resultMap>
+
+
+
+    <select id="selectFolderById" resultMap="folderMap">
+        SELECT *
+        FROM sys_folder
+          WHERE id = #{id}
+          AND deleted = 0
+    </select>
+
+
+    <select id="getFolderTree" resultMap="folderMap" parameterType="java.lang.Long">
+        --  这个得到是一个 id 列表
+        SET @ids =  get_chlid_lists(#{folderId});
+
+        --  让下面这个查询得到的结果是按照 @ids 默认顺序排序的
+        SELECT id, name, parent_id
+        FROM sys_folder
+        WHERE FIND_IN_SET(id, @ids)
+        AND deleted = 0
+        ORDER BY FIND_IN_SET(id, @ids);
+    </select>
+
+
+    <select id="getFolderPath" resultMap="folderMap">
+        SELECT id, name, parent_id
+        FROM sys_folder
+        WHERE find_in_set(id, get_parent_list(#{folderId}))
+    </select>
+
+
+    <select id="selectFilesByFolderId" resultMap="folderMap">
+        SELECT *
+        FROM sys_file
+        WHERE folder_id = #{folderId}
+          AND deleted = 0
+    </select>
+
+    <select id="selectSubFolders" parameterType="com.mist.cloud.domain.file.model.entity.FolderSelectReq" resultMap="folderMap">
+        SELECT *
+        FROM sys_folder
+        WHERE user_id = #{userId}
+          AND parent_id = #{parentId}
+          AND deleted = 0
+    </select>
+
+
+    <insert id="createFolder">
+        INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
+        VALUES (#{id}, #{userId}, #{folderName}, #{parentId}, NOW(), NOW());
+    </insert>
+
+
+    <update id="renameFolder" parameterType="com.mist.cloud.domain.file.model.entity.FolderSelectReq">
+        UPDATE sys_folder
+        SET name = #{folderName}
+        WHERE user_id = #{userId}
+          AND id = #{id}
+          AND deleted = 0
+    </update>
+
+
+    <update id="copyFolder" parameterType="com.mist.cloud.domain.file.model.entity.FolderCopyReq">
+        INSERT INTO sys_folder (id, name, folder_size, parent_id, user_id)
+        SELECT #{newFolderId}, name, folder_size, #{targetFolderId}, user_id
+        FROM sys_folder
+        WHERE id = #{folderId}
+          AND deleted = 0;
+    </update>
+
+
+    <update id="realDeleteFolderRecursive" parameterType="java.lang.Long">
+        <![CDATA[
+        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
+
+        SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
+
+        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @folder_ids);
+
+        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @file_ids);
+        ]]>
+    </update>
+
 
     <update id="deleteFolderRecursive" parameterType="java.lang.Long">
         <![CDATA[
@@ -33,145 +116,12 @@
     </update>
 
 
-    <select id="selectFolders" parameterType="FolderSelectReq" resultMap="folderMap">
-        SELECT *
-        FROM sys_folder
-        WHERE user_id = #{userId}
-          AND parent_id = #{parentId}
-          AND deleted = 0
-    </select>
-
-    <select id="selectSingleFolder" parameterType="FolderSelectReq" resultMap="folderMap">
-        SELECT *
-        FROM sys_folder
-        WHERE user_id = #{userId}
-          AND id = #{id}
-          AND deleted = 0
-    </select>
-
-    <select id="folderExist" parameterType="FolderSelectReq" resultType="java.lang.Integer">
-        SELECT COUNT(id) as count
-        FROM sys_folder
-        WHERE user_id = #{userId}
-          AND parent_id = #{parentId}
-          AND `name` = #{folderName}
-          AND deleted = 0
-    </select>
-
-    <select id="getRootDirFolderSize" parameterType="FolderSelectReq" resultType="java.lang.Long">
-        SELECT folder_size
-        FROM sys_folder
-        WHERE user_id = #{userId}
-          AND parent_id = 0
-          AND deleted = 0
-    </select>
-
-    <select id="checkParentIdExist" parameterType="FolderSelectReq" resultType="java.lang.Integer">
-        SELECT COUNT(id)
-        FROM sys_folder
-        WHERE user_id = #{userId}
-          AND id = #{parentId}
-    </select>
-
-
-    <select id="getFolderTree" resultMap="folderMap" parameterType="java.lang.Long">
-        --  这个得到是一个 id 列表
-        SET
-        @ids =  get_chlid_lists(
-        #{roorDir}
-        );
-
-        --  让下面这个查询得到的结果是按照 @ids 默认顺序排序的
-        SELECT id, name, parent_id
-        FROM sys_folder
-        WHERE FIND_IN_SET(id, @ids)
-        AND deleted = 0
-        ORDER BY FIND_IN_SET(id, @ids);
-    </select>
-
-
-    <select id="getFolderPath" resultMap="folderMap">
-        SELECT id, name, parent_id
-        FROM sys_folder
-        WHERE find_in_set(id, get_parent_list(#{folderId}))
-    </select>
-
-    <select id="existFile" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM sys_file
-        WHERE name = (SELECT name FROM sys_file WHERE id = #{fileId} AND deleted = 0)
-          AND folder_id = #{folderId}
-          AND deleted = 0;
-    </select>
-
-
-    <select id="existFolder" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM sys_folder
-        WHERE name = (SELECT name FROM sys_folder WHERE id = #{folderId})
-          AND parent_id = #{targetFolderId}
-          AND deleted = 0;
-    </select>
-
-    <select id="getChildNums" resultType="java.lang.Integer">
-        SELECT SUM(count) AS total_count FROM (
-          SELECT COUNT(id) AS count FROM  sys_file WHERE folder_id = #{folderId}
-          UNION ALL
-          SELECT COUNT(id) AS count FROM  sys_folder WHERE parent_id = #{folderId}
-         )
-          AS combined_counts;
-    </select>
-
-
-    <select id="getChildFolderIds" resultType="java.lang.Long">
-        SELECT id
-        FROM sys_folder
-        WHERE parent_id = #{folderId}
-          AND deleted = 0
-    </select>
-
-
-    <insert id="createFolder">
-        INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
-        VALUES (#{id}, #{userId}, #{folderName}, #{parentId}, NOW(), NOW());
-    </insert>
-
-
-    <update id="renameFolder" parameterType="FolderSelectReq">
-        UPDATE sys_folder
-        SET name = #{folderName}
-        WHERE user_id = #{userId}
-          AND id = #{id}
-          AND deleted = 0
-    </update>
-
-
-    <update id="copyFolder">
-        INSERT INTO sys_folder (id, name, folder_size, parent_id, user_id)
-        SELECT #{newFolderId}, name, folder_size, #{targetFolderId}, user_id
-        FROM sys_folder
-        WHERE id = #{folderId}
-          AND deleted = 0;
-    </update>
-
-
-    <update id="realDeleteFolderRecursive">
-        <![CDATA[
-        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
-
-        SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
-
-        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @folder_ids);
-
-        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @file_ids);
-        ]]>
-    </update>
-
-    <update id="createFolders" parameterType="FolderSelectReq">
+    <update id="createFolders" parameterType="com.mist.cloud.domain.file.model.entity.FolderBrief">
         <foreach collection="list" item="item" separator=";">
             INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
             VALUES
-            (#{item.id}, #{item.userId}, #{item.folderName}, #{item.parentId}, NOW(), NOW())
+            (#{item.id}, #{item.userId}, #{item.name}, #{item.parentId}, NOW(), NOW())
         </foreach>
     </update>
+
 </mapper>

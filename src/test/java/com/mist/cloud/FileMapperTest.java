@@ -1,8 +1,7 @@
 package com.mist.cloud;
 
-import com.mist.cloud.config.FileConfig;
-import com.mist.cloud.dao.FileMapper;
-import com.mist.cloud.model.po.File;
+import com.mist.cloud.common.config.FileConfig;
+import com.mist.cloud.infrastructure.dao.FileMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

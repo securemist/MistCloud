@@ -21,9 +21,9 @@ spring:
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
-  type-aliases-package: com.mist.cloud.model
+  type-aliases-package: com.mist.cloud.infrastructure.DO
   configuration:
-#    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 

@@ -1,17 +1,6 @@
 package com.mist.cloud.common.result;
 
-import com.mist.cloud.common.Constants;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Author: securemist

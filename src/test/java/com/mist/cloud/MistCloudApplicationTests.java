@@ -1,7 +1,7 @@
 package com.mist.cloud;
 
-import com.mist.cloud.config.FileConfig;
-import com.mist.cloud.service.IUploadSevice;
+import com.mist.cloud.common.config.FileConfig;
+import com.mist.cloud.domain.tansmit.service.IUploadSevice;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
