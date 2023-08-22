@@ -2,6 +2,7 @@ package com.mist.cloud.service;
 
 import com.mist.cloud.config.context.Task;
 import com.mist.cloud.exception.file.FileCommonException;
+import com.mist.cloud.model.po.File;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
@@ -28,6 +29,8 @@ public interface IFileService {
      * @return 真实的文件名
      */
     String downloadAndGetName(Long fileId);
+
+    File getFile(Long fileId);
 
     /**
      * 文件重命名

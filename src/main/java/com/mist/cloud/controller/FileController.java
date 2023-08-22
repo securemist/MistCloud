@@ -83,7 +83,8 @@ public class FileController {
         return new SuccessResult(Constants.Response.FILE_UPLOAD_SUCCESS.getMsg(), res);
     }
 
-    @GetMapping("/file/download")
+    // TODO 设计大文件下载，这里必须得使用流式下载
+    @GetMapping("/filedownload")
     @ApiImplicitParam(name = "fileId", value = "文件 id", dataTypeClass = Lang.class)
     public ResponseEntity<ByteArrayResource> download(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
         // 获取真实的文件名

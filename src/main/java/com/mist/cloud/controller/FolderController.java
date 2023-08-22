@@ -18,16 +18,22 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Lang;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 
 /**
@@ -68,6 +74,26 @@ public class FolderController {
     public Object getCapacityInfo() {
         UserCapacityDto userCapacityDto = folderService.getCapacityInfo();
         return new SuccessResult(userCapacityDto);
+    }
+
+    @GetMapping("/folder/download")
+    @ApiImplicitParam(name = "folder", value = "文件夹 id", dataTypeClass = Lang.class)
+    public ResponseEntity<ByteArrayResource> download(@RequestParam("folderId") Long folderId, HttpServletResponse response) throws IOException {
+        String zipSource = folderService.downloadFolder(folderId);
+
+//        // 读取文件
+        byte[] bytes = Files.readAllBytes(Paths.get(zipSource));
+        ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
+
+        // 设置响应头，指定文件名和类型 文件名由前段控制
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", zipSource.substring(zipSource.lastIndexOf('/'), zipSource.length()));
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        // 返回响应实体
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(byteArrayResource);
     }
 
     @GetMapping(value = "/folder/rename")

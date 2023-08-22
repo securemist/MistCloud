@@ -9,7 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MistCloudApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MistCloudApplication.class, args);
+        try{
+            SpringApplication.run(MistCloudApplication.class, args);
+        } catch (Throwable e){
+            e.printStackTrace();
+        }
     }
 
 }

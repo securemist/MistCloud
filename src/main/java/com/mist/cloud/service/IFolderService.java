@@ -3,6 +3,7 @@ package com.mist.cloud.service;
 import com.mist.cloud.exception.file.FolderException;
 import com.mist.cloud.model.dto.FolderDto;
 import com.mist.cloud.model.dto.UserCapacityDto;
+import com.mist.cloud.model.po.Folder;
 import com.mist.cloud.model.pojo.FolderDetail;
 import com.mist.cloud.model.tree.FolderTreeNode;
 import com.mist.cloud.service.impl.UploadServiceImpl;
@@ -32,4 +33,8 @@ public interface IFolderService {
 
     void createFolders(List<UploadServiceImpl.Folder> folderList);
 
+
+    String downloadFolder(Long folderId);
+
+    Folder getFolder(Long folderId);
 }

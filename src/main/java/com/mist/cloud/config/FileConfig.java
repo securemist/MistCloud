@@ -14,4 +14,7 @@ import org.springframework.stereotype.Component;
 public class FileConfig {
     @Value("${file.base_path}")
     private String base_path;
+
+    @Value("${file.download_path}")
+    private String download_path;
 }

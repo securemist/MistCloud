@@ -5,15 +5,12 @@ import com.mist.cloud.config.context.Task;
 import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.dao.FolderMapper;
 import com.mist.cloud.exception.file.FileCommonException;
-import com.mist.cloud.exception.file.FileException;
-import com.mist.cloud.exception.RequestParmException;
 import com.mist.cloud.model.po.File;
 import com.mist.cloud.model.pojo.FileSelectReq;
 import com.mist.cloud.service.IFileService;
 import com.mist.cloud.utils.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -161,20 +158,22 @@ public class FileServiceImpl implements IFileService {
 
     @Override
     public String downloadAndGetName(Long fileId) {
+        File file = getFile(fileId);
+        // TODO 添加下载文件的记录
+        return file.getOriginName();
+    }
+
+    @Override
+    public File getFile(Long fileId){
         FileSelectReq fileSelectReq = FileSelectReq
                 .builder()
                 .id(fileId)
                 .build();
 
         File rFile = fileMapper.getSingleFile(fileSelectReq);
-        if (rFile == null) { // 传入的文件 id 有误
-            throw new RequestParmException();
-        }
-
-        // TODO 添加下载文件的记录
-
-        return rFile.getOriginName();
+        return rFile;
     }
+
 
     @Override
     public void renameFile(Long fileId, String fileName) {

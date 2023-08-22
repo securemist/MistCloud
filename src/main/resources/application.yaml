@@ -17,7 +17,7 @@ spring:
       max-request-size: 1024MB
 
 # swagger地址
-# localhost:9000/swagger-ui/index.html#/
+# localhost:8888/swagger-ui/index.html#/
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
@@ -29,10 +29,11 @@ mybatis:
 
 logging:
   level:
-    com.mist.cloud.dao : DEBUG
+    com.mist.cloud.dao: DEBUG
 
 file:
-  base_path: /Users/securemist/Downloads/File
+  base_path: /Users/securemist/Downloads/mist_cloud/File
+  download_path: /Users/securemist/Downloads/mist_cloud/download
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

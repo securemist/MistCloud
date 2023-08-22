@@ -1,6 +1,9 @@
 package com.mist.cloud.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.io.FileUtil;
 import com.mist.cloud.common.Constants;
+import com.mist.cloud.config.FileConfig;
 import com.mist.cloud.config.IdGenerator;
 import com.mist.cloud.dao.FileMapper;
 import com.mist.cloud.dao.FolderMapper;
@@ -16,11 +19,17 @@ import com.mist.cloud.model.pojo.FolderDetail;
 import com.mist.cloud.model.pojo.FolderSelectReq;
 import com.mist.cloud.model.tree.FolderTreeNode;
 import com.mist.cloud.model.tree.SubFolder;
+import com.mist.cloud.service.IFileService;
 import com.mist.cloud.service.IFolderService;
 import com.mist.cloud.utils.DateTimeUtils;
+import com.mist.cloud.utils.FileUtils;
+import com.mist.cloud.utils.ZipUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +48,10 @@ public class FolderServiceImpl implements IFolderService {
     private FileMapper fileMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private FileConfig fileConfig;
+    @Resource
+    private IFileService fileService;
 
     @Override
     public FolderDto createFolder(Long parentId, String folderName) throws FolderException {
@@ -113,7 +126,7 @@ public class FolderServiceImpl implements IFolderService {
          * 这个 sql 放在 doc 目录下了
          */
 
-        if(realDelete){
+        if (realDelete) {
             folderMapper.realDeleteFolderRecursive(folderId);
         } else {
             folderMapper.deleteFolderRecursive(folderId);
@@ -214,6 +227,55 @@ public class FolderServiceImpl implements IFolderService {
         folderMapper.createFolders(folders);
     }
 
+    @Override
+    public String downloadFolder(Long folderId) {
+        String folderName = getFolder(folderId).getName();
+        String source = fileConfig.getDownload_path() + "/" + folderName;
+        recur(folderId, "");
+
+
+        String zipSource = source + ".zip";
+
+        ZipUtils.zipFolder(source, zipSource);
+        return zipSource;
+    }
+
+    @Override
+    public Folder getFolder(Long folderId) {
+        FolderSelectReq folderSelectReq = FolderSelectReq.builder()
+                .userId(Long.parseLong(String.valueOf(StpUtil.getLoginId())))
+                .id(folderId)
+                .build();
+        Folder folder = folderMapper.selectSingleFolder(folderSelectReq);
+        return folder;
+    }
+
+
+    public void recur(Long folderId, String currentPath) {
+        FolderDetail root = getFiles(folderId);
+        String folderPath = fileConfig.getDownload_path() + currentPath + "/" + root.getName();
+        try {
+            // 创建文件夹
+            FileUtils.createDirectory(Paths.get(folderPath));
+            // 创建文件
+            for (File file : root.getFileList()) {
+                String filePath = folderPath + "/" + file.getName();
+                String sourcePath = fileConfig.getBase_path() + "/" + fileService.getFile(file.getId()).getOriginName();
+
+                Files.deleteIfExists(Paths.get(filePath));
+                // copy资源
+                Files.copy(Paths.get(sourcePath), Paths.get(filePath));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //递归遍历子文件夹
+        for (Folder folder : root.getFolderList()) {
+            recur(folder.getId(), currentPath + "/" + root.getName());
+        }
+    }
+
 
     // TODO 这里递归操作数据库，暂时没想到更好的方法
     private void copyFolderRecur(Long folderId, Long targetFolderId) {
@@ -259,7 +321,7 @@ public class FolderServiceImpl implements IFolderService {
 
         Long currentId = currentNode.id;
 
-        folderTreeVoList= folderTreeVoList.stream()
+        folderTreeVoList = folderTreeVoList.stream()
                 .map(folder -> {
                     if (folder.getParentId().equals(currentId)) {
                         currentNode.children.add(new FolderTreeNode(folder.getId(), folder.getName()));

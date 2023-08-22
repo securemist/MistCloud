@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -136,7 +133,7 @@ public class FileUtils {
                         try {
                             //以追加的形式写入文件
                             Files.write(Paths.get(targetFile), Files.readAllBytes(path), StandardOpenOption.APPEND);
-                            //合并后删除该块`
+                            //合并后删除该块
                             Files.delete(path);
                         } catch (IOException e) {
                             log.error(e.getMessage(), e);
@@ -184,5 +181,32 @@ public class FileUtils {
                         .forEach(File::delete);
             }
         }
+    }
+
+    /**
+     * 创建一个目录
+     * @param folderPath
+     *
+     * 如果目录已存在就全部删除之后在创建
+     */
+    public static void createDirectory(Path path) throws IOException {
+        if(Files.exists(path)){
+            deleteDirectory(path);
+        }
+
+        Files.createDirectory(path);
+
+    }
+
+    public static void deleteDirectory(Path path) throws IOException {
+        Files.walk(path)
+                .sorted((p1, p2) -> -p1.compareTo(p2))
+                .forEach(p -> {
+                    try {
+                        Files.delete(p);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
