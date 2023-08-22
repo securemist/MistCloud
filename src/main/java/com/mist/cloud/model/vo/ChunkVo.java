@@ -16,10 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @Builder
 public class ChunkVo {
-    /**
-     * 唯一标识
-     */
-    private String uid;
 
     /**
      * 当前文件块，从1开始
@@ -54,6 +50,11 @@ public class ChunkVo {
      * 真实路径
      */
     private String relativePath;
+
+    /**
+     * 文件夹 id
+     */
+    private Long folderId;
 
     private MultipartFile file;
 }

@@ -24,12 +24,12 @@ mybatis:
   type-aliases-package: com.mist.cloud.model
   configuration:
 #    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 
 logging:
   level:
-    com.mist.cloud.dao : ERROR
+    com.mist.cloud.dao : DEBUG
 
 file:
   base_path: /Users/securemist/Downloads/File

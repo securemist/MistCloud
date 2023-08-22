@@ -46,17 +46,9 @@ public class Task {
     // 文件真实路径，主要适用于文件夹上传
     private String relativePath;
 
-    // 是否已经被 setInfo
-    private boolean setInfo;
-
     public Task(String identifier, Integer chunkSize) {
         this.identifier = identifier;
         this.uploadChunks = new boolean[chunkSize + 1];
-        this.startTime = new Date();
-    }
-
-    public Task(String identifier) {
-        this.identifier = identifier;
         this.startTime = new Date();
     }
 

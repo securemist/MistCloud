@@ -53,42 +53,6 @@ public class LocalFileUploadTaskContext extends AbstractUploadContext implements
 
     }
 
-    @Override
-    public void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException {
-        Map<String, Task> uploadContext = getUploadContext();
-
-        for (FileInfoVo fileInfo : fileInfoList) {
-            // 文件存储的真实路径   base_path/path.../filename  不带有base_path
-            StringBuilder path = new StringBuilder("/");
-
-            String relativePath = fileInfo.getRelativePath();
-            // 文件夹中的文件
-            if (!relativePath.equals(fileInfo.getFileName())) {
-                String substring = relativePath.substring(0, relativePath.lastIndexOf('/'));
-                path.append(substring);
-            }
-
-            // 设置 task 有关信息，如果获取不到 task 会自动创建(线程安全)
-            Task task = getTask(fileInfo.getIdentifier());
-            task.setFileName(fileInfo.getFileName());
-            task.setMD5(fileInfo.getMd5());
-            task.setFileType(fileInfo.getType());
-            task.setFolderPath(path + "/" + fileInfo.getIdentifier());
-            task.setTargetFilePath(path + "/" + fileInfo.getFileName());
-            task.setFolderId(fileInfo.getFolderId());
-            task.setFileSize(fileInfo.getTotalSize());
-            task.setSetInfo(true);
-            task.setRelativePath(path.toString());
-            if (task.uploadChunks == null) {
-                task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
-            }
-
-            uploadContext.put(fileInfo.getIdentifier(), task);
-        }
-
-        setUploadContext(uploadContext);
-    }
-
 //    @Override
     public String generatePath(ChunkVo chunk) throws FileUploadException {
         StringBuilder sb = new StringBuilder();
@@ -131,7 +95,6 @@ public class LocalFileUploadTaskContext extends AbstractUploadContext implements
         if (task == null) {
             synchronized (LocalFileUploadTaskContext.class) {
                 if (task == null) {
-                    task = new Task(identifier);
                     uploadContext.put(identifier, task);
                 }
             }

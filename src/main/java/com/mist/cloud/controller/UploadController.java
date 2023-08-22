@@ -10,6 +10,7 @@ import com.mist.cloud.config.context.UploadTaskContext;
 import com.mist.cloud.exception.file.FileUploadException;
 import com.mist.cloud.model.vo.FileInfoVo;
 import com.mist.cloud.model.vo.ChunkVo;
+import com.mist.cloud.model.vo.MergeFileRequestVo;
 import com.mist.cloud.service.IChunkService;
 import com.mist.cloud.service.IFileService;
 import com.mist.cloud.service.IFolderService;
@@ -25,9 +26,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.mist.cloud.utils.FileUtils.*;
 
@@ -61,7 +62,7 @@ public class UploadController {
 
     // 检验给分片是否已经上传 为什么不用 Result 返回，是前端这里只能根据 http 状态码判断结果
     @GetMapping("/chunk")
-    public void checkChunk(ChunkVo chunk, HttpServletResponse response) {
+    public void checkChunk(ChunkVo chunk, HttpServletResponse response) throws FileUploadException {
         Task task = uploadTaskContext.getTask(chunk.getIdentifier());
 
         if (task == null || (task.uploadChunks != null && !task.uploadChunks[chunk.getChunkNumber()])) {
@@ -72,14 +73,20 @@ public class UploadController {
     }
 
     @PostMapping("/mergeFile")
-    public Result mergeFile(@RequestBody String[] identifierList) throws FileUploadException, IOException {
+    public Result mergeFile(@RequestBody List<MergeFileRequestVo> mergeInfoList) throws FileUploadException, IOException {
+
+        HashMap<String, String> identifierMap = new HashMap<>();
+        for (MergeFileRequestVo mergeFileRequestVo : mergeInfoList) {
+            identifierMap.put(mergeFileRequestVo.getIdentifier(),mergeFileRequestVo.getMd5());
+        }
+
         Map<String, Long> idMap = null;
         // 上传文件夹的情况
-        if (identifierList.length != 1) {
+        if (identifierMap.size() != 1) {
             // 保存文件所有的路径，后续根据这个路径在数据库构造文件夹结构
             Set<String> pathSet = new HashSet<>();
             Long parentId = null; // 一次上传文件夹的请求中的所有文件的 foldeId 都是同一个
-            for (String identifier : identifierList) {
+            for (String identifier : identifierMap.keySet()) {
                 Task task = uploadTaskContext.getTask(identifier);
                 String relativePath = task.getRelativePath();
                 parentId = task.getFolderId();
@@ -91,16 +98,16 @@ public class UploadController {
         }
 
 
-        for (String identifier : identifierList) {
+        for (String identifier : identifierMap.keySet()) {
             Task task = uploadTaskContext.getTask(identifier);
 
             /**
-             * 更新 task 列表中每个文件的 folderId
-             * 排除只上传文件的情况
+             * 在创建文件夹的过程中已经创建了文件夹，生成了新的文件夹 id，需要替换掉 task 中原油的 folderId
+             * 上传文件不需要考虑这种情况
              * task.setRelativePath("/" + fileInfo.getRelativePath());
              *
              * idMap 中的路径是不带有文件名的，relativePath带有文件名，获取生成的文件夹 id 需要适当调整
-             * 全部文件/javad   |  全部文件/java/java.md
+             * 全部文件/java   |  全部文件/java/java.md
              * relativePath.substring(0, relativePath.lastIndexOf('/'))
              */
             String relativePath = task.getRelativePath();
@@ -112,6 +119,7 @@ public class UploadController {
             String file = fileConfig.getBase_path() + "/" + task.getTargetFilePath();
             String folder = fileConfig.getBase_path() + "/" + task.getFolderPath();
 
+            // 合并文件并且算出 md5 值
             String newMD5 = "";
             try {
                 newMD5 = merge(file, folder, fileName);
@@ -119,12 +127,16 @@ public class UploadController {
                 throw new FileUploadException("file merge error in IO", identifier, e);
             }
 
-            if (!newMD5.equals(task.getMD5())) {
+            // 校验 md5 值
+            String md5 = identifierMap.get(identifier);
+
+            if (!md5 .equals(newMD5)) {
                 throw new FileUploadException("file merge error because md5 is not equal", identifier);
             }
 
             uploadTaskContext.completeTask(identifier);
             // 数据库添加记录
+            task.setMD5(md5);
             uploadSevice.addFile(task);
             log.info("文件上传成功, 文件位置: {}", file);
         }
@@ -133,16 +145,16 @@ public class UploadController {
     }
 
 
-    @PostMapping("/info")
-    public Result getInfo(@RequestBody FileInfoVo[] fileInfoList) throws FileUploadException {
-        uploadTaskContext.setTaskInfo(fileInfoList);
-        // 将拿到的 md5 值交给任务队列
-        return new SuccessResult();
-    }
-
-
     @GetMapping("/cancel")
     public Result cancel(String identifier) throws FileUploadException, IOException {
+        // 文件上传之前的取消上传，发生在文件校验时
+        if (identifier == null) {
+            return new SuccessResult();
+        }
+
+        // 文件上传过程中的取消上传
+        Task task = uploadTaskContext.getTask(identifier);
         throw new FileUploadException("取消上传", identifier);
     }
+
 }

@@ -41,13 +41,26 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         }
 
         Map<String, Task> uploadContext = getUploadContext();
-        Task task = getTask(chunk.getIdentifier());
+
+        Task task = null;
+        try {
+            task = getTask(chunk.getIdentifier());
+        } catch (FileUploadException e) {
+        }
 
         // 在第一次创建 task 的时候并不会创建 uploadChunks 数组，需要在上传分片的时候创建
-        if (task.uploadChunks == null) {
+        if (task == null) {
             synchronized (AbstractUploadContext.class) {
-                if (task.uploadChunks == null) {
-                    task.uploadChunks = new boolean[chunk.getTotalChunks() + 1];
+                if (task == null) {
+                    task = new Task(chunk.getIdentifier(), chunk.getTotalChunks());
+                    task.setFileName(chunk.getFilename());
+
+                    task.setFolderPath(chunk.getIdentifier());
+                    task.setTargetFilePath(chunk.getFilename());
+
+                    task.setFolderId(chunk.getFolderId());
+                    task.setFileSize(chunk.getTotalSize());
+                    task.setRelativePath("/" + chunk.getRelativePath());
                 }
             }
         }
@@ -60,16 +73,10 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
     @Override
     public void completeTask(String identifier) throws FileUploadException {
-        Task task = getUploadContext().get(identifier);
-
-        if (task == null) {
-            throw new FileUploadException("file upload complete error because task is null, file identifier ", identifier);
-        }
-
-        // 上传成功
         Map<String, Task> uploadContext = getUploadContext();
-        uploadContext.remove(identifier);
+        Task task = getTask(identifier);
 
+        uploadContext.remove(identifier);
         setUploadContext(uploadContext);
     }
 
@@ -78,52 +85,10 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
     public void cancelTask(String identifier) throws FileUploadException {
 
         Map<String, Task> uploadContext = getUploadContext();
-        Task task = uploadContext.remove(identifier);
+        Task task = getTask(identifier);
 
-        // 取消上传的请求，获取不到上传任务信息
-        if (task == null) {
-            throw new FileUploadException("cancel upload task error beacuse task is null", identifier);
-        }
-
+        uploadContext.remove(identifier);
         setUploadContext(uploadContext);
     }
 
-    @Override
-    public abstract void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException;
-
-//    @Override
-//    public void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException {
-//        Map<String, Task> uploadContext = getUploadContext();
-//
-//        for (FileInfoVo fileInfo : fileInfoList) {
-//            // 文件存储的真实路径   base_path/path.../filename  不带有base_path
-//            StringBuilder path = new StringBuilder("/");
-//
-//            String relativePath = fileInfo.getRelativePath();
-//            // 文件夹中的文件
-//            if (!relativePath.equals(fileInfo.getFileName())) {
-//                String substring = relativePath.substring(0, relativePath.lastIndexOf('/'));
-//                path.append(substring);
-//            }
-//
-//            // 设置 task 有关信息，如果获取不到 task 会自动创建(线程安全)
-//            Task task = getTask(fileInfo.getIdentifier());
-//            task.setFileName(fileInfo.getFileName());
-//            task.setMD5(fileInfo.getMd5());
-//            task.setFileType(fileInfo.getType());
-//            task.setFolderPath(path + "/" +  fileInfo.getIdentifier());
-//            task.setTargetFilePath(path + "/" + fileInfo.getFileName());
-//            task.setFolderId(fileInfo.getFolderId());
-//            task.setFileSize(fileInfo.getTotalSize());
-//            task.setSetInfo(true);
-//            task.setRelativePath(path.toString());
-//            if (task.uploadChunks == null) {
-//                task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
-//            }
-//
-//            uploadContext.put(fileInfo.getIdentifier(), task);
-//        }
-//
-//        setUploadContext(uploadContext);
-//    }
 }

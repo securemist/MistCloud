@@ -81,7 +81,14 @@ public class ExceptionHandlerConfig {
 
 
             // 删除上传过程产生的所有文件
-            Task task = uploadTaskContext.getTask(identifier);
+            Task task = null;
+            try {
+                task = uploadTaskContext.getTask(identifier);
+            } catch (FileUploadException ex) {
+                return new FailedResult();
+            }
+
+            // 这种情况发生与
             FileUtils.deleteDirectoryIfExist(Paths.get(task.getFolderPath()));
             Files.deleteIfExists(Paths.get(task.getTargetFilePath()));
 

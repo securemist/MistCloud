@@ -73,51 +73,15 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
         Files.write(Paths.get(path.toString()), bytes);
     }
 
-    @Override
-    public void setTaskInfo(FileInfoVo[] fileInfoList) throws FileUploadException {
-        Map<String, Task> uploadContext = getUploadContext();
-
-        for (FileInfoVo fileInfo : fileInfoList) {
-
-            // 设置 task 有关信息，如果获取不到 task 会自动创建(线程安全)
-            Task task = getTask(fileInfo.getIdentifier());
-            task.setFileName(fileInfo.getFileName());
-            task.setMD5(fileInfo.getMd5());
-            task.setFileType(fileInfo.getType());
-
-            task.setFolderPath(fileInfo.getIdentifier());
-            task.setTargetFilePath(fileInfo.getFileName());
-
-            task.setFolderId(fileInfo.getFolderId());
-            task.setFileSize(fileInfo.getTotalSize());
-            task.setSetInfo(true);
-            task.setRelativePath("/" + fileInfo.getRelativePath());
-            if (task.uploadChunks == null) {
-                task.uploadChunks = new boolean[fileInfo.getTotalChunks() + 1];
-            }
-
-            uploadContext.put(fileInfo.getIdentifier(), task);
-        }
-
-        setUploadContext(uploadContext);
-    }
 
 
     @Override
-    public Task getTask(String identifier) {
+    public Task getTask(String identifier) throws FileUploadException {
         Map<String, Task> uploadContext = getUploadContext();
-
-        /**
-         * 前端在开始发送文件前会将文件md5 等信息发送过来，会在这时候就创建完毕
-         */
         Task task = uploadContext.get(identifier);
+
         if (task == null) {
-            synchronized (LocalFileUploadTaskContext.class) {
-                if (task == null) {
-                    task = new Task(identifier);
-                    uploadContext.put(identifier, task);
-                }
-            }
+            throw new FileUploadException("task is null when get task, check the mergeFile request later than addChunk request", identifier);
         }
         return task;
     }
