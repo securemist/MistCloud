@@ -10,11 +10,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
   servlet:
     multipart:
       max-file-size: 10024MB
       max-request-size: 1024MB
+
 
 # swagger地址
 # localhost:8888/swagger-ui/index.html#/
@@ -29,7 +29,7 @@ mybatis:
 
 logging:
   level:
-    com.mist.cloud.dao: DEBUG
+    com.mist.cloud.infrastructure.dao: DEBUG
 
 file:
   base_path: /Users/securemist/Downloads/mist_cloud
@@ -47,7 +47,7 @@ sa-token:
   # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
   is-share: true
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
-  token-style: uuid
+  token-style: random-64
   # 是否输出操作日志
   is-log: false
 #  log-level: DEBUG

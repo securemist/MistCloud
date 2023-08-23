@@ -8,6 +8,9 @@ import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.infrastructure.DO.Folder;
 import com.mist.cloud.infrastructure.dao.FileMapper;
 import com.mist.cloud.infrastructure.dao.FolderMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,6 +30,7 @@ public class FolderRepository implements IFolderRepository {
     @Resource
     private FileMapper fileMapper;
 
+    @Cacheable(value = "folder", key = "#folderId")
     @Override
     public Folder findFolder(Long folderId) {
         FolderSelectReq folderSelectReq = FolderSelectReq
@@ -34,10 +38,9 @@ public class FolderRepository implements IFolderRepository {
                 .id(folderId)
                 .build();
 
-        Folder folder =  folderMapper.selectFolderById(folderId);
+        Folder folder = folderMapper.selectFolderById(folderId);
         return folder;
     }
-
 
     @Override
     public List<Folder> findSubFolders(Long folderId) {
@@ -64,6 +67,8 @@ public class FolderRepository implements IFolderRepository {
 
         return id;
     }
+
+
 
     @Override
     public void realDeleteFolderRecursive(Long folderId) {
