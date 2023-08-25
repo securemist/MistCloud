@@ -3,24 +3,14 @@ package com.mist.cloud.domain.tansmit.service.impl;
 import com.mist.cloud.common.config.IdGenerator;
 import com.mist.cloud.common.constant.Constants;
 import com.mist.cloud.domain.file.model.entity.FolderBrief;
-import com.mist.cloud.domain.file.repository.IFileRepository;
-import com.mist.cloud.domain.file.repository.IFolderRepository;
-import com.mist.cloud.domain.file.service.IFolderService;
 import com.mist.cloud.domain.tansmit.context.Task;
 import com.mist.cloud.domain.tansmit.service.TransmitSupport;
 import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
-import com.mist.cloud.infrastructure.dao.FileMapper;
-import com.mist.cloud.domain.file.model.entity.FileSelectReq;
 import com.mist.cloud.domain.tansmit.service.IUploadSevice;
 import com.mist.cloud.common.utils.FileUtils;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**

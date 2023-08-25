@@ -5,6 +5,7 @@ import com.mist.cloud.domain.file.model.entity.FileCopyReq;
 import com.mist.cloud.domain.file.model.entity.FileSelectReq;
 import com.mist.cloud.domain.file.repository.IFileRepository;
 import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.infrastructure.DO.IFIle;
 import com.mist.cloud.infrastructure.dao.FileMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -33,6 +34,7 @@ public class FileRepository implements IFileRepository {
     public File findFileByObj(FileSelectReq fileSelectReq) {
         return fileMapper.selectFileByObj(fileSelectReq);
     }
+
 
     @Override
     public void addFile(File file) {
@@ -86,6 +88,12 @@ public class FileRepository implements IFileRepository {
 
         fileMapper.copyFile(fileCopyReq);
 
+    }
+
+    @Override
+    public boolean isFolder(Long fileId) {
+        File file = fileMapper.selectFileById(fileId);
+        return file == null;
     }
 
 }

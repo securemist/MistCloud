@@ -4,6 +4,7 @@ import com.mist.cloud.domain.file.model.entity.FileSelectReq;
 import com.mist.cloud.domain.file.model.entity.FolderDetail;
 import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.infrastructure.DO.Folder;
+import com.mist.cloud.infrastructure.DO.IFIle;
 
 /**
  * @Author: securemist
@@ -53,4 +54,10 @@ public interface IFileRepository {
      */
     void copyFile( Long fileId, Long targetFolderId);
 
+    /**
+     * 判断当前id是文件还是文件夹
+     * @param fileId
+     * @return
+     */
+    boolean isFolder(Long fileId);
 }

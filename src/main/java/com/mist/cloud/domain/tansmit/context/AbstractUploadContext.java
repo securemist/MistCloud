@@ -3,7 +3,6 @@ package com.mist.cloud.domain.tansmit.context;
 import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.common.exception.file.FileUploadException;
 import com.mist.cloud.domain.tansmit.model.vo.ChunkVo;
-import com.mist.cloud.domain.file.service.IFileService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
@@ -20,9 +19,6 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
     @Resource
     FileConfig fileConfig;
-
-    @Resource
-    IFileService fileService;
 
     protected abstract Map<String, Task> getUploadContext();
 

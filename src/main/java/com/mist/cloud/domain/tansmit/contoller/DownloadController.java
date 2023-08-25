@@ -2,14 +2,10 @@ package com.mist.cloud.domain.tansmit.contoller;
 
 import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.domain.file.repository.IFileRepository;
-import com.mist.cloud.domain.file.service.IFileService;
-import com.mist.cloud.domain.file.service.IFolderService;
 import com.mist.cloud.domain.tansmit.service.IDownloadService;
-import com.mist.cloud.domain.tansmit.service.TransmitSupport;
 import com.mist.cloud.infrastructure.DO.File;
 import io.swagger.annotations.ApiImplicitParam;
 import org.apache.ibatis.annotations.Lang;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +18,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * @Author: securemist

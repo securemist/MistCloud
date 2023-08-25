@@ -7,7 +7,7 @@ import com.mist.cloud.common.result.Result;
 import com.mist.cloud.domain.tansmit.context.DefaultFileUploadContext;
 import com.mist.cloud.domain.tansmit.context.Task;
 import com.mist.cloud.domain.tansmit.context.UploadTaskContext;
-import com.mist.cloud.common.exception.file.FileException;
+import com.mist.cloud.common.exception.file.BaseFileException;
 import com.mist.cloud.common.exception.file.FileUploadException;
 import com.mist.cloud.common.exception.RequestParmException;
 import com.mist.cloud.common.utils.FileUtils;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,16 +66,17 @@ public class ExceptionHandlerConfig {
     }
 
 
-    @ResponseBody
     @ExceptionHandler(value = NotLoginException.class)
-    public Result authExceptionHandler(Exception e) {
-        log.error(e.getClass() + ": {}", e.getMessage());
-        return new FailedResult(Constants.DEFAULT_AUTH_CODE, e.getMessage());
+    public HttpServletResponse authExceptionHandler(Exception e, HttpServletResponse response) {
+        log.debug(e.getClass() + ": {}", e.getMessage());
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        return response;
+//        return new FailedResult(Constants.DEFAULT_AUTH_CODE, e.getMessage());
     }
 
     @ResponseBody
-    @ExceptionHandler(value = FileException.class)
-    public Result FileExceptionHandler(FileException e) throws IOException {
+    @ExceptionHandler(value = BaseFileException.class)
+    public Result FileExceptionHandler(BaseFileException e) throws IOException {
         if (e instanceof FileUploadException) {
             List<String> identifierList = ((FileUploadException) e).getIdentifierList();
             for (String identifier : identifierList) {

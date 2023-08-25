@@ -5,7 +5,7 @@ package com.mist.cloud.common.exception.file;
  * @Datetime: 2023/7/20 20:49
  * @Description:
  */
-public class FolderException extends FileException {
+public class FolderException extends BaseFileException {
 
     public FolderException(String message) {
         super(message);

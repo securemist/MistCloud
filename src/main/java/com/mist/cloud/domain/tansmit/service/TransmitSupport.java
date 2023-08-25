@@ -4,10 +4,6 @@ import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.domain.file.repository.IFileRepository;
 import com.mist.cloud.domain.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
-import com.mist.cloud.domain.file.model.entity.FolderDetail;
-import com.mist.cloud.domain.file.service.IFileService;
-import com.mist.cloud.domain.file.service.IFolderService;
 
 import javax.annotation.Resource;
 

@@ -20,8 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @ApiModel("文件实体类")
-public class File implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class File implements IFIle {
 
     @ApiModelProperty(value = "全局唯一 Id")
     @JsonSerialize(using = ToStringSerializer.class) // 解决前端64 位数精度丢失问题，序列化为字符串

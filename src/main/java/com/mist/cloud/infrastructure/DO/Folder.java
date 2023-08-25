@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @ApiModel("文件夹实体类")
-public class Folder {
+public class Folder implements IFIle{
 
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;

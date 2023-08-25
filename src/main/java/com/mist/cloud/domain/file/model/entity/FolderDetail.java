@@ -1,9 +1,14 @@
 package com.mist.cloud.domain.file.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.infrastructure.DO.Folder;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.*;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,21 +35,48 @@ public class FolderDetail {
     /**
      * 子文件夹列表
      */
-    private List<Folder> folderList;
-
+//    private List<FolderDetail.Folder> folderList;
 
     /**
      * 文件列表
      */
-    private List<File> fileList;
+    private List<FolderDetail.File> fileList;
 
-    @AllArgsConstructor
     @Setter
     @Getter
-    @ToString
-    public static
-    class FolderPathItem {
-        private String id;
+    @Builder
+    @AllArgsConstructor
+    public static class FolderPathItem implements Serializable{
+        @JsonSerialize(using = ToStringSerializer.class)
+        private Long id;
         private String name;
+    }
+
+    @Setter
+    @Getter
+    @Builder
+    public static class Folder implements Serializable {
+        @JsonSerialize(using = ToStringSerializer.class)
+        private Long id;
+
+        private String name;
+
+        private Date modifyTime;
+    }
+
+    @Setter
+    @Getter
+    @Builder
+    public static class File {
+        @JsonSerialize(using = ToStringSerializer.class)
+        private Long id;
+
+        private String name;
+
+        private Long size;
+
+        private Boolean isFolder;
+
+        private Date modifyTime;
     }
 }
