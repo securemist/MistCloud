@@ -26,7 +26,6 @@ import static com.mist.cloud.common.utils.FileUtils.*;
  * @Description:
  */
 @RestController
-@RequestMapping("/upload")
 @Slf4j
 public class UploadController {
     @Resource
@@ -38,7 +37,7 @@ public class UploadController {
     @Resource(type = DefaultFileUploadContext.class)
     private UploadTaskContext uploadTaskContext;
 
-    @PostMapping("/chunk")
+    @PostMapping("/upload/chunk")
     public Result uploadChunk(ChunkVo chunk) throws FileUploadException {
         uploadTaskContext.addChunk(chunk);
         return new SuccessResult();
@@ -56,7 +55,7 @@ public class UploadController {
         }
     }
 
-    @PostMapping("/mergeFile")
+    @PostMapping("/upload/mergeFile")
     public Result mergeFile(@RequestBody List<MergeFileRequestVo> mergeInfoList) throws FileUploadException, IOException {
 
         HashMap<String, String> identifierMap = new HashMap<>();

@@ -3439,3 +3439,852 @@
 2023-08-25 21:01:52.634 DEBUG 18799 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
 2023-08-25 21:01:52.634 DEBUG 18799 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
 2023-08-25 21:01:52.636 DEBUG 18799 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:38:12.035 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:38:12.056 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:38:12.112 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:38:12.178 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:38:12.180 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:38:12.185 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:38:12.190 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:38:12.191 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:38:12.196 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:39:21.678 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:39:21.679 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:39:21.684 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:39:21.684 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:39:21.685 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:39:21.690 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:39:21.691 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:39:21.691 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:39:21.694 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:40:51.619 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:40:51.620 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:40:51.623 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:40:51.623 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:40:51.624 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:40:51.630 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:40:51.630 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:40:51.631 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:40:51.633 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:41:56.657 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:41:56.658 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:41:56.661 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:41:56.662 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:41:56.663 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:41:56.666 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:41:56.667 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:41:56.667 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:41:56.670 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:43:40.596 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:43:40.597 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:43:40.601 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:43:40.602 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:43:40.602 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:43:40.605 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:43:40.606 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:43:40.606 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:43:40.609 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:44:04.244 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:44:04.246 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:44:04.249 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:44:04.251 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:44:04.252 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:44:04.255 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:44:04.255 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:44:04.256 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:44:04.258 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:45:03.381 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:45:03.382 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:45:03.385 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:45:03.385 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:45:03.386 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:45:03.389 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:45:03.389 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:45:03.390 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:45:03.392 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:45:39.619 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:45:39.620 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:45:39.622 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:45:39.623 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:45:39.623 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:45:39.626 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:45:39.627 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:45:39.627 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:45:39.629 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:46:48.702 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:46:48.703 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:46:48.705 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:46:48.706 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:46:48.706 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:46:48.709 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:46:48.709 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:46:48.710 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:46:48.712 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:47:17.781 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:47:17.781 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:47:17.784 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:47:17.784 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:47:17.784 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:47:17.787 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:47:17.788 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:47:17.789 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:47:17.791 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:49:27.350 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:49:27.351 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:49:27.354 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:49:27.355 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:49:27.355 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:49:27.358 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:49:27.358 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:49:27.358 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:49:27.360 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:49:51.736 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:49:51.737 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:49:51.740 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:49:51.741 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:49:51.742 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:49:51.745 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:49:51.746 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:49:51.746 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:49:51.752 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:51:28.931 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:51:28.932 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:51:28.935 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:51:28.935 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:51:28.935 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:51:28.938 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:51:28.938 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:51:28.938 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:51:28.940 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:54:55.192 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:54:55.193 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:54:55.195 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:54:55.196 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:54:55.196 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:54:55.198 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:54:55.199 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:54:55.200 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:54:55.202 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:55:02.366 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:55:02.367 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:55:02.369 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:55:02.369 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:55:02.370 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:55:02.372 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:55:02.373 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:55:02.373 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:55:02.374 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:55:34.267 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:55:34.268 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:55:34.271 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:55:34.272 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:55:34.272 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:55:34.275 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:55:34.275 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:55:34.276 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:55:34.278 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:56:39.127 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:56:39.128 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:56:39.129 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:56:39.130 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:56:39.130 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:56:39.131 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:56:39.132 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:56:39.132 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:56:39.133 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 21:57:09.177 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 21:57:09.178 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 21:57:09.180 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 21:57:09.180 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 21:57:09.180 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 21:57:09.182 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 21:57:09.182 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 21:57:09.183 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 21:57:09.184 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:00:13.431 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:00:13.432 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:00:13.434 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:00:13.434 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:00:13.434 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:00:13.436 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:00:13.436 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:00:13.436 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:00:13.438 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:00:23.734 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:00:23.735 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:00:23.737 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:00:23.737 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:00:23.738 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:00:23.740 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:00:23.740 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:00:23.740 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:00:23.742 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:01:04.327 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:01:04.328 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:01:04.330 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:01:04.330 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:01:04.331 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:01:04.333 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:01:04.333 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:01:04.334 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:01:04.336 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:01:22.779 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:01:22.780 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:01:22.782 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:01:22.783 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:01:22.783 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:01:22.785 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:01:22.785 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:01:22.785 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:01:22.787 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:11:41.250 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:11:41.251 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:11:41.253 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:11:41.253 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:11:41.254 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:11:41.255 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:11:41.256 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:11:41.256 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:11:41.258 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:12:03.039 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:12:03.040 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:12:03.042 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:12:03.043 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:12:03.043 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:12:03.045 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:12:03.046 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:12:03.046 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:12:03.048 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:13:12.744 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:13:12.745 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:13:12.746 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:13:12.747 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:13:12.748 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:13:12.750 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:13:12.750 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:13:12.750 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:13:12.752 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:14:23.936 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:14:23.936 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:14:23.938 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:14:23.939 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:14:23.939 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:14:23.941 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:14:23.942 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:14:23.942 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:14:23.944 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:15:00.240 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:15:00.240 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:15:00.242 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:15:00.243 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:15:00.243 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:15:00.245 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:15:00.246 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:15:00.246 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:15:00.247 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:27:17.708 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:27:17.709 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:27:17.712 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:27:17.713 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:27:17.714 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:27:17.717 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:27:17.718 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:27:17.718 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:27:17.722 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:29:14.097 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:29:14.098 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:29:14.101 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:29:14.102 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:29:14.102 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:29:14.105 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:29:14.105 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:29:14.106 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:29:14.107 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:32:11.353 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:32:11.353 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:32:11.355 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:32:11.355 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:32:11.355 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:32:11.358 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:32:11.358 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:32:11.359 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:32:11.360 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:33:54.615 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:33:54.616 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:33:54.618 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:33:54.618 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:33:54.619 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:33:54.621 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:33:54.622 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:33:54.622 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:33:54.624 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:34:06.972 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:34:06.972 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:34:06.974 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:34:06.974 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:34:06.975 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:34:06.976 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:34:06.976 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:34:06.977 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:34:06.978 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:34:44.374 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:34:44.375 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:34:44.376 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:34:44.377 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:34:44.377 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:34:44.379 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:34:44.380 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:34:44.380 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:34:44.382 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:35:49.850 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:35:49.864 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:35:49.876 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:35:49.881 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:35:49.883 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:35:49.894 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:35:49.894 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:35:49.895 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:35:49.897 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:36:37.483 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:36:37.484 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:36:37.486 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:36:37.486 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:36:37.486 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:36:37.488 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:36:37.488 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:36:37.488 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:36:37.490 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:37:41.916 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:37:41.917 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:37:41.919 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:37:41.920 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:37:41.920 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:37:41.922 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:37:41.923 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:37:41.923 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:37:41.925 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:37:48.411 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 22:37:48.412 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 22:37:48.413 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 22:37:48.414 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 22:37:48.414 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 22:37:48.421 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 22:37:53.352 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:37:53.352 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:37:53.354 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:37:53.355 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:37:53.355 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:37:53.357 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:37:53.357 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:37:53.358 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:37:53.359 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:38:30.484 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:38:30.485 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:38:30.487 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:38:30.488 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:38:30.488 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:38:30.491 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:38:30.491 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:38:30.491 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:38:30.493 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:39:45.436 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:39:45.437 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:39:45.439 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:39:45.439 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:39:45.440 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:39:45.441 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:39:45.442 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:39:45.442 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:39:45.443 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:40:25.297 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:40:25.298 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:40:25.299 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:40:25.300 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:40:25.300 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:40:25.302 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:40:25.303 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:40:25.303 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:40:25.305 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:42:15.658 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:42:15.659 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:42:15.661 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:42:15.661 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:42:15.661 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:42:15.664 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:42:15.664 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:42:15.664 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:42:15.666 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:42:21.574 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:42:21.574 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:42:21.576 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:42:21.577 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:42:21.577 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:42:21.579 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:42:21.579 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:42:21.580 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:42:21.582 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:44:39.875 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:44:39.876 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:44:39.878 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:44:39.878 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:44:39.878 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:44:39.880 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:44:39.880 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:44:39.880 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:44:39.882 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:45:20.930 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:45:20.931 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:45:20.933 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:45:20.934 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:45:20.934 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:45:20.936 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:45:20.936 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:45:20.937 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:45:20.938 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:46:57.125 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:46:57.126 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:46:57.128 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:46:57.128 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:46:57.128 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:46:57.130 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:46:57.130 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:46:57.131 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:46:57.133 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:48:12.843 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:48:12.844 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:48:12.846 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:48:12.847 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:48:12.847 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:48:12.850 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:48:12.850 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:48:12.850 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:48:12.852 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:52:13.754 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:52:13.754 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:52:13.757 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:52:13.757 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:52:13.757 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:52:13.759 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:52:13.759 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:52:13.759 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:52:13.761 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:54:36.000 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:54:36.001 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:54:36.003 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:54:36.003 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:54:36.004 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:54:36.006 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:54:36.006 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:54:36.006 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:54:36.008 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:58:21.799 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:58:21.801 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:58:21.804 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:58:21.805 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:58:21.805 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:58:21.809 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:58:21.810 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:58:21.810 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:58:21.814 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:59:11.608 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:59:11.609 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:59:11.611 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:59:11.612 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:59:11.612 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:59:11.613 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:59:11.614 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:59:11.614 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:59:11.615 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:59:17.792 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:59:17.793 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:59:17.794 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:59:17.795 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:59:17.795 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:59:17.796 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:59:17.797 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:59:17.797 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:59:17.798 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:59:29.448 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:59:29.449 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:59:29.451 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:59:29.451 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:59:29.452 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:59:29.454 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:59:29.454 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:59:29.454 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:59:29.456 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:59:47.086 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:59:47.086 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:59:47.088 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:59:47.089 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:59:47.089 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:59:47.091 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:59:47.091 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:59:47.092 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:59:47.093 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 22:59:48.029 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 22:59:48.029 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 22:59:48.031 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 22:59:48.031 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 22:59:48.032 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 22:59:48.034 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 22:59:48.034 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 22:59:48.034 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 22:59:48.036 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:00:19.465 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:00:19.466 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:00:19.468 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:00:19.468 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:00:19.469 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:00:19.471 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:00:19.471 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:00:19.471 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:00:19.473 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:00:51.013 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:00:51.014 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:00:51.016 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:00:51.017 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:00:51.017 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:00:51.018 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:00:51.019 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:00:51.019 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:00:51.021 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:00:57.112 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:00:57.113 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:00:57.114 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:00:57.115 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:00:57.115 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:00:57.116 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:00:57.116 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:00:57.117 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:00:57.118 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:01:16.953 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:01:16.954 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:01:16.956 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:01:16.957 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:01:16.957 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:01:16.959 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:01:16.959 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:01:16.960 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:01:16.961 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:01:34.227 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:01:34.228 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:01:34.229 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:01:34.230 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:01:34.230 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:01:34.231 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:01:34.232 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:01:34.232 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:01:34.233 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:01:35.484 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:01:35.485 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:01:35.487 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:01:35.488 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:01:35.488 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:01:35.491 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:01:35.492 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:01:35.492 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:01:35.494 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:01:52.846 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:01:52.847 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:01:52.849 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:01:52.850 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:01:52.850 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:01:52.853 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:01:52.854 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:01:52.854 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:01:52.856 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:01:54.993 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:01:54.993 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:01:54.995 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:01:54.995 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:01:54.995 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:01:54.997 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:01:54.998 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:01:54.998 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:01:55.000 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:02:24.662 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:02:24.663 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:02:24.664 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:02:24.665 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:02:24.665 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:02:24.667 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:02:24.667 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:02:24.667 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:02:24.669 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:02:26.807 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:26.808 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:26.810 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:26.810 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:26.811 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:26.813 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:30.317 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:30.318 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:30.319 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:30.319 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:30.320 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:30.322 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:32.252 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:32.253 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:32.254 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:32.255 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:32.255 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:32.257 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:46.414 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:02:46.415 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:02:46.416 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:02:46.417 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:02:46.417 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:02:46.419 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:02:46.419 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:02:46.419 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:02:46.421 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:02:47.669 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:47.670 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:47.672 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:47.672 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:47.673 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:47.675 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:49.186 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:49.187 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:49.188 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:49.189 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:49.189 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:49.191 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:50.590 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:50.590 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:50.592 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:50.592 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:50.592 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:50.594 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:52.311 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:52.312 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:52.314 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:52.314 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:52.315 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:52.317 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:02:53.847 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:02:53.848 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:02:53.849 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:02:53.849 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:02:53.849 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:02:53.851 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:04:17.992 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:04:17.993 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:04:17.995 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:04:17.995 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:04:17.995 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:04:17.996 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:04:17.997 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:04:17.997 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:04:17.998 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:04:40.038 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:04:40.039 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:04:40.040 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:04:40.041 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:04:40.041 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:04:40.042 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:04:40.043 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:04:40.043 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:04:40.045 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:05:27.269 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:05:27.270 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:05:27.272 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:05:27.273 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:05:27.273 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:05:27.275 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:05:27.276 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:05:27.276 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:05:27.277 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:05:45.651 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:05:45.652 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:05:45.653 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:05:45.654 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:05:45.654 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象.md(String), 1693970571102130176(Long)
+2023-08-25 23:05:45.659 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:06:08.319 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:06:08.320 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:06:08.321 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:06:08.322 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:06:08.322 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:06:08.324 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:06:08.325 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:06:08.325 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:06:08.327 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:06:49.279 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:06:49.280 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:06:49.281 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:06:49.281 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:06:49.282 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:06:49.285 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:07:11.997 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:07:11.998 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:07:12.000 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:07:12.000 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:07:12.000 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:07:12.002 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:07:12.002 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:07:12.002 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:07:12.003 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:07:38.715 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:07:38.715 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:07:38.717 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:07:38.717 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:07:38.717 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:07:38.718 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:07:38.719 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:07:38.719 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:07:38.721 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:07:43.753 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:07:43.754 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:07:43.755 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:07:43.755 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:07:43.756 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象.md(String), 1693970571102130176(Long)
+2023-08-25 23:07:43.760 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:07:56.694 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:07:56.695 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:07:56.697 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:07:56.697 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:07:56.697 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象.md(String), 1693970571102130176(Long)
+2023-08-25 23:07:56.699 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:09:05.174 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:09:05.175 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:09:05.177 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:09:05.177 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:09:05.177 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:09:05.178 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:09:05.179 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:09:05.179 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:09:05.181 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:09:30.206 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:09:30.207 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:09:30.209 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:09:30.210 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:09:30.211 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:09:30.213 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:09:30.214 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:09:30.214 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:09:30.217 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:09:41.121 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==>  Preparing: SELECT * FROM sys_file WHERE id = ? AND deleted = 0
+2023-08-25 23:09:41.122 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : ==> Parameters: 1693970571102130176(Long)
+2023-08-25 23:09:41.123 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.selectFileById    : <==      Total: 1
+2023-08-25 23:09:41.123 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==>  Preparing: UPDATE sys_file SET name = ? WHERE id = ? AND deleted = 0
+2023-08-25 23:09:41.124 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : ==> Parameters: Java面向对象a.md(String), 1693970571102130176(Long)
+2023-08-25 23:09:41.129 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FileMapper.renameFile        : <==    Updates: 1
+2023-08-25 23:10:08.832 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:10:08.833 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:10:08.835 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:10:08.835 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:10:08.836 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:10:08.838 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:10:08.838 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:10:08.839 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:10:08.840 DEBUG 19974 --- [http-nio-8888-exec-3] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:10:30.298 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:10:30.299 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:10:30.300 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:10:30.300 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:10:30.300 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:10:30.302 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:10:30.302 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:10:30.302 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:10:30.303 DEBUG 19974 --- [http-nio-8888-exec-5] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:10:33.353 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:10:33.354 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:10:33.356 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:10:33.357 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:10:33.357 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:10:33.359 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:10:33.360 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:10:33.360 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:10:33.361 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:11:55.887 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:11:55.888 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:11:55.889 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:11:55.890 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:11:55.890 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:11:55.891 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:11:55.892 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:11:55.892 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:11:55.894 DEBUG 19974 --- [http-nio-8888-exec-9] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:12:01.543 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:12:01.544 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:12:01.546 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:12:01.547 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:12:01.547 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:12:01.550 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:12:01.551 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:12:01.551 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:12:01.555 DEBUG 19974 --- [http-nio-8888-exec-1] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:16:52.352 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:16:52.353 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:16:52.356 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:16:52.356 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:16:52.356 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:16:52.357 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:16:52.358 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:16:52.358 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:16:52.360 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:16:58.426 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:16:58.426 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:16:58.428 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:16:58.429 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:16:58.429 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:16:58.431 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:16:58.431 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:16:58.431 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:16:58.433 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:17:16.765 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:16.766 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:17:16.767 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:17:16.768 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:16.768 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:17:16.769 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:17:16.770 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:16.770 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:17:16.771 DEBUG 19974 --- [http-nio-8888-exec-8] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:17:19.287 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:19.288 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1694169080933781505(Long)
+2023-08-25 23:17:19.289 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:17:19.289 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:19.290 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1694169080933781505(Long)
+2023-08-25 23:17:19.291 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 0
+2023-08-25 23:17:19.291 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:19.291 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1694169080933781505(Long)
+2023-08-25 23:17:19.293 DEBUG 19974 --- [http-nio-8888-exec-10] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 2
+2023-08-25 23:17:22.719 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:22.719 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:17:22.721 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:17:22.721 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:22.721 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:17:22.722 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:17:22.723 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:22.723 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:17:22.724 DEBUG 19974 --- [http-nio-8888-exec-2] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:17:43.550 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:43.551 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:17:43.553 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:17:43.553 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:43.553 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:17:43.555 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:17:43.556 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:43.556 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:17:43.557 DEBUG 19974 --- [http-nio-8888-exec-4] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1
+2023-08-25 23:17:45.002 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:45.002 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1693970865265446913(Long)
+2023-08-25 23:17:45.003 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 2
+2023-08-25 23:17:45.004 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:45.004 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1693970865265446913(Long)
+2023-08-25 23:17:45.005 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 0
+2023-08-25 23:17:45.005 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:45.005 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1693970865265446913(Long)
+2023-08-25 23:17:45.007 DEBUG 19974 --- [http-nio-8888-exec-6] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 2
+2023-08-25 23:17:46.043 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==>  Preparing: SELECT * FROM sys_file WHERE folder_id = ? AND deleted = 0
+2023-08-25 23:17:46.043 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : ==> Parameters: 1(Long)
+2023-08-25 23:17:46.045 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.F.selectFilesByFolderId        : <==      Total: 1
+2023-08-25 23:17:46.045 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==>  Preparing: SELECT * FROM sys_folder WHERE user_id = ? AND parent_id = ? AND deleted = 0
+2023-08-25 23:17:46.045 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : ==> Parameters: 1(Long), 1(Long)
+2023-08-25 23:17:46.047 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.d.FolderMapper.selectSubFolders  : <==      Total: 5
+2023-08-25 23:17:46.048 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==>  Preparing: SELECT id, name, parent_id FROM sys_folder WHERE find_in_set(id, get_parent_list(?))
+2023-08-25 23:17:46.048 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : ==> Parameters: 1(Long)
+2023-08-25 23:17:46.050 DEBUG 19974 --- [http-nio-8888-exec-7] c.m.c.i.dao.FolderMapper.getFolderPath   : <==      Total: 1

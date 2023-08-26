@@ -140,7 +140,7 @@ public class FileContext {
                     .id(folder.getId())
                     .name(folder.getName())
                     .modifyTime(folder.getModifyTime())
-                    .isFolder(false)
+                    .isFolder(true)
                     .size(0L)
                     .build();
             fileVoList.add(file);
@@ -152,7 +152,7 @@ public class FileContext {
                     .name(file.getName())
                     .size(file.getSize())
                     .modifyTime(file.getCreateTime())
-                    .isFolder(true)
+                    .isFolder(false)
                     .build();
             fileVoList.add(file0);
         }

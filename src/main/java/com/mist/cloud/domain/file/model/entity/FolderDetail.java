@@ -33,11 +33,6 @@ public class FolderDetail {
     private List<FolderDetail.FolderPathItem> path;
 
     /**
-     * 子文件夹列表
-     */
-//    private List<FolderDetail.Folder> folderList;
-
-    /**
      * 文件列表
      */
     private List<FolderDetail.File> fileList;
@@ -52,17 +47,6 @@ public class FolderDetail {
         private String name;
     }
 
-    @Setter
-    @Getter
-    @Builder
-    public static class Folder implements Serializable {
-        @JsonSerialize(using = ToStringSerializer.class)
-        private Long id;
-
-        private String name;
-
-        private Date modifyTime;
-    }
 
     @Setter
     @Getter

@@ -2,11 +2,9 @@ package com.mist.cloud.domain.file.controller;
 
 import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.common.exception.file.BaseFileException;
-import com.mist.cloud.common.exception.file.FileException;
 import com.mist.cloud.common.exception.file.FolderException;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
-import com.mist.cloud.domain.file.model.dto.FolderDto;
 import com.mist.cloud.domain.file.model.entity.FolderDetail;
 import com.mist.cloud.domain.file.model.tree.FolderTreeNode;
 import com.mist.cloud.domain.file.service.FileContext;
@@ -29,7 +27,7 @@ import java.util.List;
  * @Description:
  */
 @RestController
-public class File0Controller {
+public class FileController {
     @Resource
     private FileConfig fileConfig;
     @Resource
@@ -40,11 +38,7 @@ public class File0Controller {
     public Result folderTree() {
         // 查找的文件夹 id，默认为根目录
         FolderTreeNode tree = fileContext.getFolderTree();
-
-        // 返回给前端数组形式，arr[0]=tree
-        List<FolderTreeNode> arr = new ArrayList<>();
-        arr.add(tree);
-        return new SuccessResult(arr);
+        return new SuccessResult(tree);
     }
 
     @GetMapping("/folder/create")

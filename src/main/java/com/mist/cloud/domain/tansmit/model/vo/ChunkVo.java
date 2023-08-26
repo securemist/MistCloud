@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
+
 /**
  * @Author: securemist
  * @Datetime: 2023/8/17 13:43
@@ -15,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 @Builder
-public class ChunkVo {
+public class ChunkVo implements Serializable {
 
     /**
      * 当前文件块，从1开始
