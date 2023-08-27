@@ -68,4 +68,11 @@ public interface IFolderRepository {
      * @param folders
      */
     void createFolders(List<FolderBrief> folders);
+
+    /**
+     * 根据文件夹名称模糊查询
+     * @param value 查询关键字
+     * @return
+     */
+    List<Folder> searchByName(String value);
 }

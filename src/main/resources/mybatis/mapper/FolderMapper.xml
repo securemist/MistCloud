@@ -59,6 +59,13 @@
           AND deleted = 0
     </select>
 
+    <select id="search" resultMap="folderMap">
+        SELECT *
+        FROM sys_folder
+        WHERE name LIKE CONCAT('%', #{value}, '%')
+          AND deleted = 0
+    </select>
+
 
     <insert id="createFolder">
         INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)

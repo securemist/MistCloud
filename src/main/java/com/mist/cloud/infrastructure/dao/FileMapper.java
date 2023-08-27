@@ -32,4 +32,6 @@ public interface FileMapper {
     File selectFileByObj(FileSelectReq fileSelectReq);
 
     List<File> selectFilesByFolderId(Long folderId);
+
+    List<File> search(String value);
 }

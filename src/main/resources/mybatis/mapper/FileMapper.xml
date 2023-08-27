@@ -85,5 +85,12 @@
           AND deleted = 0
     </select>
 
+    <select id="search" resultMap="fileMap">
+        SELECT *
+        FROM sys_file
+        WHERE name like CONCAT('%', #{value}, '%')
+          AND deleted = 0
+    </select>
+
 
 </mapper>

@@ -39,8 +39,8 @@ public class DownloadController {
      */
 
     @GetMapping("/download")
-    @ApiImplicitParam(name = "fileId", value = "文件(夹) id", dataTypeClass = Lang.class)
-    public ResponseEntity<StreamingResponseBody> download2(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
+    @ApiImplicitParam(name = "id", value = "文件(夹) id", dataTypeClass = Lang.class)
+    public ResponseEntity<StreamingResponseBody> download2(@RequestParam("id") Long fileId, HttpServletResponse response) throws IOException {
         File file = fileRepository.findFile(fileId);
         String filePath = "";
         // 文件下载

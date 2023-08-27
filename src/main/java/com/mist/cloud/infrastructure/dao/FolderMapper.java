@@ -36,19 +36,9 @@ public interface FolderMapper {
 
     void realDeleteFolderRecursive(Long folderId);
 
-    /**
-     * 批量创建文件夹，用于文件夹递归创建
-     * @param folders
-     */
     void createFolders(List<FolderBrief> folders);
 
-
-
-    /**
-     * 复制文件夹，数据库记录层面的，实际的逻辑由 service 层完成
-     * @param folderCopyReq
-     */
     void copyFolder(FolderCopyReq folderCopyReq);
 
-
+    List<Folder> search(String value);
 }

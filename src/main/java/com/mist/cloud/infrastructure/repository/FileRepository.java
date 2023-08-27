@@ -5,7 +5,6 @@ import com.mist.cloud.domain.file.model.entity.FileCopyReq;
 import com.mist.cloud.domain.file.model.entity.FileSelectReq;
 import com.mist.cloud.domain.file.repository.IFileRepository;
 import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.IFIle;
 import com.mist.cloud.infrastructure.dao.FileMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -13,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -94,6 +94,12 @@ public class FileRepository implements IFileRepository {
     public boolean isFolder(Long fileId) {
         File file = fileMapper.selectFileById(fileId);
         return file == null;
+    }
+
+    @Override
+    public List<File> searchByName(String value) {
+        List<File> fileList = fileMapper.search(value);
+        return fileList;
     }
 
 }

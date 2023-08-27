@@ -18,9 +18,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@Builder
 public class FolderDetail {
 
     /**

@@ -59,6 +59,17 @@ public class FileController {
         return new SuccessResult(folderDetail);
     }
 
+
+    @GetMapping(value = "/file/search")
+    @ApiOperation(value = "文件重命名")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "value", value = "搜索关键词", dataTypeClass = String.class)})
+    public Result rename(@RequestParam("value") String value) {
+        FolderDetail folderDetail = fileContext.searchFile(value);
+        return new SuccessResult(folderDetail);
+    }
+
+
     @GetMapping(value = "/file/rename")
     @ApiOperation(value = "文件重命名")
     @ApiImplicitParams({
@@ -68,6 +79,7 @@ public class FileController {
         fileContext.get(id).rename(id, fileName);
         return new SuccessResult();
     }
+
 
     @GetMapping(value = "/file/copy")
     @ApiOperation(value = "文件复制")

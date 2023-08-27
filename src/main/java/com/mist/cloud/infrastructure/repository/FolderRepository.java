@@ -145,4 +145,10 @@ public class FolderRepository implements IFolderRepository {
 
         folderMapper.createFolders(folders);
     }
+
+    @Override
+    public List<Folder> searchByName(String value) {
+
+        return folderMapper.search(value);
+    }
 }

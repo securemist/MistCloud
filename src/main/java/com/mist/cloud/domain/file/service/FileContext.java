@@ -57,6 +57,7 @@ public class FileContext {
 
     /**
      * 返回用户的文件夹树形结构列表
+     *
      * @return FolderTreeNode Tree
      */
     public FolderTreeNode getFolderTree() {
@@ -84,7 +85,8 @@ public class FileContext {
 
     /**
      * 创建文件夹
-     * @param parentId 创建文件夹的所在文件夹id
+     *
+     * @param parentId   创建文件夹的所在文件夹id
      * @param folderName 名称
      * @return
      * @throws FolderException 文件加下已存在同名文件夹
@@ -121,9 +123,47 @@ public class FileContext {
     }
 
 
+    public FolderDetail searchFile(String value) {
+        List<File> fileList = fileRepository.searchByName(value);
+        List<Folder> folderList = folderRepository.searchByName(value);
+
+        // 返回给前端的数据不区分文件和文件夹，这里合并到一个集合中去
+        ArrayList<FolderDetail.File> fileVoList = new ArrayList<>();
+        for (Folder folder : folderList) {
+            FolderDetail.File file = FolderDetail.File.builder()
+                    .id(folder.getId())
+                    .name(folder.getName())
+                    .modifyTime(folder.getModifyTime())
+                    .isFolder(true)
+                    .size(0L)
+                    .build();
+            fileVoList.add(file);
+        }
+
+        for (File file : fileList) {
+            FolderDetail.File file0 = FolderDetail.File.builder()
+                    .id(file.getId())
+                    .name(file.getName())
+                    .size(file.getSize())
+                    .modifyTime(file.getCreateTime())
+                    .isFolder(false)
+                    .build();
+            fileVoList.add(file0);
+        }
+
+        FolderDetail folderDetail = FolderDetail.builder()
+                .path(new ArrayList<>())
+                .name("")
+                .fileList(fileVoList)
+                .build();
+
+        return folderDetail;
+    }
+
 
     /**
      * 获取文件下的所有文件和文件夹信息
+     *
      * @param id
      * @return
      */
@@ -134,7 +174,7 @@ public class FileContext {
         List<Folder> folderList = folderRepository.findSubFolders(id);
 
         // 返回给前端的数据不区分文件和文件夹，这里合并到一个集合中去
-        ArrayList<FolderDetail.File > fileVoList = new ArrayList<>();
+        ArrayList<FolderDetail.File> fileVoList = new ArrayList<>();
         for (Folder folder : folderList) {
             FolderDetail.File file = FolderDetail.File.builder()
                     .id(folder.getId())
@@ -175,7 +215,12 @@ public class FileContext {
             }
         }
 
-        return new FolderDetail(path.get(path.size() - 1).getName(), path, fileVoList);
+        FolderDetail folderDetail = FolderDetail.builder()
+                .path(path)
+                .name(path.get(path.size() - 1).getName())
+                .fileList(fileVoList)
+                .build();
+        return folderDetail;
     }
 
 
@@ -218,4 +263,5 @@ public class FileContext {
 
         return folderTreeVoList;
     }
+
 }

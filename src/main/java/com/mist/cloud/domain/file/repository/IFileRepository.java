@@ -6,6 +6,8 @@ import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.infrastructure.DO.Folder;
 import com.mist.cloud.infrastructure.DO.IFIle;
 
+import java.util.List;
+
 /**
  * @Author: securemist
  * @Datetime: 2023/8/22 14:35
@@ -60,4 +62,11 @@ public interface IFileRepository {
      * @return
      */
     boolean isFolder(Long fileId);
+
+    /**
+     * 根据文件名模糊查询
+     * @param value 查询关键字
+     * @return
+     */
+    List<File> searchByName(String value);
 }
