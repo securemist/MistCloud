@@ -1,10 +1,9 @@
 package com.mist.cloud.infrastructure.dao;
 
-import com.mist.cloud.domain.file.model.entity.FolderBrief;
-import com.mist.cloud.domain.file.model.entity.FolderCopyReq;
-import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.aggregate.file.model.entity.FolderBrief;
+import com.mist.cloud.aggregate.file.model.entity.FolderCopyReq;
 import com.mist.cloud.infrastructure.DO.Folder;
-import com.mist.cloud.domain.file.model.entity.FolderSelectReq;
+import com.mist.cloud.aggregate.file.model.entity.FolderSelectReq;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.LinkedList;

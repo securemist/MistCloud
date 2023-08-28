@@ -2,14 +2,12 @@ package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.common.config.IdGenerator;
 import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.domain.file.model.entity.*;
-import com.mist.cloud.domain.file.repository.IFolderRepository;
+import com.mist.cloud.aggregate.file.model.entity.*;
+import com.mist.cloud.aggregate.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.infrastructure.DO.Folder;
 import com.mist.cloud.infrastructure.dao.FileMapper;
 import com.mist.cloud.infrastructure.dao.FolderMapper;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 

@@ -20,14 +20,14 @@
         VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5}, #{originName}, NOW())
     </insert>
 
-    <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq">
+    <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq">
         UPDATE sys_file
         SET duplicate_times = duplicate_times + 1
         WHERE id = #{id}
           AND deleted = 0
     </update>
 
-    <update id="renameFile" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq">
+    <update id="renameFile" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq">
         UPDATE sys_file
         SET name = #{fileName}
         WHERE id = #{id}
@@ -46,7 +46,7 @@
         WHERE id = #{id}
     </update>
 
-    <update id="copyFile" parameterType="com.mist.cloud.domain.file.model.entity.FileCopyReq">
+    <update id="copyFile" parameterType="com.mist.cloud.aggregate.file.model.entity.FileCopyReq">
         INSERT INTO sys_file (id, name, size, type, folder_id, md5, origin_name)
         SELECT #{newFileId}, name, size, type, #{targetFolderId}, md5, origin_name
         FROM sys_file
@@ -61,7 +61,7 @@
     </select>
 
 
-    <select id="selectFileByObj" parameterType="com.mist.cloud.domain.file.model.entity.FileSelectReq" resultMap="fileMap">
+    <select id="selectFileByObj" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq" resultMap="fileMap">
         SELECT *
         FROM sys_file
         <where>

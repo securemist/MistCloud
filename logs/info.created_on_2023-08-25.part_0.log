@@ -514,14 +514,14 @@ javax.servlet.ServletException: Could not resolve view with name 'folder/login' 
 2023-08-25 20:11:34.308  INFO 17595 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.64]
 2023-08-25 20:11:34.400  INFO 17595 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2023-08-25 20:11:34.400  INFO 17595 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1021 ms
-2023-08-25 20:11:34.687  WARN 17595 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'exceptionHandlerConfig': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+2023-08-25 20:11:34.687  WARN 17595 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'exceptionHandlerConfig': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 2023-08-25 20:11:34.689  INFO 17595 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
 2023-08-25 20:11:34.696  INFO 17595 --- [main] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
 2023-08-25 20:11:34.715 ERROR 17595 --- [main] o.s.boot.SpringApplication               : Application run failed
 
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'exceptionHandlerConfig': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'exceptionHandlerConfig': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
@@ -540,7 +540,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
 	at com.mist.cloud.MistCloudApplication.main(MistCloudApplication.java:14)
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultFileUploadContext': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
@@ -559,7 +559,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:329)
 	... 17 common frames omitted
-Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance(AbstractBeanFactory.java:417)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:398)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
@@ -579,14 +579,14 @@ Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bea
 2023-08-25 20:12:39.882  INFO 17636 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.64]
 2023-08-25 20:12:39.966  INFO 17636 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2023-08-25 20:12:39.967  INFO 17636 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 980 ms
-2023-08-25 20:12:40.228  WARN 17636 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'file0Controller': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+2023-08-25 20:12:40.228  WARN 17636 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'file0Controller': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 2023-08-25 20:12:40.230  INFO 17636 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
 2023-08-25 20:12:40.237  INFO 17636 --- [main] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
 2023-08-25 20:12:40.252 ERROR 17636 --- [main] o.s.boot.SpringApplication               : Application run failed
 
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'file0Controller': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'file0Controller': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
@@ -605,7 +605,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
 	at com.mist.cloud.MistCloudApplication.main(MistCloudApplication.java:14)
-Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance(AbstractBeanFactory.java:417)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:398)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
@@ -625,14 +625,14 @@ Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bea
 2023-08-25 20:13:55.139  INFO 17658 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.64]
 2023-08-25 20:13:55.223  INFO 17658 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2023-08-25 20:13:55.223  INFO 17658 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 957 ms
-2023-08-25 20:13:55.488  WARN 17658 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+2023-08-25 20:13:55.488  WARN 17658 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 2023-08-25 20:13:55.490  INFO 17658 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
 2023-08-25 20:13:55.497  INFO 17658 --- [main] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
 2023-08-25 20:13:55.513 ERROR 17658 --- [main] o.s.boot.SpringApplication               : Application run failed
 
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
@@ -651,7 +651,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
 	at com.mist.cloud.MistCloudApplication.main(MistCloudApplication.java:14)
-Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.domain.file.service.IFileService' but was actually of type 'com.mist.cloud.domain.file.service.FileService'
+Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'fileService' is expected to be of type 'com.mist.cloud.aggregate.file.service.IFileService' but was actually of type 'com.mist.cloud.aggregate.file.service.FileService'
 	at org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance(AbstractBeanFactory.java:417)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:398)
 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
@@ -865,7 +865,7 @@ javax.servlet.ServletException: Could not resolve view with name 'folder/1' in s
 	at java.lang.Thread.run(Thread.java:750)
 
 2023-08-25 20:27:35.612 ERROR 18018 --- [http-nio-8888-exec-2] c.m.c.c.config.ExceptionHandlerConfig    : class org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported
-2023-08-25 20:27:41.917 ERROR 18018 --- [http-nio-8888-exec-3] c.m.c.c.config.ExceptionHandlerConfig    : class org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.mist.cloud.common.result.Result com.mist.cloud.domain.user.controller.UserController.login(cn.hutool.json.JSONObject)
+2023-08-25 20:27:41.917 ERROR 18018 --- [http-nio-8888-exec-3] c.m.c.c.config.ExceptionHandlerConfig    : class org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.mist.cloud.common.result.Result com.mist.cloud.aggregate.user.controller.UserController.login(cn.hutool.json.JSONObject)
 2023-08-25 20:28:19.159 ERROR 18018 --- [http-nio-8888-exec-4] c.m.c.c.config.ExceptionHandlerConfig    : class org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;boundary=--------------------------543940882814927579636683;charset=UTF-8' not supported
 2023-08-25 20:28:46.849 ERROR 18018 --- [http-nio-8888-exec-5] c.m.c.c.config.ExceptionHandlerConfig    : class org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported
 2023-08-25 20:29:18.644  INFO 18018 --- [http-nio-8888-exec-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...

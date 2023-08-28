@@ -51,7 +51,7 @@
           AND deleted = 0
     </select>
 
-    <select id="selectSubFolders" parameterType="com.mist.cloud.domain.file.model.entity.FolderSelectReq" resultMap="folderMap">
+    <select id="selectSubFolders" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderSelectReq" resultMap="folderMap">
         SELECT *
         FROM sys_folder
         WHERE user_id = #{userId}
@@ -73,7 +73,7 @@
     </insert>
 
 
-    <update id="renameFolder" parameterType="com.mist.cloud.domain.file.model.entity.FolderSelectReq">
+    <update id="renameFolder" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderSelectReq">
         UPDATE sys_folder
         SET name = #{folderName}
         WHERE user_id = #{userId}
@@ -82,7 +82,7 @@
     </update>
 
 
-    <update id="copyFolder" parameterType="com.mist.cloud.domain.file.model.entity.FolderCopyReq">
+    <update id="copyFolder" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderCopyReq">
         INSERT INTO sys_folder (id, name, folder_size, parent_id, user_id)
         SELECT #{newFolderId}, name, folder_size, #{targetFolderId}, user_id
         FROM sys_folder
@@ -123,7 +123,7 @@
     </update>
 
 
-    <update id="createFolders" parameterType="com.mist.cloud.domain.file.model.entity.FolderBrief">
+    <update id="createFolders" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderBrief">
         <foreach collection="list" item="item" separator=";">
             INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
             VALUES
