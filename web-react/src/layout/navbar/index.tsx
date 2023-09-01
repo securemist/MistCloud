@@ -1,6 +1,6 @@
 import styles from "./navbar.module.scss"
 import {ReactComponent as Logo} from "@/icons/logo.svg";
-import {Menu} from "@/components/navbar/menu.tsx";
+import {Menu} from "./menu.tsx";
 
 import {ReactComponent as Avatar} from "@/icons/avatar.svg";
 import {ReactComponent as GithubLink} from "@/icons/github.svg";
@@ -54,7 +54,6 @@ export function Navbar() {
                     window.open("https://github.com")
                 }}
             />
-
 
 
         </div>

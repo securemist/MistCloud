@@ -1,0 +1,13 @@
+.main {
+
+  .content {
+    position: relative;
+    min-height: 100vh;
+    margin: 1vh auto;
+    width: 1200px;
+    border: var(--border-in-light);
+    box-shadow: var(--box-gray-shadow);
+    border-radius: 5px;
+  }
+
+}

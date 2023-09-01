@@ -1,14 +1,16 @@
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
-import {Header} from "@/components/file/header.tsx";
-import {FilePath} from "@/components/file/file-path.tsx";
+
+import {Header} from "./header.tsx";
+import {FilePath} from "./file-path.tsx";
 import {getSubFoldersAndFiles} from "@/api/file";
 import {FolderDetail} from "@/api/file/type.ts";
-import {FileList} from "@/components/file/file-list.tsx";
+import {FileList} from "./file-list.tsx";
+
 import {useUserStore} from "@/store/user.ts";
 import Pubsub from "pubsub-js";
 
-export function FilePage() {
+export function Home() {
     const {id} = useParams();
     const [folderDetail, setFolderDetail] = useState<FolderDetail>(null);
     const userStore = useUserStore();
