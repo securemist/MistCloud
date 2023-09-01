@@ -1,9 +1,9 @@
 import styles from "./file-path.module.scss";
 import React, {useRef} from "react";
-import {ReactComponent as BackSvg} from "@/icons/go-back.svg";
 import {FolderDetail, PathItem} from "@/api/file/type.ts";
 import {useNavigate} from "react-router-dom";
 import {Breadcrumb} from "antd";
+import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 
 interface Props {
     path: PathItem[]
@@ -41,7 +41,9 @@ export const FilePath: React.FC<Props> = (props) => {
         <>
             <div className={styles["catalogue-container"]}>
                 {path.length > 1 ?
-                    <BackSvg className={styles["back-icon"]} onClick={goBack}/>
+                    (
+                        <SvgIcon name={"go-back"} size={"30px"} className={styles["back-icon"]} onClick={goBack}/>
+                    )
                     : <div className={styles["back-icon"]}></div>}
 
                 <div className={styles["item-list"]}>
@@ -49,7 +51,9 @@ export const FilePath: React.FC<Props> = (props) => {
                         separator={">"}
                         items={items}
                     />
+
                 </div>
+
             </div>
         </>
     )

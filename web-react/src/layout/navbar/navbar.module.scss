@@ -26,8 +26,6 @@ $navbarFontSize: 25px;
     float: left;
 
     .logo-icon {
-      width: $logoSize;
-      height: $logoSize;
       float: left;
       margin-top: 5px;
     }
@@ -44,7 +42,7 @@ $navbarFontSize: 25px;
     width: $smallLogoSize;
     height: $smallLogoSize;
     float: right;
-    margin: 10px 30px;
+    margin: 10px 10px;
     cursor: pointer;
   }
 

@@ -1,14 +1,16 @@
 import styles from "./header.module.scss";
 import {Button, Modal, Input, Dropdown, Space, message} from 'antd';
 import React, {useRef, useState} from "react";
-import {func} from "prop-types";
 import {createFolder, searchFile} from "@/api/file";
-import {removeToken} from "@/utils/auth.ts";
-import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
 import {useUserStore} from "@/store/user.ts";
 import {useNavigate} from "react-router-dom";
 import Pubsub from "pubsub-js";
+
+
+/**
+ * 文件区顶部菜单
+ * @constructor
+ */
 export function Header() {
     return (
         <div className={styles["header-container"]}>

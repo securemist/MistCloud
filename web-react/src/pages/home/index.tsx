@@ -1,5 +1,5 @@
 import {useParams} from "react-router";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Header} from "./header.tsx";
 import {FilePath} from "./file-path.tsx";
@@ -40,6 +40,7 @@ export function Home() {
             <Header/>
             {folderDetail && <FilePath path={folderDetail.path}/>}
             {folderDetail && <FileList fileList={folderDetail.fileList}/>}
+
         </div>
     )
 }

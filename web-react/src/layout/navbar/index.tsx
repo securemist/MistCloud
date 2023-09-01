@@ -1,11 +1,8 @@
 import styles from "./navbar.module.scss"
-import {ReactComponent as Logo} from "@/icons/logo.svg";
 import {Menu} from "./menu.tsx";
 
-import {ReactComponent as Avatar} from "@/icons/avatar.svg";
-import {ReactComponent as GithubLink} from "@/icons/github.svg";
-
 import {Dropdown, Space} from 'antd';
+import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 
 export function Navbar() {
     //头像框下拉菜单
@@ -30,30 +27,24 @@ export function Navbar() {
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
-                <Logo className={styles["logo-icon"]}/>
+                <SvgIcon name={"logo"} size={"40px"} className={styles["logo-icon"]}/>
                 <div className={styles["logo-title"]}>
                     <span>Mist Cloud</span>
                 </div>
             </div>
 
             <Menu/>
+
             {/*头像下拉框*/}
             <Dropdown menu={{items}} className={styles["drop-down"]}>
                 <a onClick={(e) => e.preventDefault()}>
                     <Space>
-                        <Avatar
-                            className={styles["logo-link"]}
-                        />
+                        <SvgIcon name={"avatar"} size={"40px"} className={styles["logo-link"]}/>
                     </Space>
                 </a>
             </Dropdown>
 
-            <GithubLink
-                className={styles["logo-link"]}
-                onClick={() => {
-                    window.open("https://github.com")
-                }}
-            />
+            <SvgIcon name={"github"} size={"40px"} className={styles["logo-link"]}/>
 
 
         </div>
