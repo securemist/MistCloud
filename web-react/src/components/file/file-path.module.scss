@@ -17,14 +17,12 @@ $fontHeight: 30px;
     margin: 5px 50px;
   }
 
-
   .item-list {
-    line-height: $catalogueHeight;
+    line-height: $fontHeight;
 
     .item {
       margin: 0 10px;
       @include menu-active;
     }
-
   }
 }

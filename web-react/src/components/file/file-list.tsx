@@ -3,12 +3,15 @@ import React from "react";
 import {File, FolderDetail} from "@/api/file/type.ts";
 import {ReactComponent as FolderSvg} from "@/icons/folder.svg";
 import {useNavigate} from "react-router-dom";
+import {useUserStore} from "@/store/user.ts";
 
 interface Props {
     fileList: File[]
 }
 
 export const FileList: React.FC<Props> = (props) => {
+    const userStore = useUserStore();
+
     const {fileList} = props;
     return (
         <div className={styles.container}>

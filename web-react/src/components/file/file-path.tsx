@@ -3,6 +3,7 @@ import React, {useRef} from "react";
 import {ReactComponent as BackSvg} from "@/icons/go-back.svg";
 import {FolderDetail, PathItem} from "@/api/file/type.ts";
 import {useNavigate} from "react-router-dom";
+import {Breadcrumb} from "antd";
 
 interface Props {
     path: PathItem[]
@@ -25,6 +26,17 @@ export const FilePath: React.FC<Props> = (props) => {
         }
     }
 
+    const items = []
+
+    path.forEach(item => {
+        items.push({
+            id: item.id,
+            title: (
+                <span className={styles["item"]}
+                      onClick={enterFolder(item.id)}>{item.name}</span>
+            )
+        })
+    })
     return (
         <>
             <div className={styles["catalogue-container"]}>
@@ -33,16 +45,10 @@ export const FilePath: React.FC<Props> = (props) => {
                     : <div className={styles["back-icon"]}></div>}
 
                 <div className={styles["item-list"]}>
-                    {
-                        path.map(item => {
-                            return (
-                                <span key={item.id}
-                                      className={styles.item}
-                                      onClick={enterFolder(item.id)}
-                                >{item.name}</span>
-                            )
-                        })
-                    }
+                    <Breadcrumb
+                        separator={">"}
+                        items={items}
+                    />
                 </div>
             </div>
         </>

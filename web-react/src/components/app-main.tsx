@@ -15,7 +15,6 @@ export function AppMain() {
                     <Route path={"/recycle"} element={<Recycle/>}/>
                 </Routes>
             </div>
-
         </div>
     )
 }

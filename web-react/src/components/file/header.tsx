@@ -6,11 +6,9 @@ import {createFolder, searchFile} from "@/api/file";
 import {removeToken} from "@/utils/auth.ts";
 import {Simulate} from "react-dom/test-utils";
 import input = Simulate.input;
-
-const newFolder = () => {
-
-}
-
+import {useUserStore} from "@/store/user.ts";
+import {useNavigate} from "react-router-dom";
+import Pubsub from "pubsub-js";
 export function Header() {
     return (
         <div className={styles["header-container"]}>
@@ -34,29 +32,36 @@ export function Header() {
 const CreateFolderDialog: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
-    const inputRef = useRef<any>(null)
-
+    const inputRef = useRef<any>(null);
+    const userStore = useUserStore();
+    const navigate = useNavigate();
     const showModal = () => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         // 发送请求创建文件
-        // validFoldername()
         // 拿到输入值
         const value = inputRef.current.input.value
         // 校验名字
         // validFolderName(value)
 
         // 发送请求
-        // createFolder()
-        messageApi.success("创建成功");
+        // 创建位置所在文件夹的id
+        const parentId = userStore.folderId;
+        try {
+            await createFolder(parentId, value);
+            messageApi.success("创建成功");
+            Pubsub.publish("refresh");
+        } catch (error) {
+            console.log(error);
+            messageApi.warning("创建失败")
+        }
         setIsModalOpen(false);
     };
 
     const handleCancel = () => {
         messageApi.warning("取消创建");
-
         setIsModalOpen(false);
     };
     return (
@@ -81,17 +86,13 @@ const UploadButton: React.FC = () => {
     const items = [
         {
             label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    上传文件
-                </a>
+                <a rel="noopener noreferrer">上传文件</a>
             ),
             key: '0',
         },
         {
             label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    上传文件夹
-                </a>
+                <a rel="noopener noreferrer">上传文件夹</a>
             ),
             key: '1',
         }
@@ -113,7 +114,7 @@ const UploadButton: React.FC = () => {
 const SearchBox: React.FC = () => {
 
     const {Search} = Input;
-    const onSearch = (value:string) => {
+    const onSearch = (value: string) => {
         // 发送请求搜索
         // searchFile(value)
     }
