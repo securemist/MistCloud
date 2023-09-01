@@ -1,0 +1,87 @@
+//
+$menuColor: #444343; // 菜单栏字体颜色
+$menuColorActive: #4e8cff; // 菜单栏字体hover颜色
+
+$themColorBlue: #4e8cff; //主题色
+$themeColorWhite: #ffffff; // 纯白色
+
+$themeTextHover: $themColorBlue;
+$bordershallowGray: rgba(0, 21, 41, 0.08); // 边框浅灰
+$borderDeepGray: rgba(0, 0, 0, 0.3);
+$boxShadowGray: rgba(0, 21, 41, .08); // 阴影浅灰
+
+$divideLineDeepGray: rgba(6, 6, 6, 0.08); // 深灰分割线
+
+$homeBackGround: #f3f4f6;
+$fileMenuTextColor: #606266;
+
+@mixin common {
+  --theme: light;
+
+  /* color */
+  --white: white;
+  --black: rgb(48, 48, 48);
+
+  --gray: rgb(250, 250, 250);
+  --gray-deep: rgba(0, 21, 41, 0.08);
+
+  --primary: rgb(29, 147, 171);
+  --second: rgb(231, 248, 255);
+  --hover-color: #f3f3f3;
+  --bar-color: rgba(0, 0, 0, 0.1);
+  --theme-color: var(--gray);
+  --blue: #4e8cff;
+  /* shadow */
+  --shadow: 50px 50px 100px 10px rgb(0, 0, 0, 0.1);
+  --card-shadow: 0px 2px 4px 0px rgb(0, 0, 0, 0.05);
+
+  --box-gray-shadow: 0 1px 2px rgba(0, 21, 41, 0.08);
+  /* stroke */
+  --border-in-light: 1px solid var(--gray-deep);
+
+}
+
+/**
+可点击的文字菜单，鼠标hover变色
+ */
+@mixin menu-active {
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--blue);
+  }
+}
+
+/**
+图标的pointer缩放效果
+ */
+@mixin img-pointer-zoom {
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+body {
+  @include common;
+
+  background-color: var(--gray);
+  color: var(--black);
+  margin: 0;
+  padding: 0;
+  height: var(--full-height);
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  touch-action: pan-x pan-y;
+  overflow: hidden;
+
+  @media only screen and (max-width: 600px) {
+    background-color: var(--second);
+  }
+}

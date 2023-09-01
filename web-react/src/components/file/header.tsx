@@ -1,0 +1,124 @@
+import styles from "./header.module.scss";
+import {Button, Modal, Input, Dropdown, Space, message} from 'antd';
+import React, {useRef, useState} from "react";
+import {func} from "prop-types";
+import {createFolder, searchFile} from "@/api/file";
+import {removeToken} from "@/utils/auth.ts";
+import {Simulate} from "react-dom/test-utils";
+import input = Simulate.input;
+
+const newFolder = () => {
+
+}
+
+export function Header() {
+    return (
+        <div className={styles["header-container"]}>
+            <div className={styles["item"]}>
+                <CreateFolderDialog/>
+            </div>
+            <div className={styles["item"]}>
+                <UploadButton/>
+            </div>
+            <div className={styles["search-box"]}>
+                <SearchBox/>
+            </div>
+        </div>
+    )
+}
+
+/**
+ * 新建文件夹button + dialog
+ * @constructor
+ */
+const CreateFolderDialog: React.FC = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+    const inputRef = useRef<any>(null)
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        // 发送请求创建文件
+        // validFoldername()
+        // 拿到输入值
+        const value = inputRef.current.input.value
+        // 校验名字
+        // validFolderName(value)
+
+        // 发送请求
+        // createFolder()
+        messageApi.success("创建成功");
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        messageApi.warning("取消创建");
+
+        setIsModalOpen(false);
+    };
+    return (
+        <>
+            {contextHolder}
+            <Button type="primary" onClick={showModal}>
+                新建文件夹
+            </Button>
+            <Modal title="请输入文件夹名称" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Input size="large" placeholder={"large size"} ref={inputRef} defaultValue={"原文件"}/>
+            </Modal>
+        </>
+    );
+}
+
+/**
+ * 上传按钮
+ * @constructor
+ */
+const UploadButton: React.FC = () => {
+
+    const items = [
+        {
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    上传文件
+                </a>
+            ),
+            key: '0',
+        },
+        {
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    上传文件夹
+                </a>
+            ),
+            key: '1',
+        }
+    ]
+    return (
+        <Dropdown menu={{items}} placement={"bottom"}>
+            <a onClick={(e) => e.preventDefault()}>
+                <Button type="primary"> 上传</Button>
+            </a>
+        </Dropdown>
+    )
+
+}
+
+/**
+ * 搜索框
+ * @constructor
+ */
+const SearchBox: React.FC = () => {
+
+    const {Search} = Input;
+    const onSearch = (value:string) => {
+        // 发送请求搜索
+        // searchFile(value)
+    }
+
+    return (
+        <Search placeholder="input search text" onSearch={onSearch} enterButton/>
+    )
+}

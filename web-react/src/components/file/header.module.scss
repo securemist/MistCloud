@@ -1,0 +1,17 @@
+$headerHeight: 40px;
+
+.header-container {
+  height: $headerHeight;
+  border-bottom: var( --border-in-light);
+
+  .item {
+    float: left;
+    margin:  5px 20px;
+  }
+
+  .search-box {
+    float: right;
+    width: 200px;
+    margin: 5px 20px;
+  }
+}

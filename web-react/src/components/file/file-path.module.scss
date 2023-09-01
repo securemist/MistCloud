@@ -1,0 +1,30 @@
+@import "@/styles/global";
+
+$catalogueHeight: 30px;
+$backIconSize: 20px;
+$fontHeight: 30px;
+
+.catalogue-container {
+  height: $catalogueHeight;
+  border-bottom: var(--border-in-light);
+  clear: both;
+
+  .back-icon {
+    @include img-pointer-zoom;
+    width: $backIconSize;
+    height: $backIconSize;
+    float: left;
+    margin: 5px 50px;
+  }
+
+
+  .item-list {
+    line-height: $catalogueHeight;
+
+    .item {
+      margin: 0 10px;
+      @include menu-active;
+    }
+
+  }
+}

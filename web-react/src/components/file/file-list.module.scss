@@ -1,0 +1,62 @@
+.container {
+  margin-left: 75px;
+  margin-right: 75px;
+
+  //min-height: 60vh;
+  //height: 200px;
+
+
+  flex-basis: 33.33%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+$fileBoxSize: 130px;
+$fileImgSize: 65px;
+$fileNameFontSize: 14px;
+.file-box {
+  margin: 10px 10px;
+  width: $fileBoxSize;
+  height: $fileBoxSize;
+
+  // 文件列表浮现动画
+  opacity: 0;
+  animation: fade-in-up 0.5s ease-out;
+  animation-fill-mode: forwards;
+
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .file-img {
+    width: $fileImgSize;
+    height: $fileImgSize;
+    margin-left: 33px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  .file-name {
+    float: right;
+    width: 130px;
+    margin-top: 5px;
+    text-align: center;
+    font-size: $fileNameFontSize;
+
+    // 溢出文字用 ... 替代
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-default-color);
+    cursor: pointer;
+  }
+
+
+}
