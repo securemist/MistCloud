@@ -1,4 +1,4 @@
-import styles from "./app-main.module.scss";
+import styles from "./layout.module.scss";
 import {Route, Routes} from "react-router-dom";
 import {Home} from "@/pages/home";
 import {Recycle} from "@/pages/recycle";
@@ -11,13 +11,9 @@ import {Footer} from "@/layout/footer";
 export function Layout() {
     return (
         <div className={styles.main}>
-            <div className={styles.content}>
-                <div className={styles.app}>
-                    <Navbar/>
-                    <AppMain/>
-                    <Footer/>
-                </div>
-            </div>
+            <Navbar/>
+            <AppMain/>
+            <Footer/>
         </div>
     )
 }
