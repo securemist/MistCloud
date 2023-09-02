@@ -11,8 +11,10 @@ import Pubsub from "pubsub-js";
 
 export function Home() {
     // 从路径中获取文件夹id
+    const userStore = useUserStore();
     const {id} = useParams();
-    useUserStore.getState().setFolderId(id);
+    // userStore.setFolderId(id);
+
     const [folderDetail, setFolderDetail] = useState<FolderDetail>(null);
     const getFiles = async () => {
         try {
@@ -29,6 +31,8 @@ export function Home() {
 
 
     useEffect(() => {
+    console.log(userStore)
+
         const refresh = () => {
             // TODO
         }

@@ -8,40 +8,20 @@ export interface UserStore {
     checkView: () => void;
 
     setFolderId: (id: string) => void;
-    selectedFiles: Set<string>;
-    addFile: (ids: string[]) => void;
-    removeFile: (ids: string[]) => void;
-    clearFiles: () => void;
 }
 
-const arr = ["sa", "asd"]
-export const useUserStore = create<UserStore>((set, get) => ({
+
+export const useUserStore = create(persist<UserStore>((set, get) => ({
+    iconView: true,
     folderId: "",
-    iconView: false,
     selectedFiles: new Set<string>(),
     setFolderId: (id: string) => {
         set(state => ({folderId: id}));
-        Pubsub.publish("refresh");
     },
     checkView: () => {
         set(state => ({iconView: !get().iconView}));
+        console.log(1)
     },
-    addFile: (ids: string[]) => {
-        const set0 = get().selectedFiles;
-        ids.forEach(id => {
-            set0.add(id);
-        })
-        set(state => ({selectedFiles: set0}))
-    },
-    removeFile: (ids: string[]) => {
-        const set0 = get().selectedFiles;
-        ids.forEach(id => {
-            set0.delete(id);
-        })
-        set(state => ({selectedFiles: set0}))
-    },
-    clearFiles: () => {
-        set(state => ({selectedFiles: new Set<string>()}))
-    }
+}), {
+    name: "userConfig",
 }))
-

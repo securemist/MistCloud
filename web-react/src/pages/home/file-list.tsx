@@ -6,7 +6,7 @@ import {Dropdown, MenuProps, Popover} from "antd";
 import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 import {useUserStore} from "@/store/user.ts";
 import {timestampToTime} from "@/utils/common.ts";
-import boolean from "async-validator/dist-types/validator/boolean";
+import {deleteFile} from "@/api/file";
 
 /**
  * 文件列表
@@ -65,17 +65,19 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
     const view = userStore.iconView;
     const [iconView, setIconView] = useState(view);
     useEffect(() => {
-            setIconView(view);
+            // setIconView(view);
+            // console.log(iconView)
         },
         [view])
 
     //监听已经选中的文件set集合
-    const selectedFiles = useUserStore.getState().selectedFiles;
-    const [set, setSelectFilesSet] = useState(selectedFiles);
-    useEffect(() => {
-            setSelectFilesSet(selectedFiles)
-        },
-        [selectedFiles.size])
+    // const selectedFiles: Set<string> = userStore.selectedFiles;
+    // const [set, setSelectFilesSet] = useState(selectedFiles);
+
+    // useEffect(() => {
+    //         setSelectFilesSet(selectedFiles)
+    //     },
+    //     [selectedFiles.size])
 
     return (
         <div className={styles.container}>
@@ -98,17 +100,17 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                             {
                                 iconView ?
                                     <div className={styles["icon-view"]}>
-                                        <FileIconView file={file}  isSelected={set.has(file.id)}
+                                        <FileIconView file={file} isSelected={false}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
-                                                      />
+                                        />
                                     </div>
                                     :
                                     <div className={styles["list-view"]}>
-                                        <FileListView file={file} isSelected={set.has(file.id)}
+                                        <FileListView file={file} isSelected={false}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
-                                            />
+                                        />
                                     </div>
                             }
                         </div>
@@ -208,7 +210,7 @@ const FileIconView: React.FC<FileListProps> = (props) => {
         },
         {
             key: '5', label: <a onClick={() => {
-                deleteFile(file.id)
+                handleDelete(file.id)
             }}>删除</a>,
         },
     ];
@@ -263,5 +265,12 @@ const copy = (id: string) => {
 const move = (id: string) => {
 }
 
-const deleteFile = (id: string) => {
+const handleDelete = async (id: string) => {
+    console.log(id)
+    try {
+        await deleteFile(id, false)
+        location.reload();
+    } catch (error) {
+        console.log(error)
+    }
 }

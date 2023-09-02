@@ -43,6 +43,7 @@ export const FilePath: React.FC<Props> = (props) => {
         })
     })
 
+
     const iconView = userStore.iconView;
     // 切换视图
     const changeView = () => {
