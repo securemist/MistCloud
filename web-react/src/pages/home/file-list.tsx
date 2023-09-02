@@ -7,6 +7,7 @@ import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 import {useUserStore} from "@/store/user.ts";
 import {timestampToTime} from "@/utils/common.ts";
 import {deleteFile} from "@/api/file";
+import {useFileSelectedStore} from "@/store/file.ts";
 
 /**
  * 文件列表
@@ -16,6 +17,8 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
     const {fileList} = props;
     const userStore = useUserStore();
     const navigate = useNavigate();
+    const fileSelectedStore = useFileSelectedStore();
+
     // 屏蔽鼠标右键点击事件
     document.oncontextmenu = function (e) {
         return false;
@@ -24,20 +27,19 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
     // 双击进入文件夹
     const enterFolder = (id: string) => {
         navigate(`/home/${id}`);
-        userStore.clearFiles();
+        fileSelectedStore.clearFiles();
     }
 
     // 单击选中文件
     const selectFile = (id: string) => {
-        const selectedFiles = userStore.selectedFiles;
+        const selectedFiles = fileSelectedStore.getFileSet();
         // 如果已经选中就取消选中
         if (selectedFiles.has(id)) {
-            const ids: string[] = [id]
-            userStore.removeFile(ids)
+            fileSelectedStore.removeFile(id);
             return
         }
-        const ids: string[] = [id]
-        userStore.addFile(ids)
+        fileSelectedStore.addFile(id);
+        // console.log(fileSelectedStore.getFileSet())
     }
 
     /**
@@ -48,7 +50,7 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
     const clickFile = (id: string) => {
         if (clicked) { // 双击
             enterFolder(id);
-            clicked = false
+            clicked = false;
             clearTimeout(timeOutId);
         } else {  // 单击
             clicked = true;
@@ -56,8 +58,7 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                 clearTimeout(timeOutId);
                 clicked = false;
                 selectFile(id);
-
-            }, 500); // 设置延迟时间，单位为毫秒
+            }, 300); // 设置延迟时间，单位为毫秒
         }
     };
 
@@ -65,19 +66,18 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
     const view = userStore.iconView;
     const [iconView, setIconView] = useState(view);
     useEffect(() => {
-            // setIconView(view);
-            // console.log(iconView)
+            setIconView(view);
         },
         [view])
 
     //监听已经选中的文件set集合
-    // const selectedFiles: Set<string> = userStore.selectedFiles;
-    // const [set, setSelectFilesSet] = useState(selectedFiles);
+    const set = fileSelectedStore.getFileSet();
+    const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
 
-    // useEffect(() => {
-    //         setSelectFilesSet(selectedFiles)
-    //     },
-    //     [selectedFiles.size])
+    useEffect(() => {
+            setSelectedFiles(set);
+        },
+        [set.size])
 
     return (
         <div className={styles.container}>
@@ -100,14 +100,14 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                             {
                                 iconView ?
                                     <div className={styles["icon-view"]}>
-                                        <FileIconView file={file} isSelected={false}
+                                        <FileIconView file={file} isSelected={selectedFiles.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
                                         />
                                     </div>
                                     :
                                     <div className={styles["list-view"]}>
-                                        <FileListView file={file} isSelected={false}
+                                        <FileListView file={file} isSelected={selectedFiles.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
                                         />
@@ -226,7 +226,6 @@ const FileIconView: React.FC<FileListProps> = (props) => {
     return (
         <div className={styles["file-box"]}>
             <input type={"checkbox"} className={styles["checkbox"]}
-                   defaultChecked={false}
                    style={isSelected ? {display: "block"} : {}}
                    checked={isSelected}
                    onChange={() => {

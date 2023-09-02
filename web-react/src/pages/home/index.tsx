@@ -29,10 +29,7 @@ export function Home() {
         getFiles();
     }, [id])
 
-
     useEffect(() => {
-    console.log(userStore)
-
         const refresh = () => {
             // TODO
         }
