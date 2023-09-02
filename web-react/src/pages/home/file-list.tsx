@@ -100,14 +100,14 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                                         <FileIconView file={file} key={file.id} isSelected={set.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
-                                                      enterFolder={enterFolder}/>
+                                                      />
                                     </div>
                                     :
                                     <div className={styles["list-view"]}>
                                         <FileListView file={file} key={file.id} isSelected={set.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
-                                                      enterFolder={enterFolder}/>
+                                            />
                                     </div>
                             }
                         </div>
@@ -124,7 +124,6 @@ interface FileListProps {
     isSelected: boolean,
     clickFile: (id: string) => void,
     selectFile: (id: string) => void,
-    enterFolder: (id: string) => void,
 }
 
 /**

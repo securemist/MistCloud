@@ -1,11 +1,13 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
+import Pubsub from "pubsub-js";
 
 export interface UserStore {
     folderId: string;
     iconView: boolean;
     checkView: () => void;
 
+    enterFolder: (id: string) => void;
     selectedFiles: Set<string>;
     addFile: (ids: string[]) => void;
     removeFile: (ids: string[]) => void;
@@ -17,6 +19,10 @@ export const useUserStore = create<UserStore>((set, get) => ({
     folderId: "",
     iconView: false,
     selectedFiles: new Set<string>(),
+    enterFolder: (id: string) => {
+        set(state => ({folderId: id}));
+        Pubsub.publish("refresh");
+    },
     checkView: () => {
         set(state => ({iconView: !get().iconView}));
     },
