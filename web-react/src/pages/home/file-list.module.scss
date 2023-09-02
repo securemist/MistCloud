@@ -1,29 +1,17 @@
-.container {
-  margin-left: 75px;
-  margin-right: 75px;
+@import "@/styles/global";
 
-  //min-height: 60vh;
-  //height: 200px;
-
-  overflow-x: visible;
-  flex-basis: 33.33%;
-  display: flex;
-  flex-wrap: wrap;
+@mixin list-checkbox {
+  float: left;
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 
-$fileBoxSize: 130px;
-$fileImgSize: 65px;
-$fileNameFontSize: 14px;
-.file-box {
-  margin: 10px 10px;
-  width: $fileBoxSize;
-  height: $fileBoxSize;
-
+@mixin file-list-animation {
   // 文件列表浮现动画
   opacity: 0;
   animation: fade-in-up 0.5s ease-out;
   animation-fill-mode: forwards;
-
   @keyframes fade-in-up {
     0% {
       opacity: 0;
@@ -35,35 +23,172 @@ $fileNameFontSize: 14px;
     }
   }
 
-  .file-img {
-    width: $fileImgSize;
-    height: $fileImgSize;
-    margin-left: 33px;
-    margin-top: 20px;
+}
+
+@mixin IconView {
+  $fileBoxSize: 130px;
+  $fileImgSize: 65px;
+  $fileNameFontSize: 14px;
+
+
+  // 当filebox鼠标悬浮的时候checkbox才显示
+  .file-box {
+    margin: 10px 10px;
+    width: $fileBoxSize;
+    height: $fileBoxSize;
+    float: left;
+    @include file-list-animation;
+
+    .checkbox {
+      display: none;
+      width: 15px;
+      height: 15px;
+      position: absolute;
+    }
+
+    &:hover .checkbox {
+      display: block;
+    }
+
+    .file-img {
+      width: $fileImgSize;
+      height: $fileImgSize;
+      margin-left: 33px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    &:hover {
+      // 触发这个的情况下，让selected-border显示
+      transition: box-shadow 0.1s ease;
+      box-shadow: var(--box-deep-gray-shadow);
+    }
+
+
+    .file-name {
+      float: right;
+      width: 130px;
+      margin-top: 5px;
+      text-align: center;
+      font-size: $fileNameFontSize;
+
+      // 溢出文字用 ... 替代
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-default-color);
+      cursor: pointer;
+    }
+  }
+
+
+}
+
+@mixin ListView {
+  $fileBoxHeight: 50px;
+  $fileImgSize: 30px;
+  $fileNameFontSize: 14px;
+
+  .file-box {
+    height: $fileBoxHeight;
+    line-height: $fileBoxHeight;
+    clear: both;
+    border-bottom: var(--border-in-light);
     cursor: pointer;
+    @include file-list-animation;
+
+    // 鼠标悬停给整个div
+    &:hover {
+      background-color: var(--gray-deep);
+    }
+
+    .checkbox {
+      @include list-checkbox;
+      margin-left: 20px;
+      margin-top: 20px;
+    }
+
+    .file-img {
+      width: $fileImgSize;
+      height: $fileImgSize;
+      margin-top: 10px;
+      float: left;
+      margin-left: 20px;
+    }
+
+    .file-name {
+      float: left;
+      margin-left: 10px;
+      width: 400px;
+    }
+
+    .options-container {
+      float: right;
+      width: 150px;
+      //background-color: #4e8cff;
+
+      height: $fileBoxHeight;
+      margin-right: 30px;
+
+      .icon {
+        margin-top: 17px;
+        float: left;
+        margin: 10px;
+        @include img-pointer-zoom;
+      }
+
+    }
+
+    .file-size {
+      float: right;
+      margin-right: 50px;
+      font-size: 13px;
+    }
+
+    .modify-time {
+      float: right;
+      width: 150px;
+      font-size: 13px;
+    }
   }
 
-  &:hover {
-    // 触发这个的情况下，让selected-border显示
-    transition: box-shadow 0.1s ease;
-    box-shadow: var(--box-deep-gray-shadow);
+}
+
+
+/**
+两种视图对应的样式
+ */
+.icon-view {
+  @include IconView;
+}
+
+.list-view {
+  @include ListView;
+}
+
+.navbar {
+  $navbarHeight: 30px;
+  height: $navbarHeight;
+  line-height: $navbarHeight;
+  width: 1200px;
+  font-size: 14px;
+  border-bottom: var(--border-in-light);
+
+  .navbar-checkbox {
+    @include list-checkbox;
+    margin-left: 20px;
+    margin-top: 8px;
   }
 
-
-.file-name {
-    float: right;
-    width: 130px;
-    margin-top: 5px;
-    text-align: center;
-    font-size: $fileNameFontSize;
-
-    // 溢出文字用 ... 替代
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-default-color);
-    cursor: pointer;
+  .navbar-name {
+    margin-left: 30px;
   }
 
+  .navbar-options {
+    margin-left: 855px;
+  }
 
+  .navbar-time {
+    margin-left: 80px;
+  }
 }
