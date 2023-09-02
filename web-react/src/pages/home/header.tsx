@@ -5,21 +5,21 @@ import {createFolder, searchFile} from "@/api/file";
 import {useUserStore} from "@/store/user.ts";
 import {useNavigate} from "react-router-dom";
 import Pubsub from "pubsub-js";
+import {validFolderName} from "@/utils/valid.ts";
 
 /**
  * 文件区顶部菜单
  * @constructor
  */
 export function Header() {
-    const refresh = () => {
-         Pubsub.publish("refresh");
-    }
 
     return (
         <div className={styles["header-container"]}>
             <CreateFolderDialog className={styles["item"]}/>
             <UploadButton className={styles["item"]}/>
-            <Button className={styles["item"]} onClick={refresh}>刷新</Button>
+            <Button className={styles["item"]} onClick={() => {
+                location.reload()
+            }}>刷新</Button>
             <SearchBox className={styles["search-box"]}/>
         </div>
     )
@@ -44,20 +44,23 @@ const CreateFolderDialog = forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivEle
         // 拿到输入值
         const value = inputRef.current.input.value
         // 校验名字
-        // validFolderName(value)
+        const msg = validFolderName(value)
+        if (msg != undefined) {
+            messageApi.error(msg);
+            return;
+        }
 
         // 发送请求
         // 创建位置所在文件夹的id
         const parentId = userStore.folderId;
         try {
             await createFolder(parentId, value);
-            messageApi.success("创建成功");
-            Pubsub.publish("refresh");
+            location.reload();
+            setIsModalOpen(false);
         } catch (error) {
             console.log(error);
-            messageApi.warning("创建失败")
+            messageApi.warning(error.message)
         }
-        setIsModalOpen(false);
     };
 
     const handleCancel = () => {
@@ -70,7 +73,7 @@ const CreateFolderDialog = forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivEle
                 新建文件夹
             </Button>
             <Modal title="请输入文件夹名称" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Input size="large" placeholder={"large size"} ref={inputRef} defaultValue={"原文件"}/>
+                <Input size="large" placeholder={"large size"} ref={inputRef} defaultValue={""}/>
             </Modal>
         </div>
     );

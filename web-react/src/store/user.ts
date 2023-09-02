@@ -7,7 +7,7 @@ export interface UserStore {
     iconView: boolean;
     checkView: () => void;
 
-    enterFolder: (id: string) => void;
+    setFolderId: (id: string) => void;
     selectedFiles: Set<string>;
     addFile: (ids: string[]) => void;
     removeFile: (ids: string[]) => void;
@@ -19,7 +19,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     folderId: "",
     iconView: false,
     selectedFiles: new Set<string>(),
-    enterFolder: (id: string) => {
+    setFolderId: (id: string) => {
         set(state => ({folderId: id}));
         Pubsub.publish("refresh");
     },

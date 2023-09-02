@@ -56,7 +56,8 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                 clearTimeout(timeOutId);
                 clicked = false;
                 selectFile(id);
-            }, 200); // 设置延迟时间，单位为毫秒
+
+            }, 500); // 设置延迟时间，单位为毫秒
         }
     };
 
@@ -93,18 +94,18 @@ export const FileList: React.FC<{ fileList: File[] }> = (props) => {
                 // 文件列表
                 fileList.map(file => {
                     return (
-                        <div>
+                        <div key={file.id}>
                             {
                                 iconView ?
                                     <div className={styles["icon-view"]}>
-                                        <FileIconView file={file} key={file.id} isSelected={set.has(file.id)}
+                                        <FileIconView file={file}  isSelected={set.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
                                                       />
                                     </div>
                                     :
                                     <div className={styles["list-view"]}>
-                                        <FileListView file={file} key={file.id} isSelected={set.has(file.id)}
+                                        <FileListView file={file} isSelected={set.has(file.id)}
                                                       clickFile={clickFile}
                                                       selectFile={selectFile}
                                             />
@@ -132,8 +133,6 @@ interface FileListProps {
  */
 const FileListView: React.FC<FileListProps> = (props) => {
     const {file, isSelected, clickFile, selectFile} = props;
-    const navigate = useNavigate();
-    const userStore = useUserStore();
 
     const items: MenuProps['items'] = [
         {
@@ -159,7 +158,6 @@ const FileListView: React.FC<FileListProps> = (props) => {
     return (
         <div className={styles["file-box"]}>
             <input type={"checkbox"} className={styles["checkbox"]}
-                   defaultChecked={false}
                    checked={isSelected}
                    onChange={() => {
                        selectFile(file.id)
