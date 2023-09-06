@@ -10,6 +10,13 @@ spring:
     url: jdbc:mysql://localhost:3306/mist_cloud_dev?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
     password: root
+  sql: # 总是执行初始化脚本
+    init:
+      mode: never
+      continue-on-error: false # 执行sql出错就终止
+      platform: mysql
+      schema-locations: classpath:db/schema/mist_cloud_schema.sql
+      data-locations: classpath:db/data/mist_cloud_data.sql
   mail:
     host: smtp.qq.com
     port: 465
@@ -40,7 +47,7 @@ jasypt:
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
-  type-aliases-package: com.mist.cloud.infrastructure.DO
+  type-aliases-package: com.mist.cloud.infrastructure.entity
   configuration:
     #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
@@ -48,7 +55,7 @@ mybatis:
 
 logging:
   level:
-    com.mist.cloud.infrastructure.dao: DEBUG
+    com.mist.cloud.infrastructure.mapper: DEBUG
 
 file:
   base_path: /Users/securemist/Downloads/mist-cloud

@@ -3,7 +3,7 @@ package com.mist.cloud.aggregate.file.service.impl;
 import com.mist.cloud.common.exception.file.FileException;
 import com.mist.cloud.aggregate.file.service.FileServiceSupport;
 import com.mist.cloud.aggregate.file.service.IFileStrategy;
-import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.infrastructure.entity.File;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 @Component
 @Slf4j
-public class DataSourceApplicationText implements ApplicationContextAware {
+public class ApplicationInit implements ApplicationContextAware {
 
     private static ApplicationContext context;
 

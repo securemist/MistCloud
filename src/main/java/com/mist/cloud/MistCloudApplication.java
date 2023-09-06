@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@MapperScan("com.mist.cloud.infrastructure.dao")
+@MapperScan("com.mist.cloud.infrastructure.mapper")
 public class MistCloudApplication {
 
     public static void main(String[] args) {

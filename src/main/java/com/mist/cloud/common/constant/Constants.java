@@ -21,6 +21,11 @@ public class Constants {
     public static final String DEFAULT_SUCCESS_MSG = "请求成功";
     public static final String DEFAULT_FAILED_MSG = "服务器异常";
 
+    // 邮箱验证码有效期
+    public static final Long MAIL_EXPIRE_TIME = 5 * 60 * 1000L;
+
+    // 默认根文件夹名称
+    public static final String ROOT_FOLDER_NAME = "全部文件";
 
     @Getter
     @AllArgsConstructor

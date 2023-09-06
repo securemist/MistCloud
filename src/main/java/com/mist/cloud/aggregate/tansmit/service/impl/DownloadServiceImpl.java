@@ -3,8 +3,8 @@ package com.mist.cloud.aggregate.tansmit.service.impl;
 import com.mist.cloud.aggregate.tansmit.service.IDownloadService;
 import com.mist.cloud.common.utils.FileUtils;
 import com.mist.cloud.common.utils.ZipUtils;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.aggregate.tansmit.service.TransmitSupport;
 import org.springframework.stereotype.Service;
 

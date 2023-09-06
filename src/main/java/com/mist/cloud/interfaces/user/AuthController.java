@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import com.mist.cloud.aggregate.user.mode.req.LoginReq;
 import com.mist.cloud.aggregate.user.mode.res.LoginResponse;
 import com.mist.cloud.aggregate.user.service.UserService;
+import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;
 import com.mist.cloud.common.result.SuccessResult;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,6 +32,10 @@ public class AuthController {
     public Result login(@RequestBody LoginReq loginReq) {
 
         Long folderId = userService.login(loginReq.getUsername(), loginReq.getPassword());
+
+        if(folderId == null) {
+            return new FailedResult("用户名或密码错误");
+        }
 
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
 

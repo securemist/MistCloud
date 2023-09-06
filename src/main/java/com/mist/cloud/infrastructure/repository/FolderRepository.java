@@ -4,10 +4,10 @@ import com.mist.cloud.common.config.IdGenerator;
 import com.mist.cloud.common.constant.Constants;
 import com.mist.cloud.aggregate.file.model.entity.*;
 import com.mist.cloud.aggregate.file.repository.IFolderRepository;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
-import com.mist.cloud.infrastructure.dao.FileMapper;
-import com.mist.cloud.infrastructure.dao.FolderMapper;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.infrastructure.mapper.FileMapper;
+import com.mist.cloud.infrastructure.mapper.FolderMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class FolderRepository implements IFolderRepository {
-    @Resource
+    @Resource()
     private FolderMapper folderMapper;
     @Resource
     private FileMapper fileMapper;
@@ -65,7 +65,6 @@ public class FolderRepository implements IFolderRepository {
 
         return id;
     }
-
 
 
     @Override
@@ -148,5 +147,20 @@ public class FolderRepository implements IFolderRepository {
     public List<Folder> searchByName(String value) {
 
         return folderMapper.search(value);
+    }
+
+    @Override
+    public void createRootFolder(Long userId) {
+        Long id = IdGenerator.fileId();
+
+        FolderSelectReq folderCreateReq = FolderSelectReq.builder()
+                .userId(Constants.DEFAULT_USERID)
+                .id(id)
+                .userId(userId)
+                .parentId(0L)
+                .folderName(Constants.ROOT_FOLDER_NAME)
+                .build();
+
+        folderMapper.createFolder(folderCreateReq);
     }
 }
