@@ -3,7 +3,7 @@ package com.mist.cloud.interfaces.transmit;
 import com.mist.cloud.aggregate.tansmit.service.IDownloadService;
 import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.DO.File;
 import io.swagger.annotations.ApiImplicitParam;
 import org.apache.ibatis.annotations.Lang;
 import org.springframework.http.HttpHeaders;

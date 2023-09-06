@@ -1,6 +1,6 @@
-package com.mist.cloud.infrastructure.mapper;
+package com.mist.cloud.infrastructure.dao;
 
-import com.mist.cloud.infrastructure.entity.User;
+import com.mist.cloud.infrastructure.DO.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

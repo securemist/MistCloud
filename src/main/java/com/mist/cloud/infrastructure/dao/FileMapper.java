@@ -1,7 +1,7 @@
-package com.mist.cloud.infrastructure.mapper;
+package com.mist.cloud.infrastructure.dao;
 
 import com.mist.cloud.aggregate.file.model.entity.FileCopyReq;
-import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.aggregate.file.model.entity.FileSelectReq;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,7 +1,7 @@
 package com.mist.cloud.aggregate.file.repository;
 
 import com.mist.cloud.aggregate.file.model.entity.FileSelectReq;
-import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.DO.File;
 
 import java.util.List;
 

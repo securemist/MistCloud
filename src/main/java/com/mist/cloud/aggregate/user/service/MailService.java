@@ -1,8 +1,6 @@
 package com.mist.cloud.aggregate.user.service;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.mist.cloud.common.constant.Constants;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,8 +8,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,30 +22,24 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String from;
 
+    private ConcurrentHashMap<String, String> mailCodeMap = new ConcurrentHashMap<>();
 
-    private Long expireTime = Constants.MAIL_EXPIRE_TIME;
+    public boolean verify(String email, String mailCode) {
+        String code = mailCodeMap.get(email);
+        mailCodeMap.remove(mailCode);
 
-    private ConcurrentHashMap<String, Mail> mailCodeMap = new ConcurrentHashMap<>();
-
-    public String verify(String email, String mailCode) {
-        Mail mail = mailCodeMap.get(email);
-
-        if (mail == null) {
-            return "验证码已过期";
+        if (code == null || !code.equals(mailCode)) {
+            return false;
         }
 
-        if (!mail.code.equals(mailCode)) {
-            return "验证码错误";
-        }
-        mailCodeMap.remove(email);
-        return "";
+        return true;
     }
 
     public void sendMail(String email) {
         String code = generateCode();
         // 存入map TODO 这里需要设置过期时间
 
-        mailCodeMap.put(email, new Mail(code));
+        mailCodeMap.put(email, code);
         String text = "这是您的验证码(5分钟有效)：" + code;
 
         SimpleMailMessage message = new SimpleMailMessage();
@@ -57,7 +47,6 @@ public class MailService {
         message.setCc(email);
         message.setSubject("验证码");
         message.setText(text);
-
         mailSender.send(message);
     }
 
@@ -68,19 +57,5 @@ public class MailService {
         int code = random.nextInt(90000) + 10000; // 生成 10000 到 99999 之间的随机数
 
         return String.valueOf(code);
-    }
-
-    @Data
-    static class Mail {
-
-        Long sendTime;
-
-        String code;
-
-        public Mail(String code) {
-            this.code = code;
-            this.sendTime = System.currentTimeMillis();
-        }
-
     }
 }

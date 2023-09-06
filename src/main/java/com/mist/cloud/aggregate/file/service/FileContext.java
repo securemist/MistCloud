@@ -10,8 +10,8 @@ import com.mist.cloud.aggregate.file.model.tree.FolderTreeNode;
 import com.mist.cloud.aggregate.file.model.tree.SubFolder;
 import com.mist.cloud.aggregate.file.repository.IFileRepository;
 import com.mist.cloud.aggregate.file.repository.IFolderRepository;
-import com.mist.cloud.infrastructure.entity.File;
-import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.infrastructure.DO.Folder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

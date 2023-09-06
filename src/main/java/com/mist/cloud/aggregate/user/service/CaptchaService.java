@@ -30,11 +30,11 @@ public class CaptchaService {
      * @return UUID 用户登陆表示  Icaptcha验证码
      */
 
-    private Map<String, String> captchaMap;
+    private Map<String, String> captcharMap;
 
     @PostConstruct
     public void init() {
-        captchaMap = new ConcurrentHashMap<>();
+        captcharMap = new ConcurrentHashMap<>();
     }
 
     public CaptchaEntity createCode(String lastUid) {
@@ -43,28 +43,29 @@ public class CaptchaService {
 
         // 刷新验证码
         if (lastUid != null) {
-            captchaMap.put(lastUid, code);
+            captcharMap.put(lastUid, code);
             return new CaptchaEntity(lastUid, shearCaptcha.getImageBase64Data());
         }
 
         // 第一次创建验证码
         String uuid = UUID.randomUUID().toString();
-        captchaMap.put(uuid, code);
+        captcharMap.put(uuid, code);
 
         String imageBase64Data = shearCaptcha.getImageBase64Data();
         return new CaptchaEntity(uuid, shearCaptcha.getImageBase64Data());
     }
 
     public boolean verify(String uuid, String userInputCode) {
-        String code = captchaMap.get(uuid);
+        String code = captcharMap.get(uuid);
 
         // 获取不到用户uid信息
-        if (code == null || !code.equals(userInputCode)) {
+        if (code == null) {
             return false;
         }
 
-        // 移除验证码
-        captchaMap.remove(uuid);
-        return true;
+        // 不管成功与否都删除验证码
+        captcharMap.remove(uuid);
+
+        return code.equals(userInputCode);
     }
 }

@@ -40,9 +40,8 @@ public class RegisterController {
         return new SuccessResult(reason);
     }
 
-    @GetMapping("/code")
-    @ApiOperation(value = "获取图片验证码")
-    public Result code(@RequestParam String uid) throws IOException {
+    @PostMapping("/code")
+    public Result code(@RequestBody String uid) throws IOException {
         // 创建验证码
         CaptchaEntity captchaEntity = captchaService.createCode(uid);
 
@@ -54,9 +53,14 @@ public class RegisterController {
     }
 
 
+    /**
+     * 获取验证码接口
+     *
+     * @param mailReq
+     * @return
+     */
     @PostMapping("/mail")
-    @ApiOperation(value = "校验图片验证码同时发送邮件验证码")
-    public Result mail(@RequestBody MailReq mailReq) {
+    public Result mail(@RequestParam MailReq mailReq) {
         // 校验验证码
         boolean ok = captchaService.verify(mailReq.getUid(), mailReq.getCode());
 
@@ -73,13 +77,13 @@ public class RegisterController {
     @PostMapping("/exec")
     public Result register(@RequestBody RegisterReq registerReq) {
         // 校验邮箱验证码
-        String reason = mailService.verify(registerReq.getEmail(), registerReq.getMailCode());
-        if (!"".equals(reason)) {
-            return new FailedResult(reason);
+        boolean ok  = mailService.verify(registerReq.getEmail(), registerReq.getMailCode());
+        if(!ok) {
+            return new FailedResult("邮箱验证码错误");
         }
 
         // 开始注册
-        userService.register(registerReq.getUsername(), registerReq.getPassword(), registerReq.getEmail());
+        userService.register(registerReq.getUsername(), registerReq.getPassword(), registerReq.getPassword());
 
         return new SuccessResult();
     }

@@ -1,10 +1,11 @@
-package com.mist.cloud.infrastructure.entity;
+package com.mist.cloud.infrastructure.DO;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,10 +13,14 @@ import java.util.Date;
  * @Datetime: 2023/7/18 14:20
  * @Description:
  */
+@Getter
+@Setter
 @Builder
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @ApiModel("文件实体类")
-public class File {
+public class File implements IFIle {
 
     @ApiModelProperty(value = "全局唯一 Id")
     @JsonSerialize(using = ToStringSerializer.class) // 解决前端64 位数精度丢失问题，序列化为字符串

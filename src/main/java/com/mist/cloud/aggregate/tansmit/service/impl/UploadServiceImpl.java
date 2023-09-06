@@ -6,7 +6,7 @@ import com.mist.cloud.common.constant.Constants;
 import com.mist.cloud.aggregate.file.model.entity.FolderBrief;
 import com.mist.cloud.aggregate.tansmit.context.Task;
 import com.mist.cloud.aggregate.tansmit.service.TransmitSupport;
-import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.DO.File;
 import com.mist.cloud.common.utils.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

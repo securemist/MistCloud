@@ -1,7 +1,7 @@
 package com.mist.cloud.aggregate.user.repository;
 
 import com.mist.cloud.aggregate.user.mode.UserRegisterInfo;
-import com.mist.cloud.infrastructure.entity.User;
+import com.mist.cloud.infrastructure.DO.User;
 
 /**
  * @Author: securemist

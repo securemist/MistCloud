@@ -2,7 +2,6 @@ package com.mist.cloud.aggregate.user.mode.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Author: securemist
@@ -11,8 +10,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class MailReq {
+
     // 验证码
     private String uid;
     private String code;

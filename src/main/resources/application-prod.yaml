@@ -29,7 +29,7 @@ mybatis:
 
 logging:
   level:
-    com.mist.cloud.infrastructure.mapper: DEBUG
+    com.mist.cloud.infrastructure.dao: DEBUG
 
 file:
   base_path: ${FILE_BASH_PATH:/root/mist-cloud/storage}
