@@ -29,6 +29,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+logs/**
 logs
 
 web
@@ -39,3 +40,4 @@ web-react
 
 .DS_Store
 */**/.DS_Store
+
