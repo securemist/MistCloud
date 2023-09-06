@@ -1,0 +1,56 @@
+@import "@/styles/global";
+
+$catalogueHeight: 30px;
+$backIconSize: 20px;
+$fontHeight: 30px;
+
+.catalogue-container {
+  height: $catalogueHeight;
+  border-bottom: var(--border-in-light);
+  clear: both;
+  line-height: $fontHeight;
+
+  .back-icon {
+    @include img-pointer-zoom;
+    width: $backIconSize;
+    height: $backIconSize;
+    float: left;
+    margin: 5px 20px;
+  }
+
+  .item-list {
+    margin-top: 5px;
+    float: left;
+
+    .item {
+      @include menu-active;
+    }
+  }
+
+
+  .options {
+    float: right;
+
+    font-size: 14px;
+    .item {
+      float: left;
+      min-width: 80px;
+      margin: auto 5px;
+      @include menu-active;
+
+      .svg {
+        @include img-pointer-zoom;
+        margin-top: 8px;
+        margin-right: 5px;
+        float: left;
+      }
+
+      span {
+        display: block;
+        float: left;
+      }
+    }
+
+  }
+
+}

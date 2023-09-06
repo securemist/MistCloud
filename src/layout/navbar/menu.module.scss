@@ -1,0 +1,11 @@
+@import "navbar.module";
+
+.menu-container {
+  float: left;
+
+  .menu-item {
+    @include navbar-item;
+    padding-right: 0px;
+    padding-left: 50px;
+  }
+}
