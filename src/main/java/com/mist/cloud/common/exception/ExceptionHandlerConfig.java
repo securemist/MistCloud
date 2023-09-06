@@ -1,6 +1,7 @@
-package com.mist.cloud.common.config;
+package com.mist.cloud.common.exception;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import com.mist.cloud.common.config.FileConfig;
 import com.mist.cloud.common.constant.Constants;
 import com.mist.cloud.common.result.FailedResult;
 import com.mist.cloud.common.result.Result;

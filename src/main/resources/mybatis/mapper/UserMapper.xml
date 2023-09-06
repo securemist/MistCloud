@@ -2,9 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mist.cloud.infrastructure.dao.UserMapper">
 
+    <resultMap id="userMap" type="User">
+        <result column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="username" property="username"/>
+        <result column="parent_id" property="password"/>
+        <result column="user_id" property="rootFolderId"/>
+        <result column="used_apacity" property="usedCapacity"/>
+        <result column="total_Capacity" property="totalCapacity"/>
+    </resultMap>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (username, password, email, root_folder_id, user_capacity, total_capacity,)
+        VALUES (#{username}, #{password}, #{email}, #{rootFolderId}, #{usedCapacity}, #{totalCapacity})
+    </insert>
+
     <select id="getTotalCapacity" resultType="java.lang.Long">
         SELECT total_capacity
         FROM sys_user
         WHERE id = #{userId}
     </select>
+
+    <select id="selectUserByName" resultType="User" parameterType="String">
+        SELECT *
+        FROM sys_user
+        WHERE name = #{username}
+    </select>
+
+
+    <select id="selectUserById" resultType="User" parameterType="Long">
+        SELECT * FROM sys_user WHERE id = #{userId}
+    </select>
+
+
 </mapper>

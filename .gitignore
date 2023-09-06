@@ -31,7 +31,8 @@ build/
 !**/src/test/**/build/
 logs/
 
-
+web
+web-react
 
 ### VS Code ###
 .vscode/

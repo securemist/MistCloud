@@ -7,9 +7,9 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://124.223.207.249:3306/mist_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    url: jdbc:mysql://sh-cynosdbmysql-grp-3bvjmfma.sql.tencentcdb.com:28276/mist_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: securemist
-    password: securemist
+    password: Securemist123
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -32,7 +32,7 @@ logging:
     com.mist.cloud.infrastructure.dao: DEBUG
 
 file:
-  base_path: ${FILE_BASH_PATH:/storage}
+  base_path: ${FILE_BASH_PATH:/root/mist-cloud/storage}
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

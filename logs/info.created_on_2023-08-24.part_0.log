@@ -125,7 +125,7 @@
 2023-08-24 14:50:37.609  INFO 11881 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2023-08-24 14:50:37.610  INFO 11881 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2023-08-24 14:50:37.629  WARN 11881 --- [http-nio-8888-exec-2] o.s.web.servlet.PageNotFound             : No mapping for GET /folder/
-2023-08-24 14:50:37.716  WARN 11881 --- [http-nio-8888-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.mist.cloud.common.config.ExceptionHandlerConfig#authExceptionHandler(Exception, HttpServletResponse)
+2023-08-24 14:50:37.716  WARN 11881 --- [http-nio-8888-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.mist.cloud.common.exception.ExceptionHandlerConfig#authExceptionHandler(Exception, HttpServletResponse)
 
 org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: getOutputStream() has already been called for this response; nested exception is com.fasterxml.jackson.databind.JsonMappingException: getOutputStream() has already been called for this response (through reference chain: org.apache.catalina.connector.ResponseFacade["writer"])
 	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:465)
@@ -291,7 +291,7 @@ Caused by: cn.dev33.satoken.exception.NotLoginException: token 无效：COrIfqXf
 	... 31 common frames omitted
 
 2023-08-24 14:50:39.464  WARN 11881 --- [http-nio-8888-exec-3] o.s.web.servlet.PageNotFound             : No mapping for GET /folder/
-2023-08-24 14:50:39.466  WARN 11881 --- [http-nio-8888-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.mist.cloud.common.config.ExceptionHandlerConfig#authExceptionHandler(Exception, HttpServletResponse)
+2023-08-24 14:50:39.466  WARN 11881 --- [http-nio-8888-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.mist.cloud.common.exception.ExceptionHandlerConfig#authExceptionHandler(Exception, HttpServletResponse)
 
 org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: getOutputStream() has already been called for this response; nested exception is com.fasterxml.jackson.databind.JsonMappingException: getOutputStream() has already been called for this response (through reference chain: org.apache.catalina.connector.ResponseFacade["writer"])
 	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:465)

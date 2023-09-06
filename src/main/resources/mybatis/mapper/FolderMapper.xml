@@ -15,7 +15,6 @@
     </resultMap>
 
 
-
     <select id="selectFolderById" resultMap="folderMap">
         SELECT *
         FROM sys_folder

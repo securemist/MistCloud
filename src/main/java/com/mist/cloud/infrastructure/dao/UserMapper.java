@@ -1,5 +1,6 @@
 package com.mist.cloud.infrastructure.dao;
 
+import com.mist.cloud.infrastructure.DO.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,4 +11,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
     Long getTotalCapacity(Long userId);
+
+    User selectUserByName(String username);
+
+    Long insertUser(User user);
+
+    User selectUserById(Long userId);
 }

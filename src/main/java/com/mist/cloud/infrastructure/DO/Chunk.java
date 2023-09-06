@@ -14,8 +14,6 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-@Getter
-@Setter
 @Builder
 public class Chunk implements Serializable {
 

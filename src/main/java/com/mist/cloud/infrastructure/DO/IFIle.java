@@ -6,4 +6,5 @@ package com.mist.cloud.infrastructure.DO;
  * @Description:
  */
 public interface IFIle {
+
 }
