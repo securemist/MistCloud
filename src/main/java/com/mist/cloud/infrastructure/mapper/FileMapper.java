@@ -1,8 +1,8 @@
-package com.mist.cloud.core.infrastructure.mapper;
+package com.mist.cloud.infrastructure.mapper;
 
-import com.mist.cloud.core.infrastructure.pojo.FileCopyReq;
-import com.mist.cloud.core.infrastructure.entity.File;
-import com.mist.cloud.core.infrastructure.pojo.FileSelectReq;
+import com.mist.cloud.infrastructure.pojo.FileCopyReq;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.pojo.FileSelectReq;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

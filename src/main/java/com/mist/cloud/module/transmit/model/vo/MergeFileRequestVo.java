@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.tansmit.model.vo;
+package com.mist.cloud.module.transmit.model.vo;
 
 import lombok.*;
 

@@ -40,7 +40,7 @@ jasypt:
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
-  type-aliases-package: com.mist.cloud.infrastructure.DO
+  type-aliases-package: com.mist.cloud.infrastructure
   configuration:
     #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
@@ -48,7 +48,7 @@ mybatis:
 
 logging:
   level:
-    com.mist.cloud.infrastructure.dao: DEBUG
+    com.mist.cloud.infrastructure.mapper: DEBUG
 
 file:
   base_path: /Users/securemist/Downloads/mist-cloud

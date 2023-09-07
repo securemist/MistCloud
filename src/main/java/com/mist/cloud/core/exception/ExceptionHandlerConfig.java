@@ -1,17 +1,18 @@
-package com.mist.cloud.common.exception;
+package com.mist.cloud.core.exception;
 
 import cn.dev33.satoken.exception.NotLoginException;
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.common.result.FailedResult;
-import com.mist.cloud.common.result.Result;
-import com.mist.cloud.aggregate.tansmit.context.DefaultFileUploadContext;
-import com.mist.cloud.aggregate.tansmit.context.Task;
-import com.mist.cloud.aggregate.tansmit.context.UploadTaskContext;
-import com.mist.cloud.common.exception.file.BaseFileException;
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.common.exception.RequestParmException;
-import com.mist.cloud.common.utils.FileUtils;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.exception.auth.RegisterException;
+import com.mist.cloud.core.result.FailedResult;
+import com.mist.cloud.core.result.R;
+import com.mist.cloud.core.result.Result;
+import com.mist.cloud.module.transmit.context.DefaultFileUploadContext;
+import com.mist.cloud.module.transmit.context.Task;
+import com.mist.cloud.module.transmit.context.UploadTaskContext;
+import com.mist.cloud.core.exception.file.BaseFileException;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.core.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,6 +74,12 @@ public class ExceptionHandlerConfig {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return response;
 //        return new FailedResult(Constants.DEFAULT_AUTH_CODE, e.getMessage());
+    }
+
+    @ExceptionHandler(value = RegisterException.class)
+    @ResponseBody
+    public R RegisterExceptionHandler(RegisterException e) {
+        return R.error(e.getMessage());
     }
 
     @ResponseBody

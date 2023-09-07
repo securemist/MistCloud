@@ -1,6 +1,5 @@
-package com.mist.cloud.common.config;
+package com.mist.cloud.core.config;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

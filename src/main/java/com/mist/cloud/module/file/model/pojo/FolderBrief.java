@@ -1,4 +1,4 @@
-package com.mist.cloud.module.file.model.entity;
+package com.mist.cloud.module.file.model.pojo;
 
 import lombok.Builder;
 import lombok.Getter;

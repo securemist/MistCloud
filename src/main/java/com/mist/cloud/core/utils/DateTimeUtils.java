@@ -1,4 +1,4 @@
-package com.mist.cloud.common.utils;
+package com.mist.cloud.core.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

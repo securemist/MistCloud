@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.user.mode.req;
+package com.mist.cloud.module.user.mode.req;
 
 /**
  * @Author: securemist

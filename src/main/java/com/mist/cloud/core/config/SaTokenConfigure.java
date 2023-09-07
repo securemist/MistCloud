@@ -1,4 +1,4 @@
-package com.mist.cloud.common.config;
+package com.mist.cloud.core.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;

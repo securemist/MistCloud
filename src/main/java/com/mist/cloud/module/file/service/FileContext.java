@@ -1,17 +1,17 @@
-package com.mist.cloud.aggregate.file.service;
+package com.mist.cloud.module.file.service;
 
-import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.common.exception.RequestParmException;
-import com.mist.cloud.common.exception.file.FolderException;
-import com.mist.cloud.common.utils.DateTimeUtils;
-import com.mist.cloud.aggregate.file.model.dto.FolderDto;
-import com.mist.cloud.aggregate.file.model.entity.FolderDetail;
-import com.mist.cloud.aggregate.file.model.tree.FolderTreeNode;
-import com.mist.cloud.aggregate.file.model.tree.SubFolder;
-import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.aggregate.file.repository.IFolderRepository;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
+import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.exception.RequestParmException;
+import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.core.utils.DateTimeUtils;
+import com.mist.cloud.module.file.model.dto.FolderDto;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
+import com.mist.cloud.module.file.model.tree.FolderTreeNode;
+import com.mist.cloud.module.file.model.tree.SubFolder;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.file.repository.IFolderRepository;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.entity.Folder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

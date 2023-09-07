@@ -1,4 +1,4 @@
-package com.mist.cloud.core.infrastructure.pojo;
+package com.mist.cloud.infrastructure.pojo;
 
 import lombok.*;
 

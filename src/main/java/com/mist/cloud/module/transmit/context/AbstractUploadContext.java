@@ -1,8 +1,8 @@
-package com.mist.cloud.aggregate.tansmit.context;
+package com.mist.cloud.module.transmit.context;
 
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.aggregate.tansmit.model.vo.ChunkVo;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;

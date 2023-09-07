@@ -1,7 +1,5 @@
-package com.mist.cloud.aggregate.user.mode;
+package com.mist.cloud.module.user.mode;
 
-import cn.hutool.captcha.AbstractCaptcha;
-import cn.hutool.captcha.ICaptcha;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.mist.cloud.common.config;
+package com.mist.cloud.core.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;

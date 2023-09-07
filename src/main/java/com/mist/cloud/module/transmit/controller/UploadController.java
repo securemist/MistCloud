@@ -1,15 +1,15 @@
-package com.mist.cloud.interfaces.transmit;
+package com.mist.cloud.module.transmit.controller;
 
-import com.mist.cloud.aggregate.tansmit.service.IUploadService;
-import com.mist.cloud.common.result.Result;
-import com.mist.cloud.common.result.SuccessResult;
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.aggregate.tansmit.context.DefaultFileUploadContext;
-import com.mist.cloud.aggregate.tansmit.context.Task;
-import com.mist.cloud.aggregate.tansmit.context.UploadTaskContext;
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.aggregate.tansmit.model.vo.ChunkVo;
-import com.mist.cloud.aggregate.tansmit.model.vo.MergeFileRequestVo;
+import com.mist.cloud.module.transmit.service.IUploadService;
+import com.mist.cloud.core.result.Result;
+import com.mist.cloud.core.result.SuccessResult;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.module.transmit.context.DefaultFileUploadContext;
+import com.mist.cloud.module.transmit.context.Task;
+import com.mist.cloud.module.transmit.context.UploadTaskContext;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
+import com.mist.cloud.module.transmit.model.vo.MergeFileRequestVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static com.mist.cloud.common.utils.FileUtils.*;
+import static com.mist.cloud.core.utils.FileUtils.*;
 
 /**
  * @Author: securemist

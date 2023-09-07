@@ -1,7 +1,7 @@
-package com.mist.cloud.aggregate.file.service;
+package com.mist.cloud.module.file.service;
 
-import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.aggregate.file.repository.IFolderRepository;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.file.repository.IFolderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

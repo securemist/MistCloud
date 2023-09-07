@@ -1,4 +1,4 @@
-package com.mist.cloud.module.file.model.entity;
+package com.mist.cloud.module.file.model.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

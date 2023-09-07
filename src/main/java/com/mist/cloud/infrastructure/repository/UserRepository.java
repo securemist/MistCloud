@@ -1,11 +1,11 @@
-package com.mist.cloud.core.infrastructure.repository;
+package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.module.user.mode.UserRegisterInfo;
 import com.mist.cloud.module.user.repository.IUserRepository;
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
-import com.mist.cloud.core.infrastructure.entity.User;
-import com.mist.cloud.core.infrastructure.mapper.UserMapper;
+import com.mist.cloud.infrastructure.entity.User;
+import com.mist.cloud.infrastructure.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -29,6 +29,10 @@ public class UserRepository implements IUserRepository {
         return userMapper.selectUserById(userId);
     }
 
+    public User getUserByEmail(String email) {
+        return userMapper.selectUserByEmail( email);
+    }
+
     @Override
     public User addUser(UserRegisterInfo userRegisterInfo) {
         Long defaultUserCapacity = Constants.DEFAULT_USER_CAPACITY;
@@ -46,5 +50,11 @@ public class UserRepository implements IUserRepository {
         Long userId = userMapper.insertUser(user);
 
         return getUser(userId);
+    }
+
+    @Override
+    public boolean checkEmailRegistered(String email) {
+        User user = getUserByEmail(email);
+        return user != null;
     }
 }

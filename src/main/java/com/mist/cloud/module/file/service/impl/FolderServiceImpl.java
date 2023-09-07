@@ -1,9 +1,9 @@
-package com.mist.cloud.aggregate.file.service.impl;
+package com.mist.cloud.module.file.service.impl;
 
-import com.mist.cloud.common.exception.file.FolderException;
-import com.mist.cloud.aggregate.file.service.FileServiceSupport;
-import com.mist.cloud.aggregate.file.service.IFileStrategy;
-import com.mist.cloud.infrastructure.DO.Folder;
+import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.module.file.service.FileServiceSupport;
+import com.mist.cloud.module.file.service.IFileStrategy;
+import com.mist.cloud.infrastructure.entity.Folder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

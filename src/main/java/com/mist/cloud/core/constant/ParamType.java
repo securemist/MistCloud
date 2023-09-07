@@ -1,4 +1,4 @@
-package com.mist.cloud.common.constant;
+package com.mist.cloud.core.constant;
 
 /**
  * <p>

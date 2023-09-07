@@ -1,15 +1,15 @@
-package com.mist.cloud.core.infrastructure.repository;
+package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
-import com.mist.cloud.core.infrastructure.pojo.FolderCopyReq;
-import com.mist.cloud.core.infrastructure.pojo.FolderSelectReq;
+import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
+import com.mist.cloud.infrastructure.pojo.FolderSelectReq;
 import com.mist.cloud.module.file.model.pojo.*;
 import com.mist.cloud.module.file.repository.IFolderRepository;
-import com.mist.cloud.core.infrastructure.entity.File;
-import com.mist.cloud.core.infrastructure.entity.Folder;
-import com.mist.cloud.core.infrastructure.mapper.FileMapper;
-import com.mist.cloud.core.infrastructure.mapper.FolderMapper;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.infrastructure.mapper.FileMapper;
+import com.mist.cloud.infrastructure.mapper.FolderMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 

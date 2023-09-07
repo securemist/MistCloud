@@ -1,4 +1,4 @@
-package com.mist.cloud.common.config;
+package com.mist.cloud.core.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

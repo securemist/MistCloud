@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.user.mode.res;
+package com.mist.cloud.module.user.mode.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +13,7 @@ import lombok.Data;
 public class CaptchaResponse {
     private String uid;
     private String imgBase64;
+    // md5加密过的答案
+    private String answer;
+
 }

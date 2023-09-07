@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mist.cloud.infrastructure.dao.FolderMapper">
+<mapper namespace="com.mist.cloud.infrastructure.mapper.FolderMapper">
 
     <resultMap id="folderMap" type="Folder">
         <result column="id" property="id"/>
@@ -50,7 +50,7 @@
           AND deleted = 0
     </select>
 
-    <select id="selectSubFolders" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderSelectReq" resultMap="folderMap">
+    <select id="selectSubFolders" parameterType="com.mist.cloud.infrastructure.pojo.FolderSelectReq" resultMap="folderMap">
         SELECT *
         FROM sys_folder
         WHERE user_id = #{userId}
@@ -72,7 +72,7 @@
     </insert>
 
 
-    <update id="renameFolder" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderSelectReq">
+    <update id="renameFolder" parameterType="com.mist.cloud.infrastructure.pojo.FolderSelectReq">
         UPDATE sys_folder
         SET name = #{folderName}
         WHERE user_id = #{userId}
@@ -81,7 +81,7 @@
     </update>
 
 
-    <update id="copyFolder" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderCopyReq">
+    <update id="copyFolder" parameterType="com.mist.cloud.infrastructure.pojo.FolderCopyReq">
         INSERT INTO sys_folder (id, name, folder_size, parent_id, user_id)
         SELECT #{newFolderId}, name, folder_size, #{targetFolderId}, user_id
         FROM sys_folder
@@ -122,7 +122,7 @@
     </update>
 
 
-    <update id="createFolders" parameterType="com.mist.cloud.aggregate.file.model.entity.FolderBrief">
+    <update id="createFolders" parameterType="com.mist.cloud.module.file.model.pojo.FolderBrief">
         <foreach collection="list" item="item" separator=";">
             INSERT INTO sys_folder (id, user_id, name, parent_id, create_time, modify_time)
             VALUES

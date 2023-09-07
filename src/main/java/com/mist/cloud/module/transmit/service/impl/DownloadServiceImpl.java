@@ -1,11 +1,11 @@
-package com.mist.cloud.aggregate.tansmit.service.impl;
+package com.mist.cloud.module.transmit.service.impl;
 
-import com.mist.cloud.aggregate.tansmit.service.IDownloadService;
-import com.mist.cloud.common.utils.FileUtils;
-import com.mist.cloud.common.utils.ZipUtils;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.DO.Folder;
-import com.mist.cloud.aggregate.tansmit.service.TransmitSupport;
+import com.mist.cloud.module.transmit.service.IDownloadService;
+import com.mist.cloud.core.utils.FileUtils;
+import com.mist.cloud.core.utils.ZipUtils;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.module.transmit.service.TransmitSupport;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

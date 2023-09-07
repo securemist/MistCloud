@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mist.cloud.infrastructure.dao.FileMapper">
+<mapper namespace="com.mist.cloud.infrastructure.mapper.FileMapper">
     <resultMap id="fileMap" type="File">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
@@ -20,14 +20,14 @@
         VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5}, #{originName}, NOW())
     </insert>
 
-    <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq">
+    <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.infrastructure.pojo.FileSelectReq">
         UPDATE sys_file
         SET duplicate_times = duplicate_times + 1
         WHERE id = #{id}
           AND deleted = 0
     </update>
 
-    <update id="renameFile" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq">
+    <update id="renameFile" parameterType="com.mist.cloud.infrastructure.pojo.FileSelectReq">
         UPDATE sys_file
         SET name = #{fileName}
         WHERE id = #{id}
@@ -46,7 +46,7 @@
         WHERE id = #{id}
     </update>
 
-    <update id="copyFile" parameterType="com.mist.cloud.aggregate.file.model.entity.FileCopyReq">
+    <update id="copyFile" parameterType="com.mist.cloud.infrastructure.pojo.FileCopyReq">
         INSERT INTO sys_file (id, name, size, type, folder_id, md5, origin_name)
         SELECT #{newFileId}, name, size, type, #{targetFolderId}, md5, origin_name
         FROM sys_file
@@ -61,7 +61,7 @@
     </select>
 
 
-    <select id="selectFileByObj" parameterType="com.mist.cloud.aggregate.file.model.entity.FileSelectReq" resultMap="fileMap">
+    <select id="selectFileByObj" parameterType="com.mist.cloud.infrastructure.pojo.FileSelectReq" resultMap="fileMap">
         SELECT *
         FROM sys_file
         <where>

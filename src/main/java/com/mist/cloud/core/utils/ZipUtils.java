@@ -1,4 +1,4 @@
-package com.mist.cloud.common.utils;
+package com.mist.cloud.core.utils;
 
 import java.io.File;
 import java.io.FileInputStream;

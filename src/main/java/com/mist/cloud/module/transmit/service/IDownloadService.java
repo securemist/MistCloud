@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.tansmit.service;
+package com.mist.cloud.module.transmit.service;
 
 /**
  * @Author: securemist

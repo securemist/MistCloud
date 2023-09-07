@@ -1,15 +1,19 @@
-package com.mist.cloud.interfaces.user;
+package com.mist.cloud.module.user.controller;
 
-import com.mist.cloud.aggregate.user.mode.CaptchaEntity;
-import com.mist.cloud.aggregate.user.mode.req.MailReq;
-import com.mist.cloud.aggregate.user.mode.req.RegisterReq;
-import com.mist.cloud.aggregate.user.mode.res.CaptchaResponse;
-import com.mist.cloud.aggregate.user.service.CaptchaService;
-import com.mist.cloud.aggregate.user.service.MailService;
-import com.mist.cloud.aggregate.user.service.UserService;
-import com.mist.cloud.common.result.FailedResult;
-import com.mist.cloud.common.result.Result;
-import com.mist.cloud.common.result.SuccessResult;
+import cn.hutool.captcha.AbstractCaptcha;
+import cn.hutool.crypto.digest.MD5;
+import com.mist.cloud.core.exception.auth.RegisterException;
+import com.mist.cloud.core.result.R;
+import com.mist.cloud.module.user.mode.CaptchaEntity;
+import com.mist.cloud.module.user.mode.req.MailReq;
+import com.mist.cloud.module.user.mode.req.RegisterReq;
+import com.mist.cloud.module.user.mode.res.CaptchaResponse;
+import com.mist.cloud.module.user.service.CaptchaService;
+import com.mist.cloud.module.user.service.MailService;
+import com.mist.cloud.module.user.service.UserService;
+import com.mist.cloud.core.result.FailedResult;
+import com.mist.cloud.core.result.Result;
+import com.mist.cloud.core.result.SuccessResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,15 +44,21 @@ public class RegisterController {
         return new SuccessResult(reason);
     }
 
-    @PostMapping("/code")
-    public Result code(@RequestBody String uid) throws IOException {
-        // 创建验证码
-        CaptchaEntity captchaEntity = captchaService.createCode(uid);
+    /**
+     * 获取验证码服务
+     *
+     * @param uid 前端传来表示用户会话的uid
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/code")
+    public Result code( String uid) throws IOException {
+        AbstractCaptcha shearCaptcha = captchaService.createCode(uid);
 
-        uid = captchaEntity.getUid();
-        String imgBase64 = captchaEntity.getImgBase64Data();
+        String imgBase64 = shearCaptcha.getImageBase64Data(); // 图片验证码base64格式
+        String ans = MD5.create().digestHex(shearCaptcha.getCode()); // md5加密过的验证码答案
 
-        CaptchaResponse captchaResponse = new CaptchaResponse(uid, imgBase64);
+        CaptchaResponse captchaResponse = new CaptchaResponse(uid, imgBase64, ans);
         return new SuccessResult(captchaResponse);
     }
 
@@ -60,30 +70,18 @@ public class RegisterController {
      * @return
      */
     @PostMapping("/mail")
-    public Result mail(@RequestParam MailReq mailReq) {
-        // 校验验证码
-        boolean ok = captchaService.verify(mailReq.getUid(), mailReq.getCode());
-
-        if (!ok) {
-            return new FailedResult("验证码错误");
-        }
-
-        // 发送邮件 TODO
+    public R mail(@RequestBody MailReq mailReq) {
         mailService.sendMail(mailReq.getEmail());
-
-        return new SuccessResult();
+        return R.success();
     }
 
     @PostMapping("/exec")
     public Result register(@RequestBody RegisterReq registerReq) {
         // 校验邮箱验证码
-        boolean ok  = mailService.verify(registerReq.getEmail(), registerReq.getMailCode());
-        if(!ok) {
-            return new FailedResult("邮箱验证码错误");
-        }
+        mailService.verify(registerReq.getEmail(), registerReq.getMailCode());
 
         // 开始注册
-        userService.register(registerReq.getUsername(), registerReq.getPassword(), registerReq.getPassword());
+        userService.register(registerReq.getUsername(), registerReq.getPassword(), registerReq.getEmail());
 
         return new SuccessResult();
     }

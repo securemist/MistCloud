@@ -1,9 +1,9 @@
-package com.mist.cloud.core.infrastructure.mapper;
+package com.mist.cloud.infrastructure.mapper;
 
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
-import com.mist.cloud.core.infrastructure.pojo.FolderCopyReq;
-import com.mist.cloud.core.infrastructure.entity.Folder;
-import com.mist.cloud.core.infrastructure.pojo.FolderSelectReq;
+import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
+import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.infrastructure.pojo.FolderSelectReq;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.LinkedList;

@@ -1,7 +1,7 @@
-package com.mist.cloud.aggregate.user.repository;
+package com.mist.cloud.module.user.repository;
 
-import com.mist.cloud.aggregate.user.mode.UserRegisterInfo;
-import com.mist.cloud.infrastructure.DO.User;
+import com.mist.cloud.module.user.mode.UserRegisterInfo;
+import com.mist.cloud.infrastructure.entity.User;
 
 /**
  * @Author: securemist
@@ -25,4 +25,11 @@ public interface IUserRepository {
      * @return
      */
     User addUser(UserRegisterInfo userRegisterInfo);
+
+    /**
+     * 检查邮箱是否已经注册过
+     * @param email
+     * @return
+     */
+    boolean checkEmailRegistered(String email);
 }

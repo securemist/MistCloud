@@ -1,12 +1,14 @@
-package com.mist.cloud.aggregate.user.service;
+package com.mist.cloud.module.user.service;
 
-import cn.hutool.core.util.ArrayUtil;
+import com.mist.cloud.core.exception.auth.RegisterException;
+import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,21 +23,27 @@ public class MailService {
     private JavaMailSender mailSender;
     @Value("${spring.mail.username}")
     private String from;
-
+    @Resource
+    private IUserRepository userRepository;
     private ConcurrentHashMap<String, String> mailCodeMap = new ConcurrentHashMap<>();
 
-    public boolean verify(String email, String mailCode) {
+    public void verify(String email, String mailCode) {
         String code = mailCodeMap.get(email);
-        mailCodeMap.remove(mailCode);
 
         if (code == null || !code.equals(mailCode)) {
-            return false;
+            throw new RegisterException("验证码错误");
         }
 
-        return true;
+        mailCodeMap.remove(mailCode);
     }
 
     public void sendMail(String email) {
+        // 校验该邮箱是否已注册
+        boolean resigtered = userRepository.checkEmailRegistered(email);
+        if(resigtered) {
+            throw new RegisterException("该邮箱已注册");
+        }
+
         String code = generateCode();
         // 存入map TODO 这里需要设置过期时间
 

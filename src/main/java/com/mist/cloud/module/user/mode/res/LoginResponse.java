@@ -1,11 +1,10 @@
-package com.mist.cloud.aggregate.user.mode.res;
+package com.mist.cloud.module.user.mode.res;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
 

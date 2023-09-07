@@ -1,9 +1,9 @@
-package com.mist.cloud.interfaces.transmit;
+package com.mist.cloud.module.transmit.controller;
 
-import com.mist.cloud.aggregate.tansmit.service.IDownloadService;
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.module.transmit.service.IDownloadService;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.infrastructure.entity.File;
 import io.swagger.annotations.ApiImplicitParam;
 import org.apache.ibatis.annotations.Lang;
 import org.springframework.http.HttpHeaders;

@@ -1,9 +1,9 @@
-package com.mist.cloud.common.utils;
+package com.mist.cloud.core.utils;
 
 import cn.hutool.crypto.digest.DigestUtil;
-import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.aggregate.tansmit.model.vo.ChunkVo;
+import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 

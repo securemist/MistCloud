@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.user.mode;
+package com.mist.cloud.module.user.mode;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

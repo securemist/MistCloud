@@ -1,6 +1,6 @@
-package com.mist.cloud.common.result;
+package com.mist.cloud.core.result;
 
-import com.mist.cloud.common.constant.Constants;
+import com.mist.cloud.core.constant.Constants;
 import lombok.Getter;
 import lombok.Setter;
 

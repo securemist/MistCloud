@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.file.model.tree;
+package com.mist.cloud.module.file.model.tree;
 
 import lombok.*;
 

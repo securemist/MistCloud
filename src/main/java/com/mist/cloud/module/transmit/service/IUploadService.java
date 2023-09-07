@@ -1,6 +1,6 @@
-package com.mist.cloud.aggregate.tansmit.service;
+package com.mist.cloud.module.transmit.service;
 
-import com.mist.cloud.aggregate.tansmit.context.Task;
+import com.mist.cloud.module.transmit.context.Task;
 
 import java.util.Map;
 import java.util.Set;

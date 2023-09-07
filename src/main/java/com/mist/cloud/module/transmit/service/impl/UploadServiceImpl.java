@@ -1,13 +1,13 @@
-package com.mist.cloud.aggregate.tansmit.service.impl;
+package com.mist.cloud.module.transmit.service.impl;
 
-import com.mist.cloud.aggregate.tansmit.service.IUploadService;
-import com.mist.cloud.common.config.IdGenerator;
-import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.aggregate.file.model.entity.FolderBrief;
-import com.mist.cloud.aggregate.tansmit.context.Task;
-import com.mist.cloud.aggregate.tansmit.service.TransmitSupport;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.common.utils.FileUtils;
+import com.mist.cloud.module.transmit.service.IUploadService;
+import com.mist.cloud.core.config.IdGenerator;
+import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.module.file.model.pojo.FolderBrief;
+import com.mist.cloud.module.transmit.context.Task;
+import com.mist.cloud.module.transmit.service.TransmitSupport;
+import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.core.utils.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

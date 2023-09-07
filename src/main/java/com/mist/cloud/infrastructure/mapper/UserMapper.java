@@ -1,6 +1,6 @@
-package com.mist.cloud.core.infrastructure.mapper;
+package com.mist.cloud.infrastructure.mapper;
 
-import com.mist.cloud.core.infrastructure.entity.User;
+import com.mist.cloud.infrastructure.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -17,4 +17,6 @@ public interface UserMapper {
     Long insertUser(User user);
 
     User selectUserById(Long userId);
+
+    User selectUserByEmail(String email);
 }

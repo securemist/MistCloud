@@ -1,8 +1,8 @@
-package com.mist.cloud.aggregate.file.service;
+package com.mist.cloud.module.file.service;
 
-import com.mist.cloud.common.exception.file.BaseFileException;
-import com.mist.cloud.common.exception.file.FileException;
-import com.mist.cloud.common.exception.file.FolderException;
+import com.mist.cloud.core.exception.file.BaseFileException;
+import com.mist.cloud.core.exception.file.FileException;
+import com.mist.cloud.core.exception.file.FolderException;
 
 /**
  * @Author: securemist

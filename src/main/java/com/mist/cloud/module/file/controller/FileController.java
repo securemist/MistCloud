@@ -1,13 +1,13 @@
-package com.mist.cloud.interfaces.file;
+package com.mist.cloud.module.file.controller;
 
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.common.exception.file.BaseFileException;
-import com.mist.cloud.common.exception.file.FolderException;
-import com.mist.cloud.common.result.Result;
-import com.mist.cloud.common.result.SuccessResult;
-import com.mist.cloud.aggregate.file.model.entity.FolderDetail;
-import com.mist.cloud.aggregate.file.model.tree.FolderTreeNode;
-import com.mist.cloud.aggregate.file.service.FileContext;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.core.exception.file.BaseFileException;
+import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.core.result.Result;
+import com.mist.cloud.core.result.SuccessResult;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
+import com.mist.cloud.module.file.model.tree.FolderTreeNode;
+import com.mist.cloud.module.file.service.FileContext;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.mist.cloud.common.exception.file;
+package com.mist.cloud.core.exception.file;
 
 import java.util.ArrayList;
 import java.util.List;

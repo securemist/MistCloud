@@ -1,4 +1,4 @@
-package com.mist.cloud.core.infrastructure.entity;
+package com.mist.cloud.infrastructure.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

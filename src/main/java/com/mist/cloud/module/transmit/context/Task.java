@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.tansmit.context;
+package com.mist.cloud.module.transmit.context;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.mist.cloud.common.exception.auth;
+package com.mist.cloud.core.exception.auth;
 
 /**
  * @Author: securemist

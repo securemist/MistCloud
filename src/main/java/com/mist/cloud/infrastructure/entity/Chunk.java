@@ -1,4 +1,4 @@
-package com.mist.cloud.core.infrastructure.entity;
+package com.mist.cloud.infrastructure.entity;
 
 import lombok.Builder;
 import lombok.Data;

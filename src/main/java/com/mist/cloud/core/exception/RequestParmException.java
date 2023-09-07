@@ -1,6 +1,6 @@
-package com.mist.cloud.common.exception;
+package com.mist.cloud.core.exception;
 
-import com.mist.cloud.common.constant.Constants;
+import com.mist.cloud.core.constant.Constants;
 
 /**
  * @Author: securemist

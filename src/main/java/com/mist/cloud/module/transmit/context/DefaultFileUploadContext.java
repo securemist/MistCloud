@@ -1,7 +1,7 @@
-package com.mist.cloud.aggregate.tansmit.context;
+package com.mist.cloud.module.transmit.context;
 
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.aggregate.tansmit.model.vo.ChunkVo;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static com.mist.cloud.common.utils.Session.getLoginId;
+import static com.mist.cloud.core.utils.Session.getLoginId;
 
 /**
  * @Author: securemist

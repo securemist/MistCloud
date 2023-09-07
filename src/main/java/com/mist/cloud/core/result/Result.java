@@ -1,4 +1,4 @@
-package com.mist.cloud.common.result;
+package com.mist.cloud.core.result;
 
 import java.io.Serializable;
 

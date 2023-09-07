@@ -1,9 +1,9 @@
-package com.mist.cloud.aggregate.tansmit.service;
+package com.mist.cloud.module.transmit.service;
 
-import com.mist.cloud.common.config.FileConfig;
-import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.aggregate.file.repository.IFolderRepository;
-import com.mist.cloud.infrastructure.DO.File;
+import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.file.repository.IFolderRepository;
+import com.mist.cloud.infrastructure.entity.File;
 
 import javax.annotation.Resource;
 

@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.file.model.dto;
+package com.mist.cloud.module.file.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

@@ -1,7 +1,7 @@
-package com.mist.cloud.aggregate.tansmit.context;
+package com.mist.cloud.module.transmit.context;
 
-import com.mist.cloud.common.exception.file.FileUploadException;
-import com.mist.cloud.aggregate.tansmit.model.vo.ChunkVo;
+import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 
 /**
  * @Author: securemist
