@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class RegisterReq {
+public class RegisterRequest {
     // 登陆id
     private String uid;
     // 邮箱验证码

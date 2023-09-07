@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class MailReq {
 
-    // 验证码
+    // 验证码请求
     private String uid;
     private String email;
 }
