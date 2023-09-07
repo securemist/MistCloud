@@ -1,11 +1,11 @@
-package com.mist.cloud.infrastructure.repository;
+package com.mist.cloud.core.infrastructure.repository;
 
-import com.mist.cloud.common.config.IdGenerator;
-import com.mist.cloud.aggregate.file.model.entity.FileCopyReq;
-import com.mist.cloud.aggregate.file.model.entity.FileSelectReq;
-import com.mist.cloud.aggregate.file.repository.IFileRepository;
-import com.mist.cloud.infrastructure.DO.File;
-import com.mist.cloud.infrastructure.dao.FileMapper;
+import com.mist.cloud.core.config.IdGenerator;
+import com.mist.cloud.core.infrastructure.pojo.FileCopyReq;
+import com.mist.cloud.core.infrastructure.pojo.FileSelectReq;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.core.infrastructure.entity.File;
+import com.mist.cloud.core.infrastructure.mapper.FileMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

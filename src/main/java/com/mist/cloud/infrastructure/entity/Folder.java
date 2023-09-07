@@ -1,4 +1,4 @@
-package com.mist.cloud.infrastructure.DO;
+package com.mist.cloud.core.infrastructure.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @ApiModel("文件夹实体类")
-public class Folder implements IFIle{
+public class Folder {
 
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;

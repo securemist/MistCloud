@@ -1,11 +1,11 @@
-package com.mist.cloud.infrastructure.repository;
+package com.mist.cloud.core.infrastructure.repository;
 
-import com.mist.cloud.aggregate.user.mode.UserRegisterInfo;
-import com.mist.cloud.aggregate.user.repository.IUserRepository;
-import com.mist.cloud.common.config.IdGenerator;
-import com.mist.cloud.common.constant.Constants;
-import com.mist.cloud.infrastructure.DO.User;
-import com.mist.cloud.infrastructure.dao.UserMapper;
+import com.mist.cloud.module.user.mode.UserRegisterInfo;
+import com.mist.cloud.module.user.repository.IUserRepository;
+import com.mist.cloud.core.config.IdGenerator;
+import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.infrastructure.entity.User;
+import com.mist.cloud.core.infrastructure.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

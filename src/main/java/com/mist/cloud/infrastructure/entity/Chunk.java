@@ -1,9 +1,7 @@
-package com.mist.cloud.infrastructure.DO;
+package com.mist.cloud.core.infrastructure.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;

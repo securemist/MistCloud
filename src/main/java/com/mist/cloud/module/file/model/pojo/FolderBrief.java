@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.file.model.entity;
+package com.mist.cloud.module.file.model.entity;
 
 import lombok.Builder;
 import lombok.Getter;

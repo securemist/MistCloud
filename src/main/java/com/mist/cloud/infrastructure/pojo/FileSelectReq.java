@@ -1,4 +1,4 @@
-package com.mist.cloud.aggregate.file.model.entity;
+package com.mist.cloud.core.infrastructure.pojo;
 
 import lombok.*;
 
