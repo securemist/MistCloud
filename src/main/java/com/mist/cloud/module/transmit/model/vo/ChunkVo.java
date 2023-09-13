@@ -42,7 +42,7 @@ public class ChunkVo implements Serializable {
     /**
      * 文件名
      */
-    private String filename;
+    private String fileName;
     /**
      * 总块数
      */

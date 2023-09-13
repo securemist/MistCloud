@@ -58,6 +58,18 @@ public class UserService {
 
         // 添加登陆信息
         StpUtil.login(user.getId());
+        return user.getRootFolderId();
+    }
+
+    /**
+     * 邮箱登陆
+     * @param email
+     * @return
+     */
+    public Long login(String email) {
+        User user = userRepository.getUserByEmail(email);
+
+        StpUtil.login(user.getId());
 
         return user.getRootFolderId();
     }

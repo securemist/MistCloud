@@ -24,7 +24,12 @@ public interface IFolderRepository {
 
     void renameFolder(Long folderId, String folderName);
 
-    List<Folder> getFolderTree(Long folderId);
+    /**
+     * 用户的文件夹目录树
+     * @param userId
+     * @return
+     */
+    List<Folder> getFolderTree(Long userId);
 
     /**
      * 获取文件夹下所有的文件

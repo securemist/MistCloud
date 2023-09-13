@@ -6,18 +6,18 @@ import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.result.Result;
 import com.mist.cloud.core.result.SuccessResult;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
+import com.mist.cloud.module.file.model.req.FileCopyRequest;
+import com.mist.cloud.module.file.model.req.FileDeleteRequest;
 import com.mist.cloud.module.file.model.tree.FolderTreeNode;
 import com.mist.cloud.module.file.service.FileContext;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Lang;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -79,26 +79,28 @@ public class FileController {
     }
 
 
-    @GetMapping(value = "/file/copy")
+    @PostMapping(value = "/file/copy")
     @ApiOperation(value = "文件复制")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "targetFolderId", value = "目标文件夹 id", dataTypeClass = Lang.class),
-            @ApiImplicitParam(name = "id", value = "当前文件 id", dataTypeClass = Lang.class)})
-    public Result copy(@RequestParam("targetFolderId") Long targetFolderId, @RequestParam("id") Long id) throws BaseFileException {
-        fileContext.get(id).copy(id, targetFolderId);
+            @ApiImplicitParam(name = "idList", value = "当前文件 id", dataTypeClass = Lang.class)})
+    public Result copy(@RequestBody FileCopyRequest fileCopyRequest) throws BaseFileException {
+        for (Long id : fileCopyRequest.getIdList()) {
+            fileContext.get(id).copy(id, fileCopyRequest.getTargetFolderId());
+        }
         return new SuccessResult();
     }
 
-    @GetMapping(value = "/file/delete")
+    @PostMapping(value = "/file/delete")
     @ApiOperation(value = "文件删除")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "要删除的文件 id", dataTypeClass = Lang.class),
+            @ApiImplicitParam(name = "idList", value = "要删除的文件 id集合", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "realDelete", value = "是否真实删除", dataTypeClass = Boolean.class)
     })
-    public Result delete(@RequestParam("id") Long id, @RequestParam("realDelete") Boolean realDelete) {
-        fileContext.get(id).delete(id, realDelete);
+    public Result delete(@RequestBody FileDeleteRequest fileDeleteRequest) {
+        for (Long id : fileDeleteRequest.getIdList()) {
+            fileContext.get(id).delete(id, fileDeleteRequest.getRealDelete());
+        }
         return new SuccessResult();
     }
-
-
 }

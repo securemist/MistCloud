@@ -12,7 +12,7 @@ public class RegisterRequest {
     // 登陆id
     private String uid;
     // 邮箱验证码
-    private String mailCode;
+    private String captcha;
 
     private String email;
     private String username;

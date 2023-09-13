@@ -1,6 +1,7 @@
 package com.mist.cloud.module.transmit.service;
 
 import com.mist.cloud.module.transmit.context.Task;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,12 @@ public interface IUploadService {
      * @param task
      */
     void uploadFile(Task task);
+
+
+    /**
+     * 上传非分片上传的文件
+     */
+    void uploadSingleFile(Long folderId, MultipartFile file);
 
     /**
      * 上传文件夹

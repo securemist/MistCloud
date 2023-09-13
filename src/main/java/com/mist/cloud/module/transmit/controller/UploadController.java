@@ -1,5 +1,7 @@
 package com.mist.cloud.module.transmit.controller;
 
+import cn.hutool.core.io.FileUtil;
+import com.mist.cloud.core.result.R;
 import com.mist.cloud.module.transmit.service.IUploadService;
 import com.mist.cloud.core.result.Result;
 import com.mist.cloud.core.result.SuccessResult;
@@ -12,10 +14,14 @@ import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import com.mist.cloud.module.transmit.model.vo.MergeFileRequestVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static com.mist.cloud.core.utils.FileUtils.*;
@@ -35,6 +41,20 @@ public class UploadController {
 
     @Resource(type = DefaultFileUploadContext.class)
     private UploadTaskContext uploadTaskContext;
+
+    // springboot接受文件上传
+    @PostMapping("/upload/file")
+    public R singleUpload(@RequestPart("file") MultipartFile file, Long folderId) {
+        try {
+            String path = fileConfig.getBasePath()  + file.getOriginalFilename();
+            FileUtil.writeBytes(file.getBytes(), path);
+            uploadSevice.uploadSingleFile(folderId, file);
+        } catch (IOException e) {
+            log.error("write error: {}", e);
+            return R.error("文件上传失败");
+        }
+        return R.success();
+    }
 
     @PostMapping("/upload/chunk")
     public Result uploadChunk(ChunkVo chunk) throws FileUploadException {
@@ -74,7 +94,7 @@ public class UploadController {
 
             // 排除掉单文件上传的情况
             // 这里的 relativePath 总是会带有 / 的，即使是单文件上传，也会是 /filename，需要排除这种情况
-            if(relativePath.substring(1, relativePath.length()).contains("/")){
+            if (relativePath.substring(1, relativePath.length()).contains("/")) {
                 pathSet.add(relativePath);
             }
         }
@@ -96,7 +116,7 @@ public class UploadController {
                  * 全部文件/java   |  全部文件/java/java.md
                  * relativePath.substring(0, relativePath.lastIndexOf('/'))
                  */
-                if(idMap.size() != 0){
+                if (idMap.size() != 0) {
                     String relativePath = task.getRelativePath();
                     if (relativePath.substring(1, relativePath.length()).contains("/")) {
                         task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
@@ -140,7 +160,7 @@ public class UploadController {
     }
 
 
-    @GetMapping("/cancel")
+    @GetMapping("/upload/cancel")
     public Result cancel(String identifier) throws FileUploadException, IOException {
         // 文件上传之前的取消上传，发生在文件校验时
         if (identifier == null) {

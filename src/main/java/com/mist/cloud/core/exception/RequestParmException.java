@@ -8,9 +8,7 @@ import com.mist.cloud.core.constant.Constants;
  * @Description:
  */
 public class RequestParmException extends RuntimeException{
-
     public RequestParmException() {
         super(Constants.Response.PARAMS_ERREO.getMsg());
     }
-
 }

@@ -2,6 +2,7 @@ package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.infrastructure.mapper.UserMapper;
 import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
 import com.mist.cloud.infrastructure.pojo.FolderSelectReq;
 import com.mist.cloud.module.file.model.pojo.*;
@@ -29,6 +30,8 @@ public class FolderRepository implements IFolderRepository {
     private FolderMapper folderMapper;
     @Resource
     private FileMapper fileMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Cacheable(value = "folder", key = "#folderId")
     @Override
@@ -92,9 +95,9 @@ public class FolderRepository implements IFolderRepository {
     }
 
     @Override
-    public List<Folder> getFolderTree(Long folderId) {
-
-        LinkedList<Folder> folderTreeList = folderMapper.getFolderTree(folderId);
+    public List<Folder> getFolderTree(Long userId) {
+        Long rootFolderId = userMapper.selectUserById(userId).getRootFolderId();
+        LinkedList<Folder> folderTreeList = folderMapper.getFolderTree(rootFolderId);
         return folderTreeList;
     }
 

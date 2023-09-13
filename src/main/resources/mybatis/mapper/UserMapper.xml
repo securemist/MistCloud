@@ -6,10 +6,10 @@
         <result column="id" property="id"/>
         <result column="email" property="email"/>
         <result column="username" property="username"/>
-        <result column="parent_id" property="password"/>
-        <result column="user_id" property="rootFolderId"/>
-        <result column="used_apacity" property="usedCapacity"/>
-        <result column="total_Capacity" property="totalCapacity"/>
+        <result column="password" property="password"/>
+        <result column="root_folder_id" property="rootFolderId"/>
+        <result column="used_capacity" property="usedCapacity"/>
+        <result column="total_capacity" property="totalCapacity"/>
     </resultMap>
 
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
@@ -23,10 +23,10 @@
         WHERE id = #{userId}
     </select>
 
-    <select id="selectUserByName" resultType="User" parameterType="String">
+    <select id="selectUserByName" resultMap="userMap" parameterType="String">
         SELECT *
         FROM sys_user
-        WHERE name = #{username}
+        WHERE username = #{username}
     </select>
 
 

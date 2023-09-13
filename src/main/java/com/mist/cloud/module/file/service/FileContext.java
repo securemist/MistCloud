@@ -1,5 +1,6 @@
 package com.mist.cloud.module.file.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.RequestParmException;
 import com.mist.cloud.core.exception.file.FolderException;
@@ -57,8 +58,8 @@ public class FileContext {
      * @return FolderTreeNode Tree
      */
     public FolderTreeNode getFolderTree() {
-        Long rootDirId = 1L; // 根文件夹 id
-        List<Folder> folderList = folderRepository.getFolderTree(rootDirId);
+        Long userId = Long.parseLong(StpUtil.getLoginId().toString());
+        List<Folder> folderList = folderRepository.getFolderTree(userId);
 
         List<SubFolder> folderTreeVoList = folderList.stream()
                 .map(folder -> {

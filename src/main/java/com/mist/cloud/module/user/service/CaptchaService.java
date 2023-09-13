@@ -2,13 +2,9 @@ package com.mist.cloud.module.user.service;
 
 import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.core.lang.UUID;
-import com.mist.cloud.module.user.mode.CaptchaEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author: securemist

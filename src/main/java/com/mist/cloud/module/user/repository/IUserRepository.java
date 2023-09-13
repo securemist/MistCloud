@@ -32,4 +32,11 @@ public interface IUserRepository {
      * @return
      */
     boolean checkEmailRegistered(String email);
+
+    /**
+     * 根据邮箱获取用户
+     * @param email
+     * @return
+     */
+    User getUserByEmail(String email);
 }

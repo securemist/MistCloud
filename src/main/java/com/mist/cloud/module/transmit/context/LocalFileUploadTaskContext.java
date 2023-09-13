@@ -59,7 +59,7 @@ public class LocalFileUploadTaskContext extends AbstractUploadContext implements
         String relativePath = chunk.getRelativePath();
         sb.append(fileConfig.getBasePath());
         // 真实路径与文件名不相同，说明是上传的是文件夹中的文件，需要手动拼接文件夹路径
-        if(!relativePath.equals(chunk.getFilename())){
+        if(!relativePath.equals(chunk.getFileName())){
             String[] splits = relativePath.split("/");
             for (int i = 0; i < splits.length - 1; i++) {
                 sb.append("/").append(splits[i]);
@@ -77,7 +77,7 @@ public class LocalFileUploadTaskContext extends AbstractUploadContext implements
             }
         }
         return sb.append("/")
-                .append(chunk.getFilename())
+                .append(chunk.getFileName())
                 .append("-")
                 .append(chunk.getChunkNumber()).toString();
     }

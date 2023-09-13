@@ -31,7 +31,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         try {
             writeChunk(chunk);
         } catch (IOException e) {
-            new FileUploadException("File chunk write failed : " + chunk.getFilename()
+            new FileUploadException("File chunk write failed : " + chunk.getFileName()
                     + "-" + chunk.getChunkNumber(), chunk.getIdentifier(), e);
         }
 
@@ -48,10 +48,10 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
             synchronized (AbstractUploadContext.class) {
                 if (task == null) {
                     task = new Task(chunk.getIdentifier(), chunk.getTotalChunks());
-                    task.setFileName(chunk.getFilename());
+                    task.setFileName(chunk.getFileName());
 
                     task.setFolderPath(chunk.getIdentifier());
-                    task.setTargetFilePath(chunk.getFilename());
+                    task.setTargetFilePath(chunk.getFileName());
 
                     task.setFolderId(chunk.getFolderId());
                     task.setFileSize(chunk.getTotalSize());

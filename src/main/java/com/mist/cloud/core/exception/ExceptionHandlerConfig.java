@@ -73,7 +73,6 @@ public class ExceptionHandlerConfig {
         log.debug(e.getClass() + ": {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return response;
-//        return new FailedResult(Constants.DEFAULT_AUTH_CODE, e.getMessage());
     }
 
     @ExceptionHandler(value = RegisterException.class)

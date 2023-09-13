@@ -10,6 +10,7 @@ import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.core.utils.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -41,6 +42,23 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         fileRepository.addFile(file);
     }
 
+    @Override
+    public void uploadSingleFile(Long folderId, MultipartFile file) {
+        String fileName = checkFileName(file.getOriginalFilename(), folderId);
+
+        File newFile = File.builder()
+                .id(IdGenerator.fileId())
+                .name(fileName)
+                .size(file.getSize())
+                .type(FileUtils.getFileType(file.getName()))
+                .folderId(folderId)
+                .originName(file.getOriginalFilename())
+                .md5("")
+                .build();
+
+        fileRepository.addFile(newFile);
+    }
+
     /**
      * "/全部文件/视频/满江红" => ["全部文件", "视频", "满江红"]
      *
@@ -52,7 +70,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
     public Map<String, Long> uploadFolder(Long parentId, Set<String> pathSet) {
         List<List<String>> list = new ArrayList<>();
         HashSet<List<String>> cache = new HashSet<>();
-        if(pathSet == null || pathSet.size() == 0){
+        if (pathSet == null || pathSet.size() == 0) {
             return new HashMap<>();
         }
 
@@ -143,7 +161,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
      * [Redis/null  => id]]
      */
     private Map<String, Long> treeToIdMap(Node root, Map<String, Long> idMap, String path) {
-        if(!path.equals("")){ // 手动创建的 root 根目录为 "" ，需要排除
+        if (!path.equals("")) { // 手动创建的 root 根目录为 "" ，需要排除
             idMap.put(path, root.id);
         }
 
@@ -237,7 +255,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         List<File> files = folderRepository.findFiles(folderId);
         File file = null;
         for (File file0 : files) {
-            if(file0.getName().equals(fileName)){
+            if (file0.getName().equals(fileName)) {
                 file = file0;
             }
         }

@@ -26,8 +26,8 @@ spring:
       mail.display.sendmail: spring-boot-demo
   servlet:
     multipart:
-      max-request-size: 5MB
-      max-file-size: 5MB
+      max-request-size: 25MB
+      max-file-size: 25MB
 # 为 jasypt 配置解密秘钥
 jasypt:
   encryptor:

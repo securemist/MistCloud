@@ -60,7 +60,7 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
         }
 
         // 创建分片
-        path = path.append("/").append(chunk.getFilename())
+        path = path.append("/").append(chunk.getFileName())
                 .append("-").append(chunk.getChunkNumber());
 
         Files.deleteIfExists(Paths.get(path.toString()));

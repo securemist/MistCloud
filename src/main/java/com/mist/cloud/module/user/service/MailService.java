@@ -2,8 +2,10 @@ package com.mist.cloud.module.user.service;
 
 import com.mist.cloud.core.exception.auth.RegisterException;
 import com.mist.cloud.module.user.repository.IUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Description:
  */
 @Service
+@Slf4j
 public class MailService {
     @Autowired
     private JavaMailSender mailSender;
@@ -27,22 +30,17 @@ public class MailService {
     private IUserRepository userRepository;
     private ConcurrentHashMap<String, String> mailCodeMap = new ConcurrentHashMap<>();
 
-    public void verify(String email, String mailCode) {
+    public void verify(String email, String captcha) {
         String code = mailCodeMap.get(email);
 
-        if (code == null || !code.equals(mailCode)) {
+        if (code == null || !code.equals(captcha)) {
             throw new RegisterException("验证码错误");
         }
 
-        mailCodeMap.remove(mailCode);
+        mailCodeMap.remove(captcha);
     }
 
     public void sendMail(String email) {
-        // 校验该邮箱是否已注册
-        boolean resigtered = userRepository.checkEmailRegistered(email);
-        if(resigtered) {
-            throw new RegisterException("该邮箱已注册");
-        }
 
         String code = generateCode();
         // 存入map TODO 这里需要设置过期时间
@@ -50,12 +48,17 @@ public class MailService {
         mailCodeMap.put(email, code);
         String text = "这是您的验证码(5分钟有效)：" + code;
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setCc(email);
-        message.setSubject("验证码");
-        message.setText(text);
-        mailSender.send(message);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(from);
+            message.setCc(email);
+            message.setSubject("验证码");
+            message.setText(text);
+            mailSender.send(message);
+        } catch (MailSendException e) {
+            throw new RegisterException("该邮箱不存在!");
+        }
+
     }
 
     // 随机生成五位数邮箱验证码
