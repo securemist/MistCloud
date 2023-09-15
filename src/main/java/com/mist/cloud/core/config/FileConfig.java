@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class FileConfig {
-    @Value("${file.base_path}")
+    @Value("${upload.base-path}")
     private String path;
+
 
     /**
      * 文件上传之后最终存储的位置

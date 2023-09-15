@@ -1,5 +1,6 @@
 package com.mist.cloud.module.transmit.service.impl;
 
+import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.module.transmit.service.IUploadService;
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;

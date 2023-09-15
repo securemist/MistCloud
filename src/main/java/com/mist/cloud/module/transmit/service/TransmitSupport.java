@@ -4,6 +4,7 @@ import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.module.file.service.FileContext;
 
 import javax.annotation.Resource;
 
@@ -19,6 +20,8 @@ public class TransmitSupport {
     protected IFileRepository fileRepository;
     @Resource
     protected IFolderRepository folderRepository;
+    @Resource
+    protected FileContext fileContext;
 
     public File findFile(Long fileId){
         return fileRepository.findFile(fileId);

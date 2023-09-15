@@ -26,7 +26,7 @@ public class DataSourceApplicationText implements ApplicationContextAware {
 
     private static ApplicationContext context;
 
-    @Value("${file.base_path}")
+    @Value("${upload.base-path}")
     private String fileBasePath;
 
     @Override

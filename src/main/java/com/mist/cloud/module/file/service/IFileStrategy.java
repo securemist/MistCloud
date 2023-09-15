@@ -3,6 +3,9 @@ package com.mist.cloud.module.file.service;
 import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FileException;
 import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
+
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -35,4 +38,14 @@ public interface IFileStrategy {
      * @param realDelete 是否真的删除，false：逻辑删除，true：真实删除
      */
     void delete(Long id, boolean realDelete);
+
+    /**
+     * 获取文件路径
+     * @param id
+     * @return
+     */
+    String getPath(Long id);
+
+    List<FolderDetail.FolderPathItem> getPathList(Long id);
+
 }

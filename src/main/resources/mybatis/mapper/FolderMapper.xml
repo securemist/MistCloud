@@ -5,7 +5,6 @@
     <resultMap id="folderMap" type="Folder">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="folder_size" property="size"/>
         <result column="parent_id" property="parentId"/>
         <result column="user_id" property="userId"/>
         <result column="modify_time" property="modifyTime"/>
@@ -82,8 +81,8 @@
 
 
     <update id="copyFolder" parameterType="com.mist.cloud.infrastructure.pojo.FolderCopyReq">
-        INSERT INTO sys_folder (id, name, folder_size, parent_id, user_id)
-        SELECT #{newFolderId}, name, folder_size, #{targetFolderId}, user_id
+        INSERT INTO sys_folder (id, name,  parent_id, user_id)
+        SELECT #{newFolderId}, name, #{targetFolderId}, user_id
         FROM sys_folder
         WHERE id = #{folderId}
           AND deleted = 0;

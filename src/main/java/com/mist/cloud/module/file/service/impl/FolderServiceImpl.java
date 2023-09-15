@@ -1,12 +1,16 @@
 package com.mist.cloud.module.file.service.impl;
 
 import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
 import com.mist.cloud.module.file.service.FileServiceSupport;
 import com.mist.cloud.module.file.service.IFileStrategy;
 import com.mist.cloud.infrastructure.entity.Folder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static cn.dev33.satoken.stp.StpUtil.getLoginId;
 
 /**
  * @Author: securemist
@@ -14,7 +18,7 @@ import java.util.List;
  * @Description:
  */
 @Service("folderService")
-public class FolderServiceImpl extends FileServiceSupport implements IFileStrategy {
+public class FolderServiceImpl extends FileServiceSupport {
 
     @Override
     public void rename(Long id, String name) {
@@ -45,14 +49,24 @@ public class FolderServiceImpl extends FileServiceSupport implements IFileStrate
          * 这个 sql 语句很复杂，用到了自定函数，具体的放在 doc 目录下了
          * 这个 sql 放在 doc 目录下了
          */
-
         if (realDelete) {
             folderRepository.realDeleteFolderRecursive(id);
         } else {
             folderRepository.deleteFolderRecursive(id);
         }
-
     }
+
+
+    @Override
+    public String getPath(Long id) {
+        List<FolderDetail.FolderPathItem> pathList = super.getPathList(id);
+        StringBuffer path = new StringBuffer();
+        pathList.forEach(item -> {
+            path.append("/" + item.getName());
+        });
+        return path.toString();
+    }
+
 
     // TODO 这里递归操作数据库，暂时没想到更好的方法
     private void copyFolderRecur(Long folderId, Long targetFolderId) {

@@ -34,9 +34,6 @@ public class Folder {
 
     private Date modifyTime;
 
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long size;
-
     private Date createTime;
 
     private Integer deleted;

@@ -1,6 +1,7 @@
 package com.mist.cloud.module.file.service.impl;
 
 import com.mist.cloud.core.exception.file.FileException;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
 import com.mist.cloud.module.file.service.FileServiceSupport;
 import com.mist.cloud.module.file.service.IFileStrategy;
 import com.mist.cloud.infrastructure.entity.File;
@@ -14,7 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Service("fileService")
-public class FileServiceImpl extends FileServiceSupport implements IFileStrategy {
+public class FileServiceImpl extends FileServiceSupport {
 
     @Override
     public void rename(Long id, String name) {
@@ -44,5 +45,18 @@ public class FileServiceImpl extends FileServiceSupport implements IFileStrategy
         } else {
             fileRepository.deleteFile(id);
         }
+    }
+
+    @Override
+    public String getPath(Long id) {
+        File file = fileRepository.findFile(id);
+        List<FolderDetail.FolderPathItem> pathList = getPathList(file.getFolderId());
+        StringBuffer path = new StringBuffer();
+
+        pathList.forEach(item -> {
+            path.append("/" + item.getName());
+        });
+        path.append("/" + file.getName());
+        return path.toString();
     }
 }

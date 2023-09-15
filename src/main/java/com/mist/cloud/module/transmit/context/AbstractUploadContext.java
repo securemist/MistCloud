@@ -55,7 +55,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
                     task.setFolderId(chunk.getFolderId());
                     task.setFileSize(chunk.getTotalSize());
-                    task.setRelativePath("/" + chunk.getRelativePath());
+                    task.setRelativePath(chunk.getRelativePath());
                 }
             }
         }

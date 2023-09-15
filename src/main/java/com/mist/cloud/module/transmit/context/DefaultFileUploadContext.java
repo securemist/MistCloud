@@ -71,8 +71,6 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
         Files.write(Paths.get(path.toString()), bytes);
     }
 
-
-
     @Override
     public Task getTask(String identifier) throws FileUploadException {
         Map<String, Task> uploadContext = getUploadContext();

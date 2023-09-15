@@ -18,6 +18,7 @@ public interface IUserRepository {
     User getUser(String username);
 
 
+
     /**
      * 注册用户
      *
@@ -39,4 +40,10 @@ public interface IUserRepository {
      * @return
      */
     User getUserByEmail(String email);
+
+    /**
+     * 获取用户根文件夹
+     * @param userId
+     */
+    Long getRootFolderId(Long userId);
 }

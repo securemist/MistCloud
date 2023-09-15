@@ -50,8 +50,9 @@ logging:
   level:
     com.mist.cloud.infrastructure.mapper: DEBUG
 
-file:
-  base_path: /Users/securemist/Downloads/mist-cloud
+upload:
+  base-path: /Users/securemist/Downloads/mist-cloud
+  check-md5: false
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

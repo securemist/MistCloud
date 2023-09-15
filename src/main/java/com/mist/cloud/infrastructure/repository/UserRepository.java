@@ -34,6 +34,11 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public Long getRootFolderId(Long userId) {
+        return getUser(userId).getRootFolderId();
+    }
+
+    @Override
     public User addUser(UserRegisterInfo userRegisterInfo) {
         Long defaultUserCapacity = Constants.DEFAULT_USER_CAPACITY;
 

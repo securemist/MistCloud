@@ -1,6 +1,7 @@
 package com.mist.cloud.module.transmit.controller;
 
 import cn.hutool.core.io.FileUtil;
+import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.result.R;
 import com.mist.cloud.module.transmit.service.IUploadService;
 import com.mist.cloud.core.result.Result;
@@ -13,6 +14,7 @@ import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import com.mist.cloud.module.transmit.model.vo.MergeFileRequestVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,13 +44,12 @@ public class UploadController {
     @Resource(type = DefaultFileUploadContext.class)
     private UploadTaskContext uploadTaskContext;
 
-    // springboot接受文件上传
+    // 单文件上传，且不处在文件夹上传之中
     @PostMapping("/upload/file")
     public R singleUpload(@RequestPart("file") MultipartFile file, Long folderId) {
         try {
-            String path = fileConfig.getBasePath()  + file.getOriginalFilename();
-            FileUtil.writeBytes(file.getBytes(), path);
             uploadSevice.uploadSingleFile(folderId, file);
+            FileUtil.writeBytes(file.getBytes(), fileConfig.getBasePath() + "/" + file.getOriginalFilename());
         } catch (IOException e) {
             log.error("write error: {}", e);
             return R.error("文件上传失败");
@@ -84,7 +85,7 @@ public class UploadController {
 
         Map<String, Long> idMap = null;
         // 上传文件夹的情况
-        // 保存文件所有的路径，后续根据这个路径在数据库构造文件夹结构
+        // 保存所有文件的路径，后续根据这个路径在数据库构造文件夹结构
         Set<String> pathSet = new HashSet<>();
         Long parentId = null; // 一次上传文件夹的请求中的所有文件的 foldeId 都是同一个
         for (String identifier : identifierMap.keySet()) {
@@ -101,7 +102,6 @@ public class UploadController {
 
         // 创建所有的文件夹，拿到各个路径对应的文件夹 id
         idMap = uploadSevice.uploadFolder(parentId, pathSet);
-
 
         for (String identifier : identifierMap.keySet()) {
             try {

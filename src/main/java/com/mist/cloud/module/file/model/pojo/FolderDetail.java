@@ -54,6 +54,8 @@ public class FolderDetail {
 
         private Long size;
 
+        private String path;
+
         private Boolean isFolder;
 
         private Date modifyTime;

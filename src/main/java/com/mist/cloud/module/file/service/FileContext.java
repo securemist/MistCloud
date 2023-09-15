@@ -13,12 +13,15 @@ import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.dev33.satoken.stp.StpUtil.*;
 
 /**
  * @Author: securemist
@@ -34,15 +37,14 @@ import java.util.stream.Collectors;
 public class FileContext {
     @Resource(name = "fileService")
     public IFileStrategy fileService;
-
     @Resource(name = "folderService")
     public IFileStrategy folderService;
-
     @Resource
     public IFileRepository fileRepository;
-
     @Resource
     public IFolderRepository folderRepository;
+    @Resource
+    private IUserRepository userRepository;
 
     public IFileStrategy get(Long id) {
         if (fileRepository.isFolder(id)) {
@@ -58,7 +60,7 @@ public class FileContext {
      * @return FolderTreeNode Tree
      */
     public FolderTreeNode getFolderTree() {
-        Long userId = Long.parseLong(StpUtil.getLoginId().toString());
+        Long userId = Long.parseLong(getLoginId().toString());
         List<Folder> folderList = folderRepository.getFolderTree(userId);
 
         List<SubFolder> folderTreeVoList = folderList.stream()
@@ -129,6 +131,7 @@ public class FileContext {
         for (Folder folder : folderList) {
             FolderDetail.File file = FolderDetail.File.builder()
                     .id(folder.getId())
+                    .path(folderService.getPath(folder.getId()))
                     .name(folder.getName())
                     .modifyTime(folder.getModifyTime())
                     .isFolder(true)
@@ -141,6 +144,7 @@ public class FileContext {
             FolderDetail.File file0 = FolderDetail.File.builder()
                     .id(file.getId())
                     .name(file.getName())
+                    .path(fileService.getPath(file.getId()))
                     .size(file.getSize())
                     .modifyTime(file.getCreateTime())
                     .isFolder(false)
@@ -165,7 +169,6 @@ public class FileContext {
      * @return
      */
     public FolderDetail getFolderDetail(Long id) {
-
         // 文件下所有的文件夹与文件列表
         List<File> fileList = folderRepository.findFiles(id);
         List<Folder> folderList = folderRepository.findSubFolders(id);
@@ -193,28 +196,12 @@ public class FileContext {
                     .build();
             fileVoList.add(file0);
         }
-
-        // 获取文件夹所处路，从数据库查询出来的路径集合不具有顺序性，这里需要调整顺序返回给前端
-        List<Folder> list = folderRepository.getFolderPath(id);
-        List<FolderDetail.FolderPathItem> path = new ArrayList<>();
-
-        int cnt = 0;
-        Long rootDirId = 0L;
-        Long currentParentId = rootDirId;
-        while (cnt < list.size()) {
-            for (Folder folder : list) {
-                if (folder.getParentId().equals(currentParentId)) {
-                    path.add(new FolderDetail.FolderPathItem(folder.getId(), folder.getName()));
-                    currentParentId = folder.getId();
-                    cnt++;
-                    break;
-                }
-            }
-        }
+        // 文件路径
+        List<FolderDetail.FolderPathItem> pathList = folderService.getPathList(id);
 
         FolderDetail folderDetail = FolderDetail.builder()
-                .path(path)
-                .name(path.get(path.size() - 1).getName())
+                .path(pathList)
+                .name(pathList.get(pathList.size() - 1).getName())
                 .fileList(fileVoList)
                 .build();
         return folderDetail;
