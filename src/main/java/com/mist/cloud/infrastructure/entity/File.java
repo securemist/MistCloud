@@ -1,6 +1,7 @@
 package com.mist.cloud.infrastructure.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -57,4 +58,6 @@ public class File {
     @ApiModelProperty(value = "文件 md5 值")
     private String md5;
 
+    @ApiModelProperty(value = "真实路径")
+    private String relativePath;
 }

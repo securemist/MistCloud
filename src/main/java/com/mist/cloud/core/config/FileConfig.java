@@ -13,6 +13,8 @@ public class FileConfig {
     @Value("${upload.base-path}")
     private String path;
 
+    @Value("${upload.checkmd5}")
+    public boolean checkmd5;
 
     /**
      * 文件上传之后最终存储的位置

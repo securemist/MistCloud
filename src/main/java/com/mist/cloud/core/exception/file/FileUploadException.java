@@ -9,17 +9,23 @@ import java.util.List;
  * @Description:
  */
 public class FileUploadException extends BaseFileException {
-    private List<String>  identifierList = new ArrayList<String>();
+    private List<String> identifierList = new ArrayList<String>();
 
     private Exception e;
+
+    public FileUploadException(String msg, List<String> identifier, Exception e) {
+        super(msg);
+        this.identifierList = identifierList;
+        this.e = e;
+    }
 
     public FileUploadException(String msg, String identifier, Exception e) {
         super(msg);
         this.identifierList.add(identifier);
-        this.e = e;
+        this.e = new RuntimeException();
     }
 
-    public FileUploadException(String msg, String identifier) {
+        public FileUploadException(String msg, String identifier) {
         super(msg);
         this.identifierList.add(identifier);
         this.e = new RuntimeException();

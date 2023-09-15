@@ -12,12 +12,13 @@
         <result column="deletede_time" property="deletedTime"/>
         <result column="duplicate_times" property="duplicateTimes"/>
         <result column="origin_name" property="originName"/>
+        <result column="relative_path" property="relativePath"/>
         <result column="md5" property="md5"/>
     </resultMap>
 
     <insert id="insertFile" parameterType="File">
-        INSERT INTO sys_file(id, name, size, type, folder_id, md5, origin_name, create_time)
-        VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId}, #{md5}, #{originName}, NOW())
+        INSERT INTO sys_file(id, name, size, type, folder_id, md5, relative_path , origin_name, create_time)
+        VALUES (#{id}, #{name}, #{size}, #{type}, #{folderId} , #{md5}, #{relativePath}, #{originName}, NOW())
     </insert>
 
     <update id="updateFileDuplicateTimes" parameterType="com.mist.cloud.infrastructure.pojo.FileSelectReq">
@@ -47,8 +48,8 @@
     </update>
 
     <update id="copyFile" parameterType="com.mist.cloud.infrastructure.pojo.FileCopyReq">
-        INSERT INTO sys_file (id, name, size, type, folder_id, md5, origin_name)
-        SELECT #{newFileId}, name, size, type, #{targetFolderId}, md5, origin_name
+        INSERT INTO sys_file (id, name, size, type, folder_id, relative_path, md5, origin_name)
+        SELECT #{newFileId}, name, size, type, #{targetFolderId}, relative_path, md5, origin_name
         FROM sys_file
         WHERE id = #{fileId} AND deleted = 0;
     </update>

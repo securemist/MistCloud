@@ -105,7 +105,7 @@ public class ExceptionHandlerConfig {
 
                 }
 
-                log.error("文件上传失败: {} , {}", ((FileUploadException) e).getMsg(), e.getMessage());
+                log.error("文件上传失败: {} , {}", ((FileUploadException) e).getMsg(), e);
             }
 
             // 构造返回信息

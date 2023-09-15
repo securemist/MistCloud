@@ -1,11 +1,11 @@
 package com.mist.cloud.module.transmit.service;
 
-import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.module.transmit.context.Task;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @Author: securemist
@@ -25,12 +25,16 @@ public interface IUploadService {
      */
     void uploadSingleFile(Long folderId, MultipartFile file) ;
 
+
     /**
-     * 上传文件夹
-     * @param parentId 目标文件夹
-     * @param pathSet 文件夹下所有文件的路径set集合，依次创建需要的文件夹
+     * 上传文件夹中创建所有的子文件夹
+     *
+     * @param strings  文件夹下所有的文件的路径
+     * @param folderId
      * @return
      */
-    Map<String, Long> uploadFolder(Long parentId, Set<String> pathSet);
+    Map<String, Long> createSubFolders(Map<String, String> strings, Long folderId) throws FileUploadException;
+
+    void mergeFiles(HashMap<String, String> identifierMap, Map<String, Long> idMap) throws FileUploadException;
 
 }

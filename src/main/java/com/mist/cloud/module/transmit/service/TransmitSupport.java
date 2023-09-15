@@ -5,6 +5,8 @@ import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.module.file.service.FileContext;
+import com.mist.cloud.module.transmit.context.DefaultFileUploadContext;
+import com.mist.cloud.module.transmit.context.UploadTaskContext;
 
 import javax.annotation.Resource;
 
@@ -22,8 +24,10 @@ public class TransmitSupport {
     protected IFolderRepository folderRepository;
     @Resource
     protected FileContext fileContext;
+    @Resource(type = DefaultFileUploadContext.class)
+    protected UploadTaskContext uploadTaskContext;
 
-    public File findFile(Long fileId){
+    public File findFile(Long fileId) {
         return fileRepository.findFile(fileId);
     }
 }

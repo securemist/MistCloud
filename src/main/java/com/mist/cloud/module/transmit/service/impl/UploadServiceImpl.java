@@ -1,6 +1,6 @@
 package com.mist.cloud.module.transmit.service.impl;
 
-import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.module.transmit.service.IUploadService;
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
@@ -9,11 +9,15 @@ import com.mist.cloud.module.transmit.context.Task;
 import com.mist.cloud.module.transmit.service.TransmitSupport;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.core.utils.FileUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
+
+import static com.mist.cloud.core.utils.FileUtils.merge;
 
 /**
  * @Author: securemist
@@ -21,6 +25,7 @@ import java.util.*;
  * @Description:
  */
 @Service
+@Slf4j
 public class UploadServiceImpl extends TransmitSupport implements IUploadService {
     @Override
     @Transactional
@@ -37,6 +42,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
                 .folderId(task.getFolderId())
                 .originName(task.getFileName())
                 .md5(task.getMD5())
+                .relativePath(task.getRelativePath())
                 .build();
 
         // 添加记录
@@ -46,13 +52,14 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
     @Override
     public void uploadSingleFile(Long folderId, MultipartFile file) {
         String fileName = checkFileName(file.getOriginalFilename(), folderId);
-
+        // 所有的单文件上传全部上传到根路径
         File newFile = File.builder()
                 .id(IdGenerator.fileId())
                 .name(fileName)
                 .size(file.getSize())
                 .type(FileUtils.getFileType(file.getName()))
                 .folderId(folderId)
+                .relativePath("/")
                 .originName(file.getOriginalFilename())
                 .md5("")
                 .build();
@@ -60,25 +67,124 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         fileRepository.addFile(newFile);
     }
 
+
     /**
-     * "/全部文件/视频/满江红" => ["全部文件", "视频", "满江红"]
-     *
-     * @param parentId
-     * @param pathSet
-     * @return
+     * 给文件夹内所有的子子文件夹创建记录，返回路径与文件夹id的映射
+     * <p>
+     * 0 = "/a/c/folder.png"
+     * 1 = "/a/b/zfile-4.1.5.war"
+     * ===>
+     * "/a/b" -> {Long@11242} 1702649967044333571
+     * "/a" -> {Long@11240} 1702649967044333569
+     * "/a/c" -> {Long@11238} 1702649967044333570
      */
     @Override
-    public Map<String, Long> uploadFolder(Long parentId, Set<String> pathSet) {
-        List<List<String>> list = new ArrayList<>();
-        HashSet<List<String>> cache = new HashSet<>();
+    public Map<String, Long> createSubFolders(Map<String, String> identifierMap, Long parentId) throws FileUploadException {
+        // 文件路径去重
+        Set<String> pathSet = collectPath(identifierMap);
         if (pathSet == null || pathSet.size() == 0) {
             return new HashMap<>();
         }
 
+        // 构造树形结构
+        Node tree = generateTree(pathSet);
+        // 数据库中创建文件夹
+        Map<String, Long> idMap = createFolders(tree, parentId);
+        return idMap;
+    }
+
+    @Override
+    public void mergeFiles(HashMap<String, String> identifierMap, Map<String, Long> idMap) throws FileUploadException {
+        for (String identifier : identifierMap.keySet()) {
+            try {
+                Task task = uploadTaskContext.getTask(identifier);
+
+                /**
+                 * 在创建文件夹的过程中已经创建了文件夹，生成了新的文件夹 id，需要替换掉 task 中原本的 folderId
+                 * 上传文件不需要考虑这种情况
+                 * task.setRelativePath("/" + fileInfo.getRelativePath());
+                 *
+                 * idMap 中的路径是不带有文件名的，relativePath带有文件名，获取生成的文件夹 id 需要适当调整
+                 * 全部文件/java   |  全部文件/java/java.md
+                 * relativePath.substring(0, relativePath.lastIndexOf('/'))
+                 */
+                if (idMap.size() != 0) {
+                    String relativePath = task.getRelativePath();
+                    if (relativePath.substring(1, relativePath.length()).contains("/")) {
+                        task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
+                    }
+                }
+
+                String fileName = task.getFileName();
+                String fileRealPath = fileConfig.getBasePath() + task.getRelativePath();
+                String targetFolderPath = fileConfig.getUploadPath() + task.getFolderPath();
+
+
+                // 合并文件并且算出 md5 值
+                String newMD5 = "";
+                try {
+                    merge(fileRealPath, targetFolderPath, fileName);
+                } catch (IOException e) {
+                    throw new FileUploadException("file merge error in IO", new ArrayList<>(identifierMap.keySet()), e);
+                }
+
+                if (fileConfig.checkmd5) {
+                    String md5 = identifierMap.get(identifier);
+                    boolean ok = FileUtils.checkmd5(fileRealPath, md5);
+                    if (!ok) {
+                        throw new FileUploadException("file merge error because md5 is not equal", new ArrayList<>(identifierMap.keySet()));
+                    }
+                    task.setMD5(md5);
+                }
+                // 校验 md5 值
+                uploadTaskContext.completeTask(identifier);
+                // 数据库添加记录
+                uploadFile(task);
+                log.info("文件上传成功, 文件位置: {}", fileRealPath);
+            } catch (FileUploadException e) {
+                throw new FileUploadException(e.getMsg(), new ArrayList<>(identifierMap.keySet()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FileUploadException("file upload failed in controller", new ArrayList<>(identifierMap.keySet()));
+            }
+
+        }
+    }
+
+    private Set<String> collectPath(Map<String, String> identifierMap) throws FileUploadException {
+        Set<String> pathSet = new HashSet<>();
+        for (String identifier : identifierMap.keySet()) {
+            Task task = uploadTaskContext.getTask(identifier);
+            String relativePath = task.getRelativePath();
+
+            // 排除掉单文件上传的情况
+            // 这里的 relativePath 总是会带有 / 的，即使是单文件上传，也会是 /filename，需要排除这种情况
+            if (relativePath.substring(1, relativePath.length()).contains("/")) {
+                pathSet.add(relativePath);
+            }
+        }
+        return pathSet;
+    }
+
+    private Map<String, Long> createFolders(Node root, Long parentId) {
+        // 拿到每个路径 path 对应的文件夹id
+        Map<String, Long> idMap = new HashMap<>();
+        idMap = treeToIdMap(root, idMap, "");
+
+        List<FolderBrief> folderList = new ArrayList<>();
+        folderList = treeToFolderList(root, folderList, parentId, 0);
+
+        folderRepository.createFolders(folderList);
+        return idMap;
+    }
+
+    private Node generateTree(Set<String> pathSet) {
+        List<List<String>> list = new ArrayList<>();
+        HashSet<List<String>> cache = new HashSet<>();
+
         int maxLen = 0;
         for (String path : pathSet) {
             List<String> list0 = Arrays.asList(path.substring(1, path.lastIndexOf('/')).split("/"));
-
             if (cache.contains(list0)) {
                 continue;
             }
@@ -101,16 +207,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         // 构造树性结构
         Node root = new Node("root");
         recur(root, pathList, 0, "");
-
-        // 拿到每个路径 path 对应的文件夹id
-        Map<String, Long> idMap = new HashMap<>();
-        idMap = treeToIdMap(root, idMap, "");
-
-        List<FolderBrief> folderList = new ArrayList<>();
-        folderList = treeToFolderList(root, folderList, parentId, 0);
-
-        folderRepository.createFolders(folderList);
-        return idMap;
+        return root;
     }
 
     /**

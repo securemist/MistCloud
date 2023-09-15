@@ -1,4 +1,4 @@
-package com.mist.cloud.module.transmit.model.vo;
+package com.mist.cloud.module.transmit.model.req;
 
 import lombok.*;
 
@@ -14,7 +14,8 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MergeFileRequestVo implements Serializable {
-    private String identifier;
-    private String md5;
+public class MergeFileRequest implements Serializable {
+    private IdentifierItem[] identifierList;
+    private Long folderId;
 }
+

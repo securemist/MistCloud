@@ -39,6 +39,7 @@ public class DownloadServiceImpl extends TransmitSupport implements IDownloadSer
         return null;
     }
 
+    // 递归创建子文件夹
     public void recur(Long folderId, String currentPath) {
         List<Folder> subFolders = folderRepository.findSubFolders(folderId);
         List<File> files = folderRepository.findFiles(folderId);

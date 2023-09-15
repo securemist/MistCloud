@@ -1,5 +1,6 @@
 package com.mist.cloud.core.utils;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.file.FileUploadException;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -115,40 +118,38 @@ public class FileUtils {
      * @param filename   文件名
      * @return md5 文件的 md5
      */
-    public static String merge(String targetFile, String folder, String filename) throws IOException {
+    public static void merge(String targetFile, String folder, String filename) throws IOException {
+        FileUtil.mkParentDirs(targetFile);
         Files.deleteIfExists(Paths.get(targetFile));
         Files.createFile(Paths.get(targetFile));
         // 合并文件
         try {
             Stream<Path> stream = Files.list(Paths.get(folder));
-            stream.filter(path -> !path.getFileName().toString().equals(filename))
+            List<Path> paths = stream.filter(path -> !path.getFileName().toString().equals(filename))
                     .sorted((o1, o2) -> {
                         String p1 = o1.getFileName().toString();
                         String p2 = o2.getFileName().toString();
                         int i1 = p1.lastIndexOf("-");
                         int i2 = p2.lastIndexOf("-");
                         return Integer.valueOf(p2.substring(i2)).compareTo(Integer.valueOf(p1.substring(i1)));
-                    })
-                    .forEach(path -> {
-                        try {
-                            //以追加的形式写入文件
-                            Files.write(Paths.get(targetFile), Files.readAllBytes(path), StandardOpenOption.APPEND);
-                            //合并后删除该块
-                            Files.delete(path);
-                        } catch (IOException e) {
-                            log.error(e.getMessage(), e);
-                        }
-                    });
+                    }).collect(Collectors.toList());
+
+            paths.forEach(path -> {
+                try {
+                    //以追加的形式写入文件
+                    Files.write(Paths.get(targetFile), Files.readAllBytes(path), StandardOpenOption.APPEND);
+                    //合并后删除该块
+                    Files.delete(path);
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                }
+            });
         } catch (IOException e) {
             log.debug("合并文件出错，已删除原文件 {} , {}", folder, e.getMessage());
             Files.deleteIfExists(Paths.get(targetFile));
         }
         // 删除原文件夹
         FileUtils.deleteDirectoryIfExist(Paths.get(folder));
-
-        // 读取文件 md5 值
-        File file = new File(targetFile);
-        return DigestUtil.md5Hex(file);
     }
 
     /**
@@ -185,12 +186,11 @@ public class FileUtils {
 
     /**
      * 创建一个目录
-     * @param folderPath
      *
-     * 如果目录已存在就全部删除之后在创建
+     * @param folderPath 如果目录已存在就全部删除之后在创建
      */
     public static void createDirectory(Path path) throws IOException {
-        if(Files.exists(path)){
+        if (Files.exists(path)) {
             deleteDirectory(path);
         }
 
@@ -208,5 +208,9 @@ public class FileUtils {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    public static boolean checkmd5(String fileRealPath, String md5) {
+        return DigestUtil.md5Hex(fileRealPath).equals(md5);
     }
 }
