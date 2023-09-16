@@ -1,18 +1,17 @@
 package com.mist.cloud.core.exception;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.hutool.core.io.FileUtil;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.auth.RegisterException;
 import com.mist.cloud.core.result.FailedResult;
 import com.mist.cloud.core.result.R;
 import com.mist.cloud.core.result.Result;
-import com.mist.cloud.module.transmit.context.DefaultFileUploadContext;
 import com.mist.cloud.module.transmit.context.Task;
 import com.mist.cloud.module.transmit.context.UploadTaskContext;
 import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FileUploadException;
-import com.mist.cloud.core.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -33,7 +30,7 @@ import java.util.List;
 @ControllerAdvice
 @Slf4j
 public class ExceptionHandlerConfig {
-    @Resource(type = DefaultFileUploadContext.class)
+    @Resource
     private UploadTaskContext uploadTaskContext;
     @Resource
     private FileConfig fileConfig;
@@ -68,7 +65,7 @@ public class ExceptionHandlerConfig {
 
     @ExceptionHandler(value = NotLoginException.class)
     public HttpServletResponse authExceptionHandler(Exception e, HttpServletResponse response) {
-        log.debug( "未登陆: {}", e.getMessage());
+        log.debug("未登陆: {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return response;
     }
@@ -81,37 +78,13 @@ public class ExceptionHandlerConfig {
 
     @ResponseBody
     @ExceptionHandler(value = BaseFileException.class)
-    public Result FileExceptionHandler(BaseFileException e) throws IOException {
+    public R FileExceptionHandler(BaseFileException e) throws IOException {
         if (e instanceof FileUploadException) {
             List<String> identifierList = ((FileUploadException) e).getIdentifierList();
-            for (String identifier : identifierList) {
-                // 删除上传过程产生的所有有关文件
-                Task task = null;
-                try {
-                    task = uploadTaskContext.getTask(identifier);
-                } catch (FileUploadException ex) {
-                    return new FailedResult();
-                }
-
-                FileUtils.deleteDirectoryIfExist(Paths.get(fileConfig.getUploadPath() + "/" + task.getFolderPath()));
-                Files.deleteIfExists(Paths.get(fileConfig.getBasePath() + "/" + task.getTargetFilePath()));
-
-                // 从任务列表删除该任务
-                try {
-                    uploadTaskContext.cancelTask(identifier);
-                } catch (FileUploadException ex) {
-
-                }
-
-                log.error("文件上传失败: {} , {}", ((FileUploadException) e).getMsg(), e);
-            }
-
-            // 构造返回信息
-            return new FailedResult("文件上传失败");
+            // 文件上传失败，清除所有的残余文件
+            uploadTaskContext.cancelTask(identifierList);
         }
-
-        return new FailedResult(e.getMsg());
-
+        return R.error(e.getMsg());
     }
 
 }

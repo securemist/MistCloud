@@ -2,6 +2,10 @@ package com.mist.cloud.module.transmit.context;
 
 import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.module.transmit.model.vo.ChunkVo;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @Author: securemist
@@ -11,34 +15,35 @@ import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 public interface UploadTaskContext {
 
     /**
-     * 添加文件分片
-     * @param chunk
+     * 非分片的单文件上传
+     *
+     * @param folderId
+     * @param file
      */
-    public void addChunk(ChunkVo chunk) throws FileUploadException;
-
+    void simpleUpload(Long folderId, MultipartFile file) throws IOException;
 
     /**
-     * 完成任务
-     * @param identifier 任务标识
-     * @throws FileUploadException 这个请求必须确保任务已经建立，否则抛出该异常
+     * 添加文件分片
+     *
+     * @param chunk
      */
-    public void completeTask(String identifier) throws FileUploadException;
+    void addChunk(ChunkVo chunk) throws FileUploadException;
+
+    /**
+     * 合并文件
+     *
+     * @param identifierMap 所有的task的identifier，包括单文件的合并与一个文件夹内所有文件的合并
+     * @param folderId      父文件夹id
+     * @throws FileUploadException
+     */
+    void mergeFiles(HashMap<String, String> identifierMap, Long folderId) throws FileUploadException;
 
     /**
      * 取消上传任务
-     * @param identifier
+     *
+     * @param identifierList
      * @throws FileUploadException 这个请求必须确保任务已经建立，否则抛出该异常
      */
-    public void cancelTask(String identifier) throws FileUploadException;
-
-
-    /**
-     * 获取任务信息
-     * @param identifier
-     * @return
-     * @throws FileUploadException 通过任务表示获取任务，如果获取不到说明 task 还没建立，这个请求来的不是时候
-     */
-    public Task getTask(String identifier) throws FileUploadException;
-
+    public void cancelTask(List<String> identifierList);
 
 }

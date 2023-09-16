@@ -1,73 +1,20 @@
-package com.mist.cloud.module.transmit.service.impl;
+package com.mist.cloud.module.transmit.context;
 
-import com.mist.cloud.core.exception.file.FileUploadException;
-import com.mist.cloud.module.transmit.service.IUploadService;
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
-import com.mist.cloud.module.transmit.context.Task;
-import com.mist.cloud.module.transmit.service.TransmitSupport;
-import com.mist.cloud.infrastructure.entity.File;
-import com.mist.cloud.core.utils.FileUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.*;
-
-import static com.mist.cloud.core.utils.FileUtils.merge;
 
 /**
  * @Author: securemist
- * @Datetime: 2023/8/19 17:01
- * @Description:
+ * @Datetime: 2023/9/16 22:25
+ * @Description: [又臭又长] 递归创建文件夹
  */
-@Service
-@Slf4j
-public class UploadServiceImpl extends TransmitSupport implements IUploadService {
-    @Override
-    @Transactional
-    public void uploadFile(Task task) {
-        // 校验文件名。防止重名
-        String fileName = checkFileName(task.getFileName(), task.getFolderId());
-
-        // 添加记录
-        File file = File.builder()
-                .id(IdGenerator.fileId())
-                .name(fileName)
-                .size(task.getFileSize())
-                .type(FileUtils.getFileType(fileName))
-                .folderId(task.getFolderId())
-                .originName(task.getFileName())
-                .md5(task.getMD5())
-                .relativePath(task.getRelativePath())
-                .build();
-
-        // 添加记录
-        fileRepository.addFile(file);
-    }
-
-    @Override
-    public void uploadSingleFile(Long folderId, MultipartFile file) {
-        String fileName = checkFileName(file.getOriginalFilename(), folderId);
-        // 所有的单文件上传全部上传到根路径
-        File newFile = File.builder()
-                .id(IdGenerator.fileId())
-                .name(fileName)
-                .size(file.getSize())
-                .type(FileUtils.getFileType(file.getName()))
-                .folderId(folderId)
-                .relativePath("/" + file.getOriginalFilename())
-                .originName(file.getOriginalFilename())
-                .md5("")
-                .build();
-
-        fileRepository.addFile(newFile);
-    }
-
-
+@Component
+public class CnmUploadContext extends AbstractUploadContext {
     /**
      * 给文件夹内所有的子子文件夹创建记录，返回路径与文件夹id的映射
      * <p>
@@ -78,7 +25,6 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
      * "/a" -> {Long@11240} 1702649967044333569
      * "/a/c" -> {Long@11238} 1702649967044333570
      */
-    @Override
     public Map<String, Long> createSubFolders(Map<String, String> identifierMap, Long parentId) throws FileUploadException {
         // 文件路径去重
         Set<String> pathSet = collectPath(identifierMap);
@@ -90,70 +36,23 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         Node tree = generateTree(pathSet);
         // 数据库中创建文件夹
         Map<String, Long> idMap = createFolders(tree, parentId);
-        return idMap;
-    }
 
-    @Override
-    public void mergeFiles(HashMap<String, String> identifierMap, Map<String, Long> idMap) throws FileUploadException {
+        // 把新创建的folderId更新到task中去
         for (String identifier : identifierMap.keySet()) {
-            try {
-                Task task = uploadTaskContext.getTask(identifier);
-
-                /**
-                 * 在创建文件夹的过程中已经创建了文件夹，生成了新的文件夹 id，需要替换掉 task 中原本的 folderId
-                 * 上传文件不需要考虑这种情况
-                 * task.setRelativePath("/" + fileInfo.getRelativePath());
-                 *
-                 * idMap 中的路径是不带有文件名的，relativePath带有文件名，获取生成的文件夹 id 需要适当调整
-                 * 全部文件/java   |  全部文件/java/java.md
-                 * relativePath.substring(0, relativePath.lastIndexOf('/'))
-                 */
-                if (idMap.size() != 0) {
-                    String relativePath = task.getRelativePath();
-                    if (relativePath.substring(1, relativePath.length()).contains("/")) {
-                        task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
-                    }
-                }
-
-                String fileName = task.getFileName();
-                String fileRealPath = fileConfig.getBasePath() + task.getRelativePath();
-                String targetFolderPath = fileConfig.getUploadPath() + task.getFolderPath();
-
-
-                try {
-                    merge(fileRealPath, targetFolderPath, fileName);
-                } catch (IOException e) {
-                    throw new FileUploadException("file merge error in IO", new ArrayList<>(identifierMap.keySet()), e);
-                }
-
-                if (fileConfig.checkmd5) {
-                    // 合并文件并且算出 md5 值
-                    String newMD5 = "";
-                    String md5 = identifierMap.get(identifier);
-                    boolean ok = FileUtils.checkmd5(fileRealPath, md5);
-                    if (!ok) {
-                        throw new FileUploadException("file merge error because md5 is not equal", new ArrayList<>(identifierMap.keySet()));
-                    }
-                    task.setMD5(md5);
-                }
-                uploadTaskContext.completeTask(identifier);
-                // 数据库添加记录
-                uploadFile(task);
-                log.info("文件上传成功, 文件位置: {}", fileRealPath);
-            } catch (FileUploadException e) {
-                throw new FileUploadException(e.getMsg(), new ArrayList<>(identifierMap.keySet()));
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new FileUploadException("file upload failed in controller", new ArrayList<>(identifierMap.keySet()));
+            Task task = taskExecutor.getTask(identifier);
+            String relativePath = task.getRelativePath();
+            if (relativePath.substring(1, relativePath.length()).contains("/")) {
+                task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
             }
-
         }
+
+        return idMap;
     }
 
     private Set<String> collectPath(Map<String, String> identifierMap) throws FileUploadException {
         Set<String> pathSet = new HashSet<>();
         for (String identifier : identifierMap.keySet()) {
-            Task task = uploadTaskContext.getTask(identifier);
+            Task task = taskExecutor.getTask(identifier);
             String relativePath = task.getRelativePath();
 
             // 排除掉单文件上传的情况
@@ -239,7 +138,6 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         }
         return folderList;
     }
-
 
     /**
      * 由树型结构拿到路径对应的文件夹 id
@@ -338,69 +236,4 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
         }
     }
 
-
-    /**
-     * 校验文件名
-     * 如果当前文件夹下已经有一个同名的文件，将会赋予新的文件名，根据重名的次数添加后缀
-     *
-     * @param fileName 原有的文件名
-     * @param folderId 所处文件夹 id
-     * @return
-     */
-    public String checkFileName(String fileName, Long folderId) {
-        // 查看是否同名
-        List<File> files = folderRepository.findFiles(folderId);
-        File file = null;
-        for (File file0 : files) {
-            if (file0.getName().equals(fileName)) {
-                file = file0;
-            }
-        }
-
-        // 没有发生重名
-        if (file == null) {
-            return fileName;
-        }
-
-        // 新的后缀名 _1  _2 ......
-        String suffix = String.valueOf(file.getDuplicateTimes() + 1);
-
-        // 得到文件的新名字
-        int index = fileName.lastIndexOf(".");
-        String name; // 文件名
-        String extentionName = ""; // 文件扩展名
-
-        if (index == -1) { // 文件没有后缀
-            name = fileName;
-        } else {
-            name = fileName.substring(0, index);
-            extentionName = fileName.substring(index, fileName.length());
-        }
-
-        // 添加后缀 _1 / _2 并合并文件名
-        fileName = name + "_" + suffix + extentionName;
-
-        // 更新重名次数
-        fileRepository.updateFileDuplicateTimes(file.getId());
-
-        return fileName;
-    }
-
-    private String getFileNewName(String originalName, String suffix) {
-        // 判断文件名有没有后缀
-        int index = originalName.lastIndexOf(".");
-        String name; // 文件名
-        String suffixName = ""; // 后缀
-
-        if (index == -1) { // 文件没有后缀
-            name = originalName;
-        } else {
-            name = originalName.substring(0, index);
-            suffixName = originalName.substring(index, originalName.length());
-        }
-
-        // 添加后缀 _1 / _2 并合并文件名
-        return name + "_" + suffix + suffixName;
-    }
 }
-

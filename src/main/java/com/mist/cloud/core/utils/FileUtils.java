@@ -114,17 +114,15 @@ public class FileUtils {
      * 文件合并
      *
      * @param targetFile 目标文件位置
-     * @param folder     要合并的文件所在的文件夹
+     * @param folderPath     要合并的文件所在的文件夹
      * @param filename   文件名
      * @return md5 文件的 md5
      */
-    public static void merge(String targetFile, String folder, String filename) throws IOException {
-        FileUtil.mkParentDirs(targetFile);
-        Files.deleteIfExists(Paths.get(targetFile));
-        Files.createFile(Paths.get(targetFile));
+    public static void merge(String targetFile, String folderPath, String filename) throws IOException {
+        FileUtil.touch(targetFile);
         // 合并文件
         try {
-            Stream<Path> stream = Files.list(Paths.get(folder));
+            Stream<Path> stream = Files.list(Paths.get(folderPath));
             List<Path> paths = stream.filter(path -> !path.getFileName().toString().equals(filename))
                     .sorted((o1, o2) -> {
                         String p1 = o1.getFileName().toString();
@@ -145,11 +143,10 @@ public class FileUtils {
                 }
             });
         } catch (IOException e) {
-            log.debug("合并文件出错，已删除原文件 {} , {}", folder, e.getMessage());
-            Files.deleteIfExists(Paths.get(targetFile));
+            log.debug("合并文件出错，已删除原文件 {} , {}", folderPath, e.getMessage());
+            FileUtil.del(targetFile);
         }
-        // 删除原文件夹
-        FileUtils.deleteDirectoryIfExist(Paths.get(folder));
+        FileUtil.del(folderPath);
     }
 
     /**

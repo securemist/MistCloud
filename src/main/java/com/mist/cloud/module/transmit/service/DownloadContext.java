@@ -1,15 +1,18 @@
-package com.mist.cloud.module.transmit.service.impl;
+package com.mist.cloud.module.transmit.service;
 
 import cn.hutool.core.io.FileUtil;
-import com.mist.cloud.module.file.model.pojo.FolderDetail;
-import com.mist.cloud.module.transmit.service.IDownloadService;
+import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.utils.FileUtils;
 import com.mist.cloud.core.utils.ZipUtils;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
-import com.mist.cloud.module.transmit.service.TransmitSupport;
+import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.file.repository.IFolderRepository;
+import com.mist.cloud.module.file.service.impl.FileServiceImpl;
+import com.mist.cloud.module.file.service.impl.FolderServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,9 +25,18 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class DownloadServiceImpl extends TransmitSupport implements IDownloadService {
-
-    @Override
+public class DownloadContext {
+    @Resource
+    protected FileConfig fileConfig;
+    @Resource
+    protected IFileRepository fileRepository;
+    @Resource
+    protected IFolderRepository folderRepository;
+    @Resource
+    protected FolderServiceImpl folderService;
+    @Resource
+    protected FileServiceImpl fileService;
+    
     public String downloadFolder(Long folderId) {
         // 文件夹名称
         String folderName = folderRepository.findFolder(folderId).getName();
@@ -58,7 +70,7 @@ public class DownloadServiceImpl extends TransmitSupport implements IDownloadSer
         return targetZipPath;
     }
 
-    @Override
+
     public String downloadFile(Long fileId) {
         File file = fileRepository.findFile(fileId);
         return fileConfig.getBasePath() + file.getRelativePath();

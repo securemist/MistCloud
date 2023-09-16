@@ -1,13 +1,19 @@
 package com.mist.cloud.module.transmit.context;
 
+import cn.hutool.core.io.FileUtil;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.file.repository.IFolderRepository;
+import com.mist.cloud.module.transmit.context.support.DatabaseSupport;
+import com.mist.cloud.module.transmit.context.support.IOsupport;
 import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: securemist
@@ -16,98 +22,98 @@ import java.util.Map;
  */
 @Slf4j
 public abstract class AbstractUploadContext implements UploadTaskContext {
-
+    @Resource
+    protected IOsupport iOsupport;
+    @Resource
+    protected IFolderRepository folderRepository;
+    @Resource
+    protected DatabaseSupport databaseSupport;
     @Resource
     FileConfig fileConfig;
 
-    protected abstract Map<String, Task> getUploadContext();
+    @Resource(name = "uploadTaskExecutor")
+    protected UploadTaskExecutor taskExecutor;
 
-    protected abstract void setUploadContext(Map<String, Task> taskMap);
-
-    protected abstract void writeChunk(ChunkVo chunkVo) throws IOException;
+    protected Set<String> completedTask = new HashSet<String>();
 
     @Override
     public void addChunk(ChunkVo chunk) throws FileUploadException {
-        try {
-            writeChunk(chunk);
-        } catch (IOException e) {
-            new FileUploadException("File chunk write failed : " + chunk.getFileName()
-                    + "-" + chunk.getChunkNumber(), chunk.getIdentifier(), e);
+        if (completedTask.contains(chunk.getIdentifier())) {
+            return;
         }
 
-        Map<String, Task> uploadContext = getUploadContext();
-        Task task = getTask(chunk.getIdentifier());
-
-        // 在第一次创建 task 的时候并不会创建 uploadChunks 数组，需要在上传分片的时候创建
+        iOsupport.writeChunk(chunk);
+        Task task = taskExecutor.getTask(chunk.getIdentifier());
         if (task == null) {
-            synchronized (AbstractUploadContext.class) {
-                if (task == null) {
-                    task = new Task(chunk.getIdentifier(), chunk.getTotalChunks());
-                    task.setFileName(chunk.getFileName());
-
-                    task.setFolderPath("/" + chunk.getIdentifier());
-                    task.setTargetFilePath(chunk.getFileName());
-
-                    task.setFolderId(chunk.getFolderId());
-                    task.setFileSize(chunk.getTotalSize());
-                    task.uploadChunks = new boolean[chunk.getTotalChunks() + 1];
-                    task.setRelativePath(generateRealPath(chunk.getRelativePath(), chunk.getIdentifier()));
-                }
-            }
+            task = taskExecutor.createTask(chunk);
         }
+
         task.uploadChunks[chunk.getChunkNumber()] = true;// chunk 的排序从 1 开始
-
-        uploadContext.put(chunk.getIdentifier(), task);
-        setUploadContext(uploadContext);
-    }
-
-    // 生成真实文件的文件名， originName_identifier.xxx 防止覆盖上传
-    private String generateRealPath(String relativePath, String identifier) {
-        int index = relativePath.lastIndexOf("/");
-        // 从路径中截取文件名
-        String fileName = "";
-        String path = "";
-        if (index == -1) { // 单文件上传，文件的 relativePath 为不带有 /
-            fileName = relativePath;
-        } else {  // 文件夹上传中的文件
-            path = relativePath.substring(0, index);
-            fileName = relativePath.substring(index + 1, relativePath.length());
-        }
-
-
-        // 拼接新的文件名
-        StringBuilder name = new StringBuilder();
-        index = fileName.lastIndexOf(".");
-        if (index != -1) {
-            name = name.append(fileName.substring(0, index)).append("_").append(identifier).append(".").append(fileName.substring(index + 1, fileName.length()));
-        } else {
-            name = name.append(fileName).append("_").append(identifier);
-        }
-
-        String finalPath = new StringBuilder(path).append("/").append(name).toString();
-        return finalPath;
-
+        taskExecutor.updateTask(task);
     }
 
 
     @Override
-    public void completeTask(String identifier) throws FileUploadException {
-        Map<String, Task> uploadContext = getUploadContext();
-        Task task = getTask(identifier);
-
-        uploadContext.remove(identifier);
-        setUploadContext(uploadContext);
+    public void mergeFiles(HashMap<String, String> identifierMap, Long folderId) throws FileUploadException {
+        // 给定的所有路径中，递归创建需要的所有子文件夹，返回文件夹与id的映射  [/全部文件/.. => folderId]
+        Map<String, Long> folderIdMap = createSubFolders(identifierMap, folderId);
+        // 开始合并
+        doMergeFiles(identifierMap, folderIdMap);
     }
 
+    public void completeTask(String identifier) {
+        taskExecutor.removeTask(identifier);
+        completedTask.add(identifier);
+    }
 
     @Override
-    public void cancelTask(String identifier) throws FileUploadException {
+    public void cancelTask(List<String> identifierList) {
+        for (String identifier : identifierList) {
+            completedTask.add(identifier);
+            // 删除上传过程产生的所有有关文件
+            Task task = taskExecutor.getTask(identifier);
+            if (task == null) {
+                continue;
+            }
 
-        Map<String, Task> uploadContext = getUploadContext();
-        Task task = getTask(identifier);
+            FileUtil.del(fileConfig.getUploadPath() + task.getFolderPath());
+            FileUtil.del(fileConfig.getBasePath() + task.getRelativePath());
+            log.error("文件上传失败: {} , {}, 已删除参与文件", identifier, task.getRelativePath());
+        }
 
-        uploadContext.remove(identifier);
-        setUploadContext(uploadContext);
     }
+
+    @Override
+    public void simpleUpload(Long folderId, MultipartFile file) throws IOException {
+        iOsupport.writeSimpleFile(file);
+        databaseSupport.addSimpleFile(folderId, file);
+    }
+
+    public void doMergeFiles(HashMap<String, String> identifierMap, Map<String, Long> idMap) throws FileUploadException {
+        for (String identifier : identifierMap.keySet()) {
+            try {
+                if (completedTask.contains(identifier)) {
+                    return;
+                }
+                Task task = taskExecutor.getTask(identifier);
+                // 合并文件
+                iOsupport.mergeFile(task);
+                // 校验md5
+                iOsupport.checkmd5(task, identifierMap.get(identifier));
+                // 从任务队列溢出
+                completeTask(identifier);
+                // 数据库添加记录
+                databaseSupport.addChunkableFile(task);
+                log.info("文件上传成功, 文件位置: {}", fileConfig.getBasePath() + task.getRelativePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FileUploadException("file upload failed in controller", new ArrayList<>(identifierMap.keySet()), e);
+            }
+
+        }
+    }
+
+    protected abstract Map<String, Long> createSubFolders(Map<String, String> identifierMap, Long parentId) throws FileUploadException;
+
 
 }
