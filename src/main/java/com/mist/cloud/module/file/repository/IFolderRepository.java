@@ -80,4 +80,11 @@ public interface IFolderRepository {
      * @return
      */
     List<Folder> searchByName(String value);
+
+    /**
+     * 递归获取文件夹下所有的子文件
+     * @param folderId
+     * @return
+     */
+   List<File> getAllFilesRecursive(Long folderId);
 }

@@ -45,7 +45,6 @@ public class UploadController {
     @PostMapping("/upload/file")
     public R singleUpload(@RequestPart("file") MultipartFile file, Long folderId) {
         try {
-
             uploadSevice.uploadSingleFile(folderId, file);
             FileUtil.writeBytes(file.getBytes(), fileConfig.getBasePath() + "/" + file.getOriginalFilename());
         } catch (IOException e) {

@@ -61,16 +61,14 @@ public class ExceptionHandlerConfig {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(Exception e) {
-        if (!(e instanceof NotLoginException)) {
-            log.error(e.getClass() + ": {}", e.getMessage());
-        }
+        e.printStackTrace();
         return new FailedResult(Constants.DEFAULT_FAILED_MSG);
     }
 
 
     @ExceptionHandler(value = NotLoginException.class)
     public HttpServletResponse authExceptionHandler(Exception e, HttpServletResponse response) {
-        log.debug(e.getClass() + ": {}", e.getMessage());
+        log.debug( "未登陆: {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return response;
     }

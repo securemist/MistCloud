@@ -72,13 +72,10 @@ public class DefaultFileUploadContext extends AbstractUploadContext implements U
     }
 
     @Override
-    public Task getTask(String identifier) throws FileUploadException {
+    public Task getTask(String identifier) {
         Map<String, Task> uploadContext = getUploadContext();
         Task task = uploadContext.get(identifier);
 
-        if (task == null) {
-            throw new FileUploadException("task is null when get task, check the mergeFile request later than addChunk request", identifier);
-        }
         return task;
     }
 }

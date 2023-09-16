@@ -14,7 +14,7 @@ public interface UploadTaskContext {
      * 添加文件分片
      * @param chunk
      */
-    public void addChunk(ChunkVo chunk);
+    public void addChunk(ChunkVo chunk) throws FileUploadException;
 
 
     /**

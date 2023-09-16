@@ -59,7 +59,7 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
                 .size(file.getSize())
                 .type(FileUtils.getFileType(file.getName()))
                 .folderId(folderId)
-                .relativePath("/")
+                .relativePath("/" + file.getOriginalFilename())
                 .originName(file.getOriginalFilename())
                 .md5("")
                 .build();
@@ -120,8 +120,6 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
                 String targetFolderPath = fileConfig.getUploadPath() + task.getFolderPath();
 
 
-                // 合并文件并且算出 md5 值
-                String newMD5 = "";
                 try {
                     merge(fileRealPath, targetFolderPath, fileName);
                 } catch (IOException e) {
@@ -129,6 +127,8 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
                 }
 
                 if (fileConfig.checkmd5) {
+                    // 合并文件并且算出 md5 值
+                    String newMD5 = "";
                     String md5 = identifierMap.get(identifier);
                     boolean ok = FileUtils.checkmd5(fileRealPath, md5);
                     if (!ok) {
@@ -136,7 +136,6 @@ public class UploadServiceImpl extends TransmitSupport implements IUploadService
                     }
                     task.setMD5(md5);
                 }
-                // 校验 md5 值
                 uploadTaskContext.completeTask(identifier);
                 // 数据库添加记录
                 uploadFile(task);

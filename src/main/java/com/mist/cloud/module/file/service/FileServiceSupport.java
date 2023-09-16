@@ -35,16 +35,24 @@ public abstract class FileServiceSupport implements IFileStrategy {
      */
     public List<FolderDetail.FolderPathItem> getPathList(Long id) {
         // 获取文件夹所处路径，从数据库查询出来的路径集合不具有顺序性，这里需要调整顺序返回给前端
-        List<Folder> list = folderRepository.getFolderPath(id);
+        List<Folder> folderlist = folderRepository.getFolderPath(id);
         List<FolderDetail.FolderPathItem> pathList = new ArrayList<>();
 
-        Long userId = Long.parseLong(getLoginId().toString());
-        Long rootFolderId = userRepository.getRootFolderId(userId);
+        // 找到根目录
+        Long currentParentId = null;
+        for (Folder folder : folderlist) {
+            if (folder.getParentId().equals(0L)) {
+                currentParentId = folder.getId();
+                folderlist.remove(folder);
+                pathList.add(new FolderDetail.FolderPathItem(folder.getId(), folder.getName()));
+                break;
+            }
+        }
+
 
         int cnt = 0;
-        Long currentParentId = rootFolderId;
-        while (cnt < list.size()) {
-            for (Folder folder : list) {
+        while (cnt < folderlist.size()) {
+            for (Folder folder : folderlist) {
                 if (folder.getParentId().equals(currentParentId)) {
                     pathList.add(new FolderDetail.FolderPathItem(folder.getId(), folder.getName()));
                     currentParentId = folder.getId();

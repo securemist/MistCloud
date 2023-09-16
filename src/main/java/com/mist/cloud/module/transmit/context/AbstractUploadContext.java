@@ -27,7 +27,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
     protected abstract void writeChunk(ChunkVo chunkVo) throws IOException;
 
     @Override
-    public void addChunk(ChunkVo chunk) {
+    public void addChunk(ChunkVo chunk) throws FileUploadException {
         try {
             writeChunk(chunk);
         } catch (IOException e) {
@@ -36,12 +36,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
         }
 
         Map<String, Task> uploadContext = getUploadContext();
-
-        Task task = null;
-        try {
-            task = getTask(chunk.getIdentifier());
-        } catch (FileUploadException e) {
-        }
+        Task task = getTask(chunk.getIdentifier());
 
         // 在第一次创建 task 的时候并不会创建 uploadChunks 数组，需要在上传分片的时候创建
         if (task == null) {
@@ -55,14 +50,43 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
 
                     task.setFolderId(chunk.getFolderId());
                     task.setFileSize(chunk.getTotalSize());
-                    task.setRelativePath(chunk.getRelativePath());
+                    task.uploadChunks = new boolean[chunk.getTotalChunks() + 1];
+                    task.setRelativePath(generateRealPath(chunk.getRelativePath(), chunk.getIdentifier()));
                 }
             }
         }
-        task.uploadChunks[chunk.getChunkNumber()] = true;
+        task.uploadChunks[chunk.getChunkNumber()] = true;// chunk 的排序从 1 开始
 
         uploadContext.put(chunk.getIdentifier(), task);
         setUploadContext(uploadContext);
+    }
+
+    // 生成真实文件的文件名， originName_identifier.xxx 防止覆盖上传
+    private String generateRealPath(String relativePath, String identifier) {
+        int index = relativePath.lastIndexOf("/");
+        // 从路径中截取文件名
+        String fileName = "";
+        String path = "";
+        if (index == -1) { // 单文件上传，文件的 relativePath 为不带有 /
+            fileName = relativePath;
+        } else {  // 文件夹上传中的文件
+            path = relativePath.substring(0, index);
+            fileName = relativePath.substring(index + 1, relativePath.length());
+        }
+
+
+        // 拼接新的文件名
+        StringBuilder name = new StringBuilder();
+        index = fileName.lastIndexOf(".");
+        if (index != -1) {
+            name = name.append(fileName.substring(0, index)).append("_").append(identifier).append(".").append(fileName.substring(index + 1, fileName.length()));
+        } else {
+            name = name.append(fileName).append("_").append(identifier);
+        }
+
+        String finalPath = new StringBuilder(path).append("/").append(name).toString();
+        return finalPath;
+
     }
 
 

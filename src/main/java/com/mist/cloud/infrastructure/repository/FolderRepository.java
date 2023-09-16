@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,7 +73,6 @@ public class FolderRepository implements IFolderRepository {
     }
 
 
-
     @Override
     public void realDeleteFolderRecursive(Long folderId) {
         folderMapper.realDeleteFolderRecursive(folderId);
@@ -97,8 +97,21 @@ public class FolderRepository implements IFolderRepository {
     @Override
     public List<Folder> getFolderTree(Long userId) {
         Long rootFolderId = userMapper.selectUserById(userId).getRootFolderId();
-        LinkedList<Folder> folderTreeList = folderMapper.getFolderTree(rootFolderId);
+        List<Folder> folderTreeList = folderMapper.getFolderTree(rootFolderId);
         return folderTreeList;
+    }
+
+    @Override
+    public List<File> getAllFilesRecursive(Long folderId) {
+        // 递归获取文件夹所有的子文件夹
+        List<Folder> folderList = folderMapper.getFolderTree(folderId);
+        List<File> fileList = new ArrayList<>();
+        // 遍历所有子文件夹，找到各自所有的文件
+        folderList.forEach(folder -> {
+            List<File> files = findFiles(folder.getId());
+            fileList.addAll(files);
+        });
+        return fileList;
     }
 
     @Override
@@ -145,13 +158,12 @@ public class FolderRepository implements IFolderRepository {
 
     @Override
     public void createFolders(List<FolderBrief> folders) {
-
         folderMapper.createFolders(folders);
     }
 
     @Override
     public List<Folder> searchByName(String value) {
-
         return folderMapper.search(value);
     }
+
 }
