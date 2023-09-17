@@ -2,6 +2,7 @@ package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.mapper.UserMapper;
 import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
 import com.mist.cloud.infrastructure.pojo.FolderSelectReq;
@@ -11,6 +12,7 @@ import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.infrastructure.mapper.FileMapper;
 import com.mist.cloud.infrastructure.mapper.FolderMapper;
+import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,8 @@ public class FolderRepository implements IFolderRepository {
     private FileMapper fileMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private IUserRepository userRepository;
 
     @Cacheable(value = "folder", key = "#folderId")
     @Override
@@ -49,7 +53,7 @@ public class FolderRepository implements IFolderRepository {
     @Override
     public List<Folder> findSubFolders(Long folderId) {
         FolderSelectReq folderSelectReq = FolderSelectReq.builder()
-                .userId(Constants.DEFAULT_USERID)
+                .userId(Session.getLoginId())
                 .parentId(folderId)
                 .build();
 
@@ -61,7 +65,7 @@ public class FolderRepository implements IFolderRepository {
     public Long createFolder(String folderName, Long parentId) {
         Long id = IdGenerator.fileId();
         FolderSelectReq folderCreateReq = FolderSelectReq.builder()
-                .userId(Constants.DEFAULT_USERID)
+                .userId(Session.getLoginId())
                 .id(id)
                 .parentId(parentId)
                 .folderName(folderName)
@@ -86,7 +90,7 @@ public class FolderRepository implements IFolderRepository {
     @Override
     public void renameFolder(Long folderId, String folderName) {
         FolderSelectReq folderRenametReq = FolderSelectReq.builder()
-                .userId(Constants.DEFAULT_USERID)
+                .userId(Session.getLoginId())
                 .id(folderId)
                 .folderName(folderName)
                 .build();
@@ -107,11 +111,25 @@ public class FolderRepository implements IFolderRepository {
         List<Folder> folderList = folderMapper.getFolderTree(folderId);
         List<File> fileList = new ArrayList<>();
         // 遍历所有子文件夹，找到各自所有的文件
-        folderList.forEach(folder -> {
-            List<File> files = findFiles(folder.getId());
+        for (Folder folder : folderList) {
+            // 忽略已经删除了的文件
+            List<File> files = fileMapper.findFilesIncludeRecycled(folder.getId());
             fileList.addAll(files);
-        });
+        }
+
         return fileList;
+    }
+
+
+    @Override
+    public List<Folder> getRecycledFolders(Long userId) {
+        return folderMapper.selectRecycleFolders(userId);
+    }
+
+    @Override
+    public void restoreFolder(Long id) {
+        Long rootFolderId = userRepository.getRootFolderId(Session.getLoginId());
+        folderMapper.restoreFolderRecursive(id, rootFolderId);
     }
 
     @Override

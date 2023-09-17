@@ -1,10 +1,9 @@
-package com.mist.cloud.module.file.service.impl;
+package com.mist.cloud.module.file.context.service;
 
 import com.mist.cloud.core.exception.file.FileException;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
-import com.mist.cloud.module.file.service.FileServiceSupport;
-import com.mist.cloud.module.file.service.IFileStrategy;
 import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.module.file.context.FileContextSupport;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +14,17 @@ import java.util.List;
  * @Description:
  */
 @Service("fileService")
-public class FileServiceImpl extends FileServiceSupport {
+public class FileService extends FileContextSupport implements ICommonService{
 
     @Override
     public void rename(Long id, String name) {
-        super.fileRepository.renameFile(id, name);
+        fileRepository.renameFile(id, name);
     }
 
     @Override
     public void copy(Long id, Long targetFolderId) throws FileException {
         // 判断移动的目标文件夹是否存在当前文件
-        List<File> files = super.folderRepository.findFiles(targetFolderId);
+        List<File> files = folderRepository.findFiles(targetFolderId);
 
         File file = fileRepository.findFile(id);
         for (File file0 : files) {

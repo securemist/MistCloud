@@ -87,4 +87,17 @@ public interface IFolderRepository {
      * @return
      */
    List<File> getAllFilesRecursive(Long folderId);
+
+    /**
+     * 获取回收站的文件夹，仅列出一级目录
+     * @param userId
+     * @return
+     */
+    List<Folder> getRecycledFolders(Long userId);
+
+    /**
+     * 复原回收站中的文件夹。默认复原到根目录
+     * @param id
+     */
+    void restoreFolder(Long id);
 }

@@ -37,6 +37,10 @@ public class File {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long size;
 
+    @ApiModelProperty(value = "用户id")
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long userId;
+
     @ApiModelProperty(value = "文件类型")
     private String type;
 

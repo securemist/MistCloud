@@ -10,7 +10,7 @@
         <result column="modify_time" property="modifyTime"/>
         <result column="create_time" property="createTime"/>
         <result column="deleted" property="deleted"/>
-        <result column="deletede_time" property="deletedTime"/>
+        <result column="deleted_time" property="deletedTime"/>
     </resultMap>
 
 
@@ -27,10 +27,9 @@
         SET @ids =  get_chlid_lists(#{folderId});
 
         --  让下面这个查询得到的结果是按照 @ids 默认顺序排序的
-        SELECT id, name, parent_id
+        SELECT id, name, parent_id, deleted
         FROM sys_folder
         WHERE FIND_IN_SET(id, @ids)
-        AND deleted = 0
         ORDER BY FIND_IN_SET(id, @ids);
     </select>
 
@@ -62,6 +61,14 @@
         FROM sys_folder
         WHERE name LIKE CONCAT('%', #{value}, '%')
           AND deleted = 0
+    </select>
+
+    <select id="selectRecycleFolders" resultMap="folderMap">
+        SELECT *
+        FROM sys_folder as f
+        WHERE f.user_id = #{userId}
+          AND f.deleted = 1
+          AND (SELECT deleted FROM sys_folder as p WHERE p.id = f.parent_id) = 0;
     </select>
 
 
@@ -97,10 +104,33 @@
 
         DELETE FROM sys_folder WHERE FIND_IN_SET(id, @folder_ids);
 
-        DELETE FROM sys_folder WHERE FIND_IN_SET(id, @file_ids);
+        DELETE FROM sys_file WHERE FIND_IN_SET(id, @file_ids);
         ]]>
     </update>
 
+
+    <update id="restoreFolderRecursive">
+
+        SET @folder_ids = (SELECT GROUP_CONCAT(id)
+                           FROM sys_folder
+                           WHERE FIND_IN_SET(id, get_chlid_lists(#{folderId})));
+
+        SET @file_ids = (SELECT GROUP_CONCAT(id)
+                         FROM sys_file
+                         WHERE FIND_IN_SET(folder_id, @folder_ids));
+
+
+        UPDATE sys_folder
+        SET deleted      = 0,
+            deleted_time = null,
+            parent_id    = #{targetFolderId}
+        WHERE id = #{folderId};
+
+        UPDATE sys_file
+        SET deleted      = 0,
+            deleted_time = null
+            WHERE FIND_IN_SET(id, @file_ids);
+    </update>
 
     <update id="deleteFolderRecursive" parameterType="java.lang.Long">
         <![CDATA[
@@ -128,5 +158,6 @@
             (#{item.id}, #{item.userId}, #{item.name}, #{item.parentId}, NOW(), NOW())
         </foreach>
     </update>
+
 
 </mapper>

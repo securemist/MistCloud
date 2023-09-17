@@ -10,7 +10,6 @@ import lombok.Getter;
  */
 public class Constants {
 
-    public static final Long DEFAULT_USERID = 1L;
     // 用户的默认云盘容量20G
     public static final Long DEFAULT_USER_CAPACITY = 20 * 1024 * 1024 * 1024L;
 

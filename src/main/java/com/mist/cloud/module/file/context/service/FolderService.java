@@ -1,13 +1,11 @@
-package com.mist.cloud.module.file.service.impl;
+package com.mist.cloud.module.file.context.service;
 
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
-import com.mist.cloud.module.file.service.FileServiceSupport;
-import com.mist.cloud.module.file.service.IFileStrategy;
 import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.module.file.context.FileContextSupport;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static cn.dev33.satoken.stp.StpUtil.getLoginId;
@@ -18,7 +16,7 @@ import static cn.dev33.satoken.stp.StpUtil.getLoginId;
  * @Description:
  */
 @Service("folderService")
-public class FolderServiceImpl extends FileServiceSupport {
+public class FolderService extends FileContextSupport implements ICommonService{
 
     @Override
     public void rename(Long id, String name) {
@@ -56,10 +54,9 @@ public class FolderServiceImpl extends FileServiceSupport {
         }
     }
 
-
     @Override
     public String getPath(Long id) {
-        List<FolderDetail.FolderPathItem> pathList = super.getPathList(id);
+        List<FolderDetail.FolderPathItem> pathList = getPathList(id);
         StringBuffer path = new StringBuffer();
         pathList.forEach(item -> {
             path.append("/" + item.getName());

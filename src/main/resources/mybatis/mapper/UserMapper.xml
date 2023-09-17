@@ -30,7 +30,7 @@
     </select>
 
 
-    <select id="selectUserById" resultType="User" parameterType="Long">
+    <select id="selectUserById" resultMap="userMap" parameterType="Long">
         SELECT *
         FROM sys_user
         WHERE id = #{userId}

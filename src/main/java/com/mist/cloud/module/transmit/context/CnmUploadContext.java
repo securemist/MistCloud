@@ -3,6 +3,7 @@ package com.mist.cloud.module.transmit.context;
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +53,10 @@ public class CnmUploadContext extends AbstractUploadContext {
     private Set<String> collectPath(Map<String, String> identifierMap) throws FileUploadException {
         Set<String> pathSet = new HashSet<>();
         for (String identifier : identifierMap.keySet()) {
+            if (completedTask.contains(identifier)) {
+                return pathSet;
+            }
+
             Task task = taskExecutor.getTask(identifier);
             String relativePath = task.getRelativePath();
 
@@ -123,7 +128,7 @@ public class CnmUploadContext extends AbstractUploadContext {
             FolderBrief folder = FolderBrief.builder()
                     .id(root.id)
                     .name(root.name)
-                    .userId(Constants.DEFAULT_USERID)
+                    .userId(Session.getLoginId())
                     .parentId(parentId)
                     .build();
             folderList.add(folder);

@@ -66,4 +66,18 @@ public interface IFileRepository {
      * @return
      */
     List<File> searchByName(String value);
+
+    /**
+     * 获取回收站中的文件，仅为单独删除的文件，排除掉删除文件夹导致的文件删除
+     * @param userId
+     * @return
+     */
+    List<File> getRecycledFiles(Long userId);
+
+    /**
+     * 从还原文件，还原到根目录
+     * @param id
+     */
+    void restoreFile(Long id);
+
 }

@@ -8,8 +8,8 @@ import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
-import com.mist.cloud.module.file.service.impl.FileServiceImpl;
-import com.mist.cloud.module.file.service.impl.FolderServiceImpl;
+import com.mist.cloud.module.file.context.service.FileService;
+import com.mist.cloud.module.file.context.service.FolderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,9 +33,9 @@ public class DownloadContext {
     @Resource
     protected IFolderRepository folderRepository;
     @Resource
-    protected FolderServiceImpl folderService;
+    protected FolderService folderService;
     @Resource
-    protected FileServiceImpl fileService;
+    protected FileService fileService;
     
     public String downloadFolder(Long folderId) {
         // 文件夹名称
@@ -47,6 +47,11 @@ public class DownloadContext {
 
         // 在临时目录创建所有的文件夹，将对应的文件从存储区拷贝到下载区
         for (File file : fileList) {
+            // 排除掉回收站中的文件
+            if(file.getDeleted() == 1) {
+                continue;
+            }
+
             String relativePath = file.getRelativePath();
             // 文件在数据库中的逻辑路径 /全部文件/PDF/C++_1.pdf 需要去掉 /全部文件
             String path = fileService.getPath(file.getId());

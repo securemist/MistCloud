@@ -1,19 +1,17 @@
-package com.mist.cloud.module.file.service;
+package com.mist.cloud.module.file.context;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.RequestParmException;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.utils.DateTimeUtils;
+import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.module.file.model.dto.FolderDto;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
 import com.mist.cloud.module.file.model.tree.FolderTreeNode;
 import com.mist.cloud.module.file.model.tree.SubFolder;
-import com.mist.cloud.module.file.repository.IFileRepository;
-import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
-import com.mist.cloud.module.user.repository.IUserRepository;
+import com.mist.cloud.module.file.context.service.ICommonService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -34,19 +32,14 @@ import static cn.dev33.satoken.stp.StpUtil.*;
  * 其他的接口直接在本类处理
  */
 @Component
-public class FileContext {
+public class FileServiceContext extends AbstractFileServiceSupport implements IFileContext {
     @Resource(name = "fileService")
-    public IFileStrategy fileService;
+    public ICommonService fileService;
     @Resource(name = "folderService")
-    public IFileStrategy folderService;
-    @Resource
-    public IFileRepository fileRepository;
-    @Resource
-    public IFolderRepository folderRepository;
-    @Resource
-    private IUserRepository userRepository;
+    public ICommonService folderService;
 
-    public IFileStrategy get(Long id) {
+    @Override
+    public ICommonService getService(Long id) {
         if (fileRepository.isFolder(id)) {
             return folderService;
         } else {
@@ -54,11 +47,7 @@ public class FileContext {
         }
     }
 
-    /**
-     * 返回用户的文件夹树形结构列表
-     *
-     * @return FolderTreeNode Tree
-     */
+    @Override
     public FolderTreeNode getFolderTree() {
         Long userId = Long.parseLong(getLoginId().toString());
         List<Folder> folderList = folderRepository.getFolderTree(userId);
@@ -80,19 +69,9 @@ public class FileContext {
         return root;
     }
 
-    ;
 
-    /**
-     * 创建文件夹
-     *
-     * @param parentId   创建文件夹的所在文件夹id
-     * @param folderName 名称
-     * @return
-     * @throws FolderException 文件加下已存在同名文件夹
-     */
+    @Override
     public FolderDto createFolder(Long parentId, String folderName) throws FolderException {
-        // 校验传入的 parentId 是否存在
-        // TODO
 
         Folder folder = folderRepository.findFolder(parentId);
         if (folder == null) {
@@ -111,7 +90,7 @@ public class FileContext {
         Long id = folderRepository.createFolder(folderName, parentId);
 
         FolderDto folderDto = FolderDto.builder()
-                .userId(Constants.DEFAULT_USERID)
+                .userId(Session.getLoginId())
                 .id(id)
                 .name(folderName)
                 .parentId(parentId)
@@ -122,6 +101,7 @@ public class FileContext {
     }
 
 
+    @Override
     public FolderDetail searchFile(String value) {
         List<File> fileList = fileRepository.searchByName(value);
         List<Folder> folderList = folderRepository.searchByName(value);
@@ -162,12 +142,7 @@ public class FileContext {
     }
 
 
-    /**
-     * 获取文件下的所有文件和文件夹信息
-     *
-     * @param id
-     * @return
-     */
+    @Override
     public FolderDetail getFolderDetail(Long id) {
         // 文件下所有的文件夹与文件列表
         List<File> fileList = folderRepository.findFiles(id);
@@ -197,7 +172,7 @@ public class FileContext {
             fileVoList.add(file0);
         }
         // 文件路径
-        List<FolderDetail.FolderPathItem> pathList = folderService.getPathList(id);
+        List<FolderDetail.FolderPathItem> pathList = getPathList(id);
 
         FolderDetail folderDetail = FolderDetail.builder()
                 .path(pathList)

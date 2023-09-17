@@ -2,6 +2,7 @@ package com.mist.cloud.module.transmit.context.support;
 
 import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.core.utils.FileUtils;
+import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
@@ -19,11 +20,8 @@ import java.util.List;
  * @Description:
  */
 @Component
-public class DatabaseSupport {
-    @Resource
-    private IFolderRepository folderRepository;
-    @Resource
-    private IFileRepository fileRepository;
+public class DatabaseSupport extends UploadSupport{
+
 
     public void addChunkableFile(Task task) {
         // 校验文件名。防止重名
@@ -38,6 +36,7 @@ public class DatabaseSupport {
                 .folderId(task.getFolderId())
                 .originName(task.getFileName())
                 .md5(task.getMD5())
+                .userId(Session.getLoginId())
                 .relativePath(task.getRelativePath())
                 .build();
 
@@ -50,6 +49,7 @@ public class DatabaseSupport {
         // 所有的单文件上传全部上传到根路径
         File newFile = File.builder()
                 .id(IdGenerator.fileId())
+                .userId(Session.getLoginId())
                 .name(fileName)
                 .size(file.getSize())
                 .type(FileUtils.getFileType(file.getName()))

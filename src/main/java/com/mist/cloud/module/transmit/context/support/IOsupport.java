@@ -28,15 +28,12 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Component
-public class IOsupport {
-    @Resource
-    public FileConfig fileConfig;
+public class IOsupport extends UploadSupport{
 
     public void mergeFile(Task task) throws IOException {
         String fileName = task.getFileName(); // 文件名
         String targetFilePath = fileConfig.getBasePath() + task.getRelativePath(); // 合并之后的目标文件
         String folderPath = fileConfig.getUploadPath() + task.getFolderPath(); // 合并的原文件夹
-
         FileUtil.touch(targetFilePath);
         // 合并文件
         Stream<Path> stream = Files.list(Paths.get(folderPath));

@@ -5,11 +5,11 @@ import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.result.Result;
 import com.mist.cloud.core.result.SuccessResult;
+import com.mist.cloud.module.file.context.FileServiceContext;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
 import com.mist.cloud.module.file.model.req.FileCopyRequest;
 import com.mist.cloud.module.file.model.req.FileDeleteRequest;
 import com.mist.cloud.module.file.model.tree.FolderTreeNode;
-import com.mist.cloud.module.file.service.FileContext;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,6 @@ import org.apache.ibatis.annotations.Lang;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author: securemist
@@ -29,13 +28,13 @@ public class FileController {
     @Resource
     private FileConfig fileConfig;
     @Resource
-    private FileContext fileContext;
+    private FileServiceContext fileServiceContext;
 
     @GetMapping(value = "/folder/tree")
     @ApiOperation(value = "返回所有文件的文件树")
     public Result folderTree() {
         // 查找的文件夹 id，默认为根目录
-        FolderTreeNode tree = fileContext.getFolderTree();
+        FolderTreeNode tree = fileServiceContext.getFolderTree();
         return new SuccessResult(tree);
     }
 
@@ -45,7 +44,7 @@ public class FileController {
             @ApiImplicitParam(name = "parentId", value = "创建文件夹时所在的文件夹 Id", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "folderName", value = "文件夹的名字", dataTypeClass = String.class)})
     public Result createFolder(@RequestParam("parentId") Long parentId, @RequestParam("folderName") String folderName) throws FolderException {
-        fileContext.createFolder(parentId, folderName);
+        fileServiceContext.createFolder(parentId, folderName);
         return new SuccessResult();
     }
 
@@ -53,7 +52,7 @@ public class FileController {
     @ApiOperation(value = "获取一个文件夹下所有的文件与文件夹信息")
     @ApiImplicitParam(name = "id", value = "文件夹 Id", dataTypeClass = Lang.class)
     public Result getFiles(@PathVariable("id") Long id) {
-        FolderDetail folderDetail = fileContext.getFolderDetail(id);
+        FolderDetail folderDetail = fileServiceContext.getFolderDetail(id);
         return new SuccessResult(folderDetail);
     }
 
@@ -63,7 +62,7 @@ public class FileController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "value", value = "搜索关键词", dataTypeClass = String.class)})
     public Result rename(@RequestParam("value") String value) {
-        FolderDetail folderDetail = fileContext.searchFile(value);
+        FolderDetail folderDetail = fileServiceContext.searchFile(value);
         return new SuccessResult(folderDetail);
     }
 
@@ -74,7 +73,7 @@ public class FileController {
             @ApiImplicitParam(name = "id", value = "要修改的文件(夹)名 id", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "name", value = "修改后的文件(夹)名", dataTypeClass = String.class)})
     public Result rename(@RequestParam("id") Long id, @RequestParam("name") String fileName) {
-        fileContext.get(id).rename(id, fileName);
+        fileServiceContext.rename(id, fileName);
         return new SuccessResult();
     }
 
@@ -86,7 +85,7 @@ public class FileController {
             @ApiImplicitParam(name = "idList", value = "当前文件 id", dataTypeClass = Lang.class)})
     public Result copy(@RequestBody FileCopyRequest fileCopyRequest) throws BaseFileException {
         for (Long id : fileCopyRequest.getIdList()) {
-            fileContext.get(id).copy(id, fileCopyRequest.getTargetFolderId());
+            fileServiceContext.copy(id, fileCopyRequest.getTargetFolderId());
         }
         return new SuccessResult();
     }
@@ -99,7 +98,7 @@ public class FileController {
     })
     public Result delete(@RequestBody FileDeleteRequest fileDeleteRequest) {
         for (Long id : fileDeleteRequest.getIdList()) {
-            fileContext.get(id).delete(id, fileDeleteRequest.getRealDelete());
+            fileServiceContext.delete(id, fileDeleteRequest.getRealDelete());
         }
         return new SuccessResult();
     }

@@ -8,7 +8,7 @@ import cn.dev33.satoken.stp.StpUtil;
  * @Description:
  */
 public class Session {
-    public static String getLoginId(){
-        return StpUtil.getLoginId().toString();
+    public static Long getLoginId(){
+        return Long.valueOf(StpUtil.getLoginId().toString());
     }
 }

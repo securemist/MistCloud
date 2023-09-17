@@ -40,4 +40,8 @@ public interface FolderMapper {
     void copyFolder(FolderCopyReq folderCopyReq);
 
     List<Folder> search(String value);
+
+    List<Folder> selectRecycleFolders(Long userId);
+
+    void restoreFolderRecursive(Long folderId, Long targetFolderId);
 }
