@@ -2,8 +2,6 @@ package com.mist.cloud.module.transmit.controller;
 
 import com.mist.cloud.core.result.R;
 import com.mist.cloud.module.transmit.model.req.IdentifierItem;
-import com.mist.cloud.core.result.Result;
-import com.mist.cloud.core.result.SuccessResult;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.module.transmit.context.UploadTaskContext;
 import com.mist.cloud.core.exception.file.FileUploadException;
@@ -39,19 +37,19 @@ public class UploadController {
     }
 
     @PostMapping("/upload/chunk")
-    public Result uploadChunk(ChunkVo chunk) throws FileUploadException {
+    public R uploadChunk(ChunkVo chunk) throws FileUploadException {
         uploadTaskContext.addChunk(chunk);
-        return new SuccessResult();
+        return R.success();
     }
 
     @PostMapping("/upload/mergeFile")
-    public Result mergeFile(@RequestBody MergeFileRequest mergeFileRequest) throws FileUploadException, IOException {
+    public R mergeFile(@RequestBody MergeFileRequest mergeFileRequest) throws FileUploadException, IOException {
         HashMap<String, String> identifierMap = new HashMap<>();
         for (IdentifierItem identifier : mergeFileRequest.getIdentifierList()) {
             identifierMap.put(identifier.getIdentifier(), identifier.getMd5());
         }
         uploadTaskContext.mergeFiles(identifierMap, mergeFileRequest.getFolderId());
-        return new SuccessResult("上传成功");
+        return R.success("上传成功");
     }
 
     @PostMapping("/upload/cancel")

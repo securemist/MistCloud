@@ -3,11 +3,10 @@ package com.mist.cloud.core.exception;
 import cn.dev33.satoken.exception.NotLoginException;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.constant.Constants;
+import com.mist.cloud.core.constant.ResponseCode;
 import com.mist.cloud.core.exception.auth.RegisterException;
 import com.mist.cloud.core.exception.file.FolderException;
-import com.mist.cloud.core.result.FailedResult;
 import com.mist.cloud.core.result.R;
-import com.mist.cloud.core.result.Result;
 import com.mist.cloud.module.transmit.context.UploadTaskContext;
 import com.mist.cloud.core.exception.file.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
@@ -38,9 +37,9 @@ public class ExceptionHandlerConfig {
      */
     @ResponseBody
     @ExceptionHandler(value = {RequestParmException.class})
-    public Result customExceptionHandler(Exception e) {
+    public R customExceptionHandler(Exception e) {
         log.error(e.getClass() + ": {}", e.getMessage());
-        return new FailedResult(e.getMessage());
+        return R.error(e.getMessage());
     }
 
 
@@ -49,16 +48,16 @@ public class ExceptionHandlerConfig {
      */
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public Result exceptionHandler(Exception e) {
+    public R exceptionHandler(Exception e) {
         e.printStackTrace();
-        return new FailedResult(Constants.DEFAULT_FAILED_MSG);
+        return R.error();
     }
 
 
     @ExceptionHandler(value = NotLoginException.class)
     @ResponseBody
     public R authExceptionHandler(Exception e, HttpServletResponse response) {
-        return R.error("登陆信息无效");
+        return R.error(ResponseCode.LOGIN_FAILED, null);
     }
 
     @ExceptionHandler(value = {RegisterException.class, ShareException.class, FolderException.class})
@@ -70,13 +69,11 @@ public class ExceptionHandlerConfig {
     @ResponseBody
     @ExceptionHandler(value = FileUploadException.class)
     public R FileExceptionHandler(FileUploadException e) throws IOException {
-            List<String> identifierList =  e.getIdentifierList();
-            // 文件上传失败，清除所有的残余文件
-            uploadTaskContext.cancelTask(identifierList);
+        List<String> identifierList = e.getIdentifierList();
+        // 文件上传失败，清除所有的残余文件
+        uploadTaskContext.cancelTask(identifierList);
         return R.error(e.getMessage());
     }
-
-
 
 
 }

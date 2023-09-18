@@ -82,7 +82,7 @@ public class FileServiceContext extends AbstractFileServiceSupport implements IF
         List<Folder> subFolders = folderRepository.findSubFolders(parentId);
         for (Folder subFolder : subFolders) {
             if (subFolder.getName().equals(folderName)) { // 出现重名
-                throw new FolderException(Constants.Response.FOLDER_DUPLICATE_NAME.getMsg());
+                throw new FolderException("文件夹已存在");
             }
         }
 
