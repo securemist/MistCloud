@@ -1,5 +1,6 @@
 package com.mist.cloud.infrastructure.mapper;
 
+import com.mist.cloud.infrastructure.pojo.FolderResaveReq;
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
 import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
 import com.mist.cloud.infrastructure.entity.Folder;
@@ -44,4 +45,6 @@ public interface FolderMapper {
     List<Folder> selectRecycleFolders(Long userId);
 
     void restoreFolderRecursive(Long folderId, Long targetFolderId);
+
+    void resaveFolder(FolderResaveReq folder);
 }

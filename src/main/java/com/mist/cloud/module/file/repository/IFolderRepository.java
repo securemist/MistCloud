@@ -100,4 +100,13 @@ public interface IFolderRepository {
      * @param id
      */
     void restoreFolder(Long id);
+
+        /**
+     * 转存文件夹
+     * @param folderId 源文件夹
+     * @param targetFolderId 目标文件夹
+     * @param userId 目标用户
+     * @return
+     */
+    Long resaveFolder(Long folderId, Long targetFolderId, Long userId);
 }

@@ -1,7 +1,6 @@
 package com.mist.cloud.module.file.controller;
 
 import com.mist.cloud.core.config.FileConfig;
-import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.result.Result;
 import com.mist.cloud.core.result.SuccessResult;
@@ -83,7 +82,7 @@ public class FileController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "targetFolderId", value = "目标文件夹 id", dataTypeClass = Lang.class),
             @ApiImplicitParam(name = "idList", value = "当前文件 id", dataTypeClass = Lang.class)})
-    public Result copy(@RequestBody FileCopyRequest fileCopyRequest) throws BaseFileException {
+    public Result copy(@RequestBody FileCopyRequest fileCopyRequest) {
         for (Long id : fileCopyRequest.getIdList()) {
             fileServiceContext.copy(id, fileCopyRequest.getTargetFolderId());
         }

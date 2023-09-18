@@ -1,6 +1,5 @@
 package com.mist.cloud.module.file.context;
 
-import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.module.file.model.dto.FolderDto;
 import com.mist.cloud.module.file.model.pojo.FolderDetail;
@@ -62,7 +61,7 @@ public interface IFileContext extends ICommonService {
     }
 
     @Override
-    default void copy(Long id, Long targetFolderId) throws BaseFileException {
+    default void copy(Long id, Long targetFolderId) {
         getService(id).copy(id, targetFolderId);
     }
 

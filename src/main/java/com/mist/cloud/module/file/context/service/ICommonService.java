@@ -1,6 +1,5 @@
 package com.mist.cloud.module.file.context.service;
 
-import com.mist.cloud.core.exception.file.BaseFileException;
 import com.mist.cloud.core.exception.file.FileException;
 import com.mist.cloud.core.exception.file.FolderException;
 
@@ -26,7 +25,7 @@ public interface ICommonService {
      * @throws FileException
      * @throws FolderException
      */
-    void copy(Long id, Long targetFolderId) throws BaseFileException;
+    void copy(Long id, Long targetFolderId) ;
 
     /**
      * 文件与文件夹的删除

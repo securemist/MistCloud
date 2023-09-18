@@ -8,7 +8,7 @@ import java.util.List;
  * @Datetime: 2023/8/16 16:29
  * @Description:
  */
-public class FileUploadException extends BaseFileException {
+public class FileUploadException extends RuntimeException {
     private List<String> identifierList = new ArrayList<String>();
 
     private Exception e;
@@ -25,7 +25,7 @@ public class FileUploadException extends BaseFileException {
         this.e = new RuntimeException();
     }
 
-        public FileUploadException(String msg, String identifier) {
+    public FileUploadException(String msg, String identifier) {
         super(msg);
         this.identifierList.add(identifier);
         this.e = new RuntimeException();

@@ -1,3 +1,9 @@
+upload:
+  base-path: /Volumes/Download/mist-cloud
+  checkmd5: false
+net:
+  host: 192.168.1.119
+
 server:
   port: 8888
 
@@ -14,9 +20,8 @@ spring:
     host: smtp.qq.com
     port: 465
     username: gongjiatian00@qq.com
-    # 使用 jasypt 加密密码，使用com.xkcoding.email.PasswordTest.testGeneratePassword 生成加密密码，替换 ENC(加密密码)
     password: sfnknboxmnkvdfff
-    test-connection: true
+    test-connection: false
     default-encoding: UTF-8
     properties:
       mail.smtp.auth: true
@@ -28,11 +33,6 @@ spring:
     multipart:
       max-request-size: 25MB
       max-file-size: 25MB
-# 为 jasypt 配置解密秘钥
-jasypt:
-  encryptor:
-    password: mist-cloud
-
 
 
 # swagger地址
@@ -42,7 +42,6 @@ mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   type-aliases-package: com.mist.cloud.infrastructure
   configuration:
-    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 
@@ -50,11 +49,7 @@ logging:
   level:
     com.mist.cloud.infrastructure.mapper: DEBUG
 
-upload:
-  base-path: /Volumes/Download/mist-cloud
-  checkmd5: false
 
-############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: satoken
@@ -71,8 +66,6 @@ sa-token:
   # 是否输出操作日志
   is-log: false
 #  log-level: DEBUG
-
-
 
 
 

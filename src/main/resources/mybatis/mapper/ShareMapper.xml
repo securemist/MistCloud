@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mist.cloud.infrastructure.mapper.ShareMapper">
+    <resultMap id="shareMap" type="Share">
+        <result column="user_id" property="userId"/>
+        <result column="identifier" property="identifier"/>
+        <result column="file_ids" property="fileIds"/>
+        <result column="extract_code" property="extreactCode"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="expire_time" property="expireTime"/>
+    </resultMap>
+
+    <insert id="insertShare" parameterType="Share">
+        INSERT INTO share_link (user_id, file_ids, identifier, extract_code, description, create_time, expire_time)
+        VALUES (#{userId}, #{fileIds}, #{identifier}, #{extreactCode}, #{description}, #{createTime}, #{expireTime})
+    </insert>
+
+    <delete id="deleteShareByIdentifier">
+        DELETE
+        FROM share_link
+        WHERE identifier = #{identifier}
+    </delete>
+
+    <select id="selectShareByIdentifier" resultType="com.mist.cloud.infrastructure.entity.Share">
+        SELECT *
+        FROM share_link
+        WHERE identifier = #{identifier}
+    </select>
+
+</mapper>

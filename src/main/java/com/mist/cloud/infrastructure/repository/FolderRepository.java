@@ -5,6 +5,7 @@ import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.mapper.UserMapper;
 import com.mist.cloud.infrastructure.pojo.FolderCopyReq;
+import com.mist.cloud.infrastructure.pojo.FolderResaveReq;
 import com.mist.cloud.infrastructure.pojo.FolderSelectReq;
 import com.mist.cloud.module.file.model.pojo.*;
 import com.mist.cloud.module.file.repository.IFolderRepository;
@@ -184,4 +185,15 @@ public class FolderRepository implements IFolderRepository {
         return folderMapper.search(value);
     }
 
+       @Override
+    public Long resaveFolder(Long folderId, Long targetFolderId, Long userId) {
+        Long newFolderId = IdGenerator.fileId();
+        FolderResaveReq folder = FolderResaveReq.builder()
+                .userId(userId)
+                .folderId(folderId)
+                .targetFolderId(targetFolderId)
+                .newFolderId(newFolderId).build();
+        folderMapper.resaveFolder(folder);
+        return newFolderId;
+    }
 }

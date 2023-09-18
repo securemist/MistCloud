@@ -107,7 +107,7 @@ public abstract class AbstractUploadContext implements UploadTaskContext {
                 log.info("文件上传成功, 文件位置: {}", fileConfig.getBasePath() + task.getRelativePath());
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new FileUploadException("file upload failed in controller", new ArrayList<>(identifierMap.keySet()), e);
+                throw new FileUploadException("file upload failed in PreviewController", new ArrayList<>(identifierMap.keySet()), e);
             }
 
         }

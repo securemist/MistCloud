@@ -13,11 +13,14 @@ public interface IUserRepository {
 
     /**
      * 获取用户信息
+     *
      * @param username
      */
     User getUser(String username);
 
+    User getUser(Long userId);
 
+    User getUserByEmail(String email);
 
     /**
      * 注册用户
@@ -29,20 +32,16 @@ public interface IUserRepository {
 
     /**
      * 检查邮箱是否已经注册过
+     *
      * @param email
      * @return
      */
     boolean checkEmailRegistered(String email);
 
-    /**
-     * 根据邮箱获取用户
-     * @param email
-     * @return
-     */
-    User getUserByEmail(String email);
 
     /**
      * 获取用户根文件夹
+     *
      * @param userId
      */
     Long getRootFolderId(Long userId);
