@@ -1,8 +1,9 @@
 package com.mist.cloud.infrastructure.mapper;
 
 import com.mist.cloud.infrastructure.entity.Share;
-import com.mist.cloud.infrastructure.pojo.FolderResaveReq;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -17,5 +18,7 @@ public interface ShareMapper {
     Share selectShareByIdentifier(String identifier);
 
     void deleteShareByIdentifier(String identifier);
+
+    List<Share> selectAllSharesByUserId(Long userId);
 
 }

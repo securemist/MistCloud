@@ -1,7 +1,5 @@
 package com.mist.cloud.module.share.service;
 
-import cn.dev33.satoken.stp.StpUtil;
-import com.alibaba.fastjson.JSON;
 import com.mist.cloud.core.exception.ShareException;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.File;
@@ -12,6 +10,7 @@ import com.mist.cloud.module.file.context.IFileContext;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.share.model.ShareFileInfo;
+import com.mist.cloud.module.share.model.ShareItem;
 import com.mist.cloud.module.share.model.ShareStatusType;
 import com.mist.cloud.module.share.model.req.CreateShareRequest;
 import com.mist.cloud.module.share.model.resp.ShareLinkResponse;
@@ -20,9 +19,9 @@ import com.mist.cloud.module.share.service.support.ShareCommonSupport;
 import com.mist.cloud.module.user.repository.IUserRepository;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: securemist
@@ -41,9 +40,9 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
     @Resource
     protected IFileContext fileContext;
 
-    protected abstract String generateUrl();
+    protected abstract ShareLinkResponse generateLink(String code);
 
-    protected abstract String getCompleteUrl(String uid);
+    protected abstract String getCompleteUrl(String key);
 
     protected abstract Date parseExpireTime(Integer effectiveTime);
 
@@ -52,30 +51,28 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
 
     @Override
     public ShareLinkResponse createShare(CreateShareRequest createShareRequest) {
-        // 文件列表
-        List<Long> idList = createShareRequest.getIdList();
-        String fileIds = JSON.toJSONString(idList);
+        Long fileId = createShareRequest.getFileId();
 
-        String identifier = generateUrl();
+        String code = createShareRequest.getCode();
 
-        Date expireTime = parseExpireTime(createShareRequest.getEffectiveTime());
-
-        String code = createShareRequest.getExtractCode();
-
+        ShareLinkResponse shareLink = generateLink(code);
+        Date expireTime = parseExpireTime(createShareRequest.getTimeLimit());
         Long userId = Session.getLoginId();
 
         Share share = Share.builder()
-                .fileIds(fileIds)
+                .fileId(fileId)
                 .createTime(new Date())
-                .extreactCode(code)
+                .code(code)
                 .expireTime(expireTime)
                 .userId(userId)
+                .visitLimit(createShareRequest.getVisitLimit())
+                .expireTime(expireTime)
                 .description(createShareRequest.getDescription())
-                .identifier(identifier)
+                .uniqueKey(shareLink.getUniqueKey())
                 .build();
 
         shareRepository.createShare(share);
-        return new ShareLinkResponse(getCompleteUrl(share.getIdentifier()));
+        return shareLink;
     }
 
     @Override
@@ -97,6 +94,36 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
         }
     }
 
+    @Override
+    public List<ShareItem> listShares() {
+        Long userId = Session.getLoginId();
+        List<Share> shares = shareRepository.getAllShares(userId);
+
+        List<ShareItem> shareItemList = shares.stream()
+                .map(share -> {
+                    ShareItem shareItem = new ShareItem();
+                    Long fileId = share.getFileId();
+                    shareItem.setFileId(fileId);
+                    shareItem.setUrl(getCompleteUrl(share.getUniqueKey()));
+                    shareItem.setDescription(share.getDescription());
+                    shareItem.setCode(share.getCode());
+                    shareItem.setVisitTime(100); // TODO 链接的查看次数
+
+                    if (fileRepository.isFolder(fileId)) {
+                        Folder folder = folderRepository.findFolder(fileId);
+                        shareItem.setName(folder.getName());
+                        shareItem.setIsFolder(true);
+                    } else {
+                        File file = fileRepository.findFile(fileId);
+                        shareItem.setName(file.getName());
+                        shareItem.setIsFolder(false);
+                    }
+                    return shareItem;
+                })
+                .collect(Collectors.toList());
+
+        return shareItemList;
+    }
 
     @Override
     public ShareFileInfo extractFile(String code, String identifier) {
@@ -105,7 +132,8 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
             throw new ShareException("页面不存在");
         }
 
-        if (!share.getExtreactCode().equals(code)) {
+        if (!share.getCode()
+                .equals(code)) {
             throw new ShareException("提取码错误");
         }
 
@@ -114,10 +142,23 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
         ShareFileInfo shareFileInfo = new ShareFileInfo();
         shareFileInfo.setUser(new ShareFileInfo.User(user.getId(), user.getUsername()));
         shareFileInfo.setDescription(share.getDescription());
-        shareFileInfo.setLink(getCompleteUrl(share.getIdentifier()));
+        shareFileInfo.setLink(getCompleteUrl(share.getUniqueKey()));
         shareFileInfo.setCreateTime(share.getCreateTime());
         shareFileInfo.setExpireTime(share.getExpireTime());
         shareFileInfo.setStatus(ShareStatusType.OK);
+
+        Long id = share.getFileId();
+
+        shareFileInfo.setFileId(id);
+        if (fileRepository.isFolder(id)) {
+            Folder folder = folderRepository.findFolder(id);
+            shareFileInfo.setFileName(folder.getName());
+            shareFileInfo.setIsFolder(true);
+        } else {
+            File file = fileRepository.findFile(id);
+            shareFileInfo.setFileName(file.getName());
+            shareFileInfo.setIsFolder(false);
+        }
 
         if (share.getExpireTime() == null) {
             shareFileInfo.setStatus(ShareStatusType.PERMANENT);
@@ -125,35 +166,7 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
             shareFileInfo.setStatus(ShareStatusType.EXPIRED);
         }
 
-        List<Long> idList = JSON.parseArray(share.getFileIds(), Long.class);
-        ArrayList<ShareFileInfo.File> shareFileList = new ArrayList<>();
-        for (Long id : idList) {
-            ShareFileInfo.File shareFile = new ShareFileInfo.File();
-            shareFile.setId(id);
-            if (fileRepository.isFolder(id)) {
-                Folder folder = folderRepository.findFolder(id);
-                if (folder == null) {
-                    shareFileInfo.setStatus(ShareStatusType.DELETED);
-                    break;
-                }
-                shareFile.setSize(0L);
-                shareFile.setName(folder.getName());
-                shareFile.setModifyTime(folder.getModifyTime());
-                shareFile.setIsFolder(true);
-            } else {
-                File file = fileRepository.findFile(id);
-                if (file == null) {
-                    shareFileInfo.setStatus(ShareStatusType.DELETED);
-                    break;
-                }
-                shareFile.setSize(file.getSize());
-                shareFile.setName(file.getName());
-                shareFile.setModifyTime(file.getCreateTime());
-                shareFile.setIsFolder(false);
-            }
-            shareFileList.add(shareFile);
-        }
-        shareFileInfo.setFileList(shareFileList);
+
         shareFileInfo.setStatus(ShareStatusType.OK);
 
         return shareFileInfo;

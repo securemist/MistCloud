@@ -50,7 +50,7 @@ public class R<T> implements Serializable {
     }
 
     public static R error() {
-        return new R<>(SUCCESS_CODE, SUCCESS_MSG, null);
+        return new R<>(ERROR_CODE, ERROR_MSG, null);
     }
 
     public static R error(ResponseCode responseCode, Object data) {

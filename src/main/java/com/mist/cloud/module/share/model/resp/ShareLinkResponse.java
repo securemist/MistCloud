@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ShareLinkResponse {
     // 生成的链接
-    private String link;
+    private String url;
 
+    // 提取码
+    private String code;
+
+    // 唯一标识
+    private String uniqueKey;
 }

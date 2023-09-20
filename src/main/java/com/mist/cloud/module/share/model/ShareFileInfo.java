@@ -19,7 +19,9 @@ import java.util.List;
 @Data
 public class ShareFileInfo {
     private User user; // 分享者信息
-    private List<File> fileList; // 文件列表
+    private Long fileId; // 文件id
+    private String fileName; // 文件名
+    private Boolean isFolder; // 是否是文件夹
     private String description; //分享的备注
     private String link; // 完整链接，包含提取码
     private ShareStatusType status; // 状态
@@ -36,13 +38,4 @@ public class ShareFileInfo {
         String name;
     }
 
-    @Data
-    public static class File{
-        @JsonSerialize(using = ToStringSerializer.class)
-        Long id;
-        String name;
-        Boolean isFolder;
-        Long size;
-        Date modifyTime;
-    }
 }

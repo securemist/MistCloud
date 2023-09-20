@@ -60,6 +60,7 @@ public class FileController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "value", value = "搜索关键词", dataTypeClass = String.class)})
     public R rename(@RequestParam("value") String value) {
+        // FIXME 多用户的搜索会出现冲突
         FolderDetail folderDetail = fileServiceContext.searchFile(value);
         return R.success(folderDetail);
     }

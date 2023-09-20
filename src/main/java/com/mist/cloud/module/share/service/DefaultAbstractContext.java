@@ -1,14 +1,11 @@
 package com.mist.cloud.module.share.service;
 
-import cn.hutool.captcha.generator.RandomGenerator;
-import cn.hutool.core.convert.impl.CalendarConverter;
-import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.Folder;
+import com.mist.cloud.module.share.model.resp.ShareLinkResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +13,6 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +35,7 @@ public class DefaultAbstractContext extends AbstractShareContext {
 
     @PostConstruct
     public void init() {
-        urlPrefix = getLocalHost() + "/share?s=";
+        urlPrefix = getLocalHost() + "/share/";
     }
 
     private String getLocalHost() {
@@ -47,15 +43,20 @@ public class DefaultAbstractContext extends AbstractShareContext {
     }
 
     @Override
-    protected String generateUrl() {
-        String uid = RandomUtil.randomString(SHARE_URL_LEN);
-        return uid;
+    protected ShareLinkResponse generateLink(String code) {
+        String key = RandomUtil.randomString(SHARE_URL_LEN);
+        ShareLinkResponse shareLink = new ShareLinkResponse();
+
+        shareLink.setUniqueKey(key);
+        shareLink.setCode(code);
+        shareLink.setUrl(getCompleteUrl(key));
+
+        return shareLink;
     }
 
-    protected String getCompleteUrl(String str) {
-        return urlPrefix + str;
+    protected String getCompleteUrl(String key) {
+        return urlPrefix + key + "?pwd=";
     }
-
 
     /**
      * 解析出过期时间
@@ -71,7 +72,8 @@ public class DefaultAbstractContext extends AbstractShareContext {
 
         LocalDateTime target = LocalDateTimeUtil.offset(LocalDateTimeUtil.now(), 1, ChronoUnit.DAYS);
 
-        Date expireTime = Date.from(target.atZone(ZoneId.systemDefault()).toInstant());
+        Date expireTime = Date.from(target.atZone(ZoneId.systemDefault())
+                .toInstant());
         return expireTime;
     }
 
@@ -83,7 +85,8 @@ public class DefaultAbstractContext extends AbstractShareContext {
 
         if (folder != null) {
             for (Folder subFolder : subFolders) {
-                if (subFolder.getName().equals(folder.getName())) {
+                if (subFolder.getName()
+                        .equals(folder.getName())) {
                     throw new FolderException("文件夹已存在");
                 }
             }

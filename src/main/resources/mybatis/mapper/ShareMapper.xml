@@ -2,30 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mist.cloud.infrastructure.mapper.ShareMapper">
     <resultMap id="shareMap" type="Share">
+        <result column="id" property="id"/>
         <result column="user_id" property="userId"/>
-        <result column="identifier" property="identifier"/>
-        <result column="file_ids" property="fileIds"/>
-        <result column="extract_code" property="extreactCode"/>
+        <result column="unique_key" property="uniqueKey"/>
+        <result column="file_id" property="fileId"/>
+        <result column="code" property="code"/>
+        <result column="visit_limit" property="visitLimit"/>
         <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
         <result column="expire_time" property="expireTime"/>
     </resultMap>
 
     <insert id="insertShare" parameterType="Share">
-        INSERT INTO share_link (user_id, file_ids, identifier, extract_code, description, create_time, expire_time)
-        VALUES (#{userId}, #{fileIds}, #{identifier}, #{extreactCode}, #{description}, #{createTime}, #{expireTime})
+        INSERT INTO share_link (user_id, file_id, unique_key, visit_limit, code, description, create_time, expire_time)
+        VALUES (#{userId}, #{fileId}, #{uniqueKey}, #{visitLimit}, #{code}, #{description}, #{createTime},  #{expireTime})
     </insert>
 
-    <delete id="deleteShareByIdentifier">
+    <delete id="deleteShareByIdentifier" parameterType="String">
         DELETE
         FROM share_link
         WHERE identifier = #{identifier}
     </delete>
 
-    <select id="selectShareByIdentifier" resultType="com.mist.cloud.infrastructure.entity.Share">
+    <select id="selectShareByIdentifier" resultMap="shareMap" parameterType="String">
         SELECT *
         FROM share_link
         WHERE identifier = #{identifier}
+    </select>
+
+    <select id="selectAllSharesByUserId" resultMap="shareMap" parameterType="Long">
+        SELECT *
+        FROM share_link
+        WHERE user_id = #{userId}
     </select>
 
 </mapper>

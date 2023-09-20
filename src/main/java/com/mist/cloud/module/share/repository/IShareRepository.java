@@ -2,6 +2,8 @@ package com.mist.cloud.module.share.repository;
 
 import com.mist.cloud.infrastructure.entity.Share;
 
+import java.util.List;
+
 /**
  * @Author: securemist
  * @Datetime: 2023/9/18 09:44
@@ -28,4 +30,11 @@ public interface IShareRepository {
     void deleteShare(String identifier);
 
 
+    /**
+     * 获取用户所有的分享
+     *
+     * @param userId
+     * @return
+     */
+    List<Share> getAllShares(Long userId);
 }

@@ -3,6 +3,7 @@ package com.mist.cloud.module.share.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.mist.cloud.core.result.R;
 import com.mist.cloud.module.share.model.ShareFileInfo;
+import com.mist.cloud.module.share.model.ShareItem;
 import com.mist.cloud.module.share.model.req.CreateShareRequest;
 import com.mist.cloud.module.share.model.req.ResaveFileRequest;
 import com.mist.cloud.module.share.model.resp.ShareLinkResponse;
@@ -28,13 +29,19 @@ public class ShareController {
     @PostMapping("/create")
     public R createShare(@RequestBody CreateShareRequest createShareRequest) {
         ShareLinkResponse share = shareContext.createShare(createShareRequest);
-        return R.error(share);
+        return R.success(share);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/extract")
     public R listFile(@RequestParam String identifier, @RequestParam String code) {
         ShareFileInfo shareInfo = shareContext.extractFile(code, identifier);
         return R.error(shareInfo);
+    }
+
+    @GetMapping("/list")
+    public R listShare() {
+       List<ShareItem> list = shareContext.listShares();
+        return R.success(list);
     }
 
     @GetMapping("/delete")

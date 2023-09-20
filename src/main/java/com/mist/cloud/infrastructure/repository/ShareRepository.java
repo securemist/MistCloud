@@ -1,13 +1,12 @@
 package com.mist.cloud.infrastructure.repository;
 
-import com.mist.cloud.core.config.IdGenerator;
 import com.mist.cloud.infrastructure.entity.Share;
 import com.mist.cloud.infrastructure.mapper.ShareMapper;
-import com.mist.cloud.infrastructure.pojo.FolderResaveReq;
 import com.mist.cloud.module.share.repository.IShareRepository;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -35,5 +34,9 @@ public class ShareRepository implements IShareRepository {
         shareMapper.deleteShareByIdentifier(identifier);
     }
 
+    @Override
+    public List<Share> getAllShares(Long userId) {
+        return shareMapper.selectAllSharesByUserId(userId);
+    }
 
 }

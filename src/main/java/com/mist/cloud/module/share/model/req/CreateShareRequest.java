@@ -12,15 +12,18 @@ import java.util.List;
  */
 @Data
 public class CreateShareRequest implements Serializable {
-    // 分享的文件列表
-    private List<Long> idList;
+    // 分享的文件id
+    private Long fileId;
 
     // 有效期 单位：天
-    private Integer effectiveTime;
+    private Integer timeLimit;
 
     // 提取码，可以为空
-    private String extractCode;
+    private String code;
 
     // 备注
     private String description;
+
+    // 访问人数限制
+    private Integer visitLimit;
 }

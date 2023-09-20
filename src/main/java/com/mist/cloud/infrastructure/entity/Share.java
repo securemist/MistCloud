@@ -17,21 +17,24 @@ import java.util.Date;
 @Builder
 @ApiModel("分享链接")
 public class Share {
-
-    @ApiModelProperty(value = "主键 ID")
+    @ApiModelProperty(value = "主键")
     private Long id;
+
+    @ApiModelProperty(value = "唯一标识")
+    private String uniqueKey;
 
     @ApiModelProperty(value = "分享者用户id")
     private Long userId;
 
-    @ApiModelProperty(value = "文件列表 JSON形式")
-    private String fileIds;
+    @ApiModelProperty(value = "文件")
+    private Long fileId;
 
-    @ApiModelProperty(value = "链接表示")
-    private String identifier;
 
     @ApiModelProperty(value = "提取码")
-    private String extreactCode;
+    private String code;
+
+    @ApiModelProperty(value = "访问人数限制")
+    private Integer visitLimit;
 
     @ApiModelProperty(value = "备注")
     private String description;
@@ -41,4 +44,6 @@ public class Share {
 
     @ApiModelProperty(value = "过期时间")
     private Date expireTime;
+
+
 }
