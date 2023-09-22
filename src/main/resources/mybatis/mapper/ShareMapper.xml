@@ -8,26 +8,40 @@
         <result column="file_id" property="fileId"/>
         <result column="code" property="code"/>
         <result column="visit_limit" property="visitLimit"/>
+        <result column="visit_times" property="visitTimes"/>
+        <result column="download_times" property="downloadTimes"/>
         <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
         <result column="expire_time" property="expireTime"/>
     </resultMap>
 
     <insert id="insertShare" parameterType="Share">
-        INSERT INTO share_link (user_id, file_id, unique_key, visit_limit, code, description, create_time, expire_time)
+        INSERT INTO share_link (user_id, file_id, unique_key, visit_limit,  code, description, create_time, expire_time)
         VALUES (#{userId}, #{fileId}, #{uniqueKey}, #{visitLimit}, #{code}, #{description}, #{createTime},  #{expireTime})
     </insert>
+
+    <update id="increaseVisitTimesByUniqueKey">
+        UPDATE share_link
+        SET visit_times = visit_times + 1
+        WHERE unique_key = #{uniqueKey}
+    </update>
+
+    <update id="increaseDownloadTimesByUniqueKey">
+        UPDATE share_link
+        SET download_times = download_times + 1
+        WHERE unique_key = #{uniqueKey}
+    </update>
 
     <delete id="deleteShareByIdentifier" parameterType="String">
         DELETE
         FROM share_link
-        WHERE identifier = #{identifier}
+        WHERE unique_key = #{uniqueKey}
     </delete>
 
     <select id="selectShareByIdentifier" resultMap="shareMap" parameterType="String">
         SELECT *
         FROM share_link
-        WHERE identifier = #{identifier}
+        WHERE unique_key = #{uniqueKey}
     </select>
 
     <select id="selectAllSharesByUserId" resultMap="shareMap" parameterType="Long">

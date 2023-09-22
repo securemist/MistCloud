@@ -23,7 +23,7 @@ public class FileService extends FileContextSupport implements ICommonService{
 
     @Override
     public void copy(Long id, Long targetFolderId) throws FileException {
-        // 判断移动的目标文件夹是否存在当前文件
+        // 判断移动的目标文件夹是否存在同名文件
         List<File> files = folderRepository.findFiles(targetFolderId);
 
         File file = fileRepository.findFile(id);

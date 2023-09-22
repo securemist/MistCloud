@@ -10,7 +10,8 @@ public enum ResponseCode {
     DEFAULT_SUCCESS(200, "请求成功"),
 
     DEFAULT_ERROR(100, "服务器异常"),
-    LOGIN_FAILED(101, "登陆信息无效");
+    LOGIN_FAILED(101, "登陆信息无效"),
+    SHARE_FAILED(102,"分享已失效");
 
     private Integer code;
     private String msg;

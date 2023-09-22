@@ -57,12 +57,13 @@
     </update>
 
 
-    <update id="restoreFile">
+    <update id="restoreFile" parameterType="com.mist.cloud.module.recycle.model.ResaveFileRequest">
         UPDATE sys_file
         SET deleted      = 0,
             deleted_time = null,
-            folder_id    = #{folderId}
-        WHERE id = #{id};
+            name         = #{fileName},
+            folder_id    = #{targetFolderId}
+        WHERE id = #{sourceId};
     </update>
 
     <select id="selectFileById" resultMap="fileMap">

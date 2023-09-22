@@ -20,7 +20,7 @@ public interface FolderMapper {
 
     Folder selectFolderById(Long folderId);
 
-    List<Folder> selectSubFolders(FolderSelectReq folderSelectReq);
+    List<Folder> selectSubFolders(Long folderId);
 
     void renameFolder(FolderSelectReq folderSelectReq);
 
@@ -47,4 +47,6 @@ public interface FolderMapper {
     void restoreFolderRecursive(Long folderId, Long targetFolderId);
 
     void resaveFolder(FolderResaveReq folder);
+
+    Folder selectFolderContainRecycled(Long folderId);
 }

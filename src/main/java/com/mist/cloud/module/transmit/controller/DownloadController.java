@@ -1,8 +1,10 @@
 package com.mist.cloud.module.transmit.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.share.repository.IShareRepository;
 import com.mist.cloud.module.transmit.service.DownloadContext;
 import io.swagger.annotations.ApiImplicitParam;
 import org.apache.ibatis.annotations.Lang;
@@ -33,11 +35,12 @@ public class DownloadController {
     private IFileRepository fileRepository;
     @Resource
     private IFolderRepository folderRepository;
-
+    @Resource
+    private IShareRepository shareRepository;
 
     @GetMapping("/download")
     @ApiImplicitParam(name = "id", value = "文件(夹) id", dataTypeClass = Lang.class)
-    public void download(@RequestParam("id") Long fileId, HttpServletResponse response) throws IOException {
+    public void download(@RequestParam("id") Long fileId, @RequestParam("uniqueKey") String uniqueKey, HttpServletResponse response) throws IOException {
         String filePath = "";
         boolean isFolder = fileRepository.isFolder(fileId);
         String fileName = "";
@@ -50,14 +53,17 @@ public class DownloadController {
             fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
         }
 
+        // 更新下载次数
+        if (!StrUtil.isEmpty(uniqueKey)) {
+            shareRepository.updateDownloadTimes(uniqueKey);
+        }
+
         java.io.File fileSource = new java.io.File(filePath);
 
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding(StandardCharsets.UTF_8.displayName());
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition
-                .attachment()
-                .filename(fileName, StandardCharsets.UTF_8)
-                .build().toString());
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                .filename(fileName, StandardCharsets.UTF_8).build().toString());
 
         try (FileInputStream inputStream = new FileInputStream(fileSource);) { // try-with-resources
             byte[] b = new byte[1024];

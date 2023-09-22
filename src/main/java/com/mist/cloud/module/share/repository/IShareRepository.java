@@ -21,7 +21,7 @@ public interface IShareRepository {
      * @param identifier
      * @return
      */
-    Share getShare(String identifier);
+    Share getShare(String uniqueKey);
 
     /**
      * 删除分享
@@ -37,4 +37,12 @@ public interface IShareRepository {
      * @return
      */
     List<Share> getAllShares(Long userId);
+
+    /**
+     * 更新访问次数
+     * @param uniqueKey
+     */
+    void updateVisitTimes(String uniqueKey);
+
+    void updateDownloadTimes(String uniqueKey);
 }

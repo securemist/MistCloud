@@ -1,8 +1,9 @@
 upload:
   base-path: /Volumes/Download/mist-cloud
   checkmd5: false
-net:
-  host: 192.168.1.119
+front:
+  host: localhost
+  port: 8000
 
 server:
   port: 8888

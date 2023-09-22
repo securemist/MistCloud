@@ -2,6 +2,7 @@ package com.mist.cloud.module.file.repository;
 
 import com.mist.cloud.infrastructure.pojo.FileSelectReq;
 import com.mist.cloud.infrastructure.entity.File;
+import com.mist.cloud.module.recycle.model.ResaveFileRequest;
 
 import java.util.List;
 
@@ -76,9 +77,10 @@ public interface IFileRepository {
 
     /**
      * 从还原文件，还原到根目录
-     * @param id
+     *
+     * @param resaveFileRequest
      */
-    void restoreFile(Long id);
+    void restoreFile(ResaveFileRequest resaveFileRequest);
 
 
 }

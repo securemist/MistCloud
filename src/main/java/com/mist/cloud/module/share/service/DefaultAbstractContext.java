@@ -2,14 +2,17 @@ package com.mist.cloud.module.share.service;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.module.share.model.resp.ShareLinkResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -23,11 +26,12 @@ import java.util.List;
  */
 @Component
 public class DefaultAbstractContext extends AbstractShareContext {
-    @Value(("${server.port}"))
-    private Integer port;
 
-    @Value("${net.host}")
+    @Value("${front.host}")
     private String host;
+
+    @Value("${front.port}")
+    private String port;
 
     private int SHARE_URL_LEN = 12;
 
@@ -35,6 +39,7 @@ public class DefaultAbstractContext extends AbstractShareContext {
 
     @PostConstruct
     public void init() {
+        // 如何获取application的环境是dev还是prod
         urlPrefix = getLocalHost() + "/share/";
     }
 
@@ -49,13 +54,17 @@ public class DefaultAbstractContext extends AbstractShareContext {
 
         shareLink.setUniqueKey(key);
         shareLink.setCode(code);
-        shareLink.setUrl(getCompleteUrl(key));
+        shareLink.setUrl(getCompleteUrl(key,code));
 
         return shareLink;
     }
 
-    protected String getCompleteUrl(String key) {
-        return urlPrefix + key + "?pwd=";
+    protected String getCompleteUrl(String key, String code) {
+        if (!StrUtil.isEmpty(code)) {
+            return urlPrefix + key + "?pwd=";
+        } else {
+            return urlPrefix + key;
+        }
     }
 
     /**

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 public class R<T> implements Serializable {
     private Integer code;
-    private String msg ;
+    private String msg;
     private T data;
 
     private static final Integer SUCCESS_CODE = ResponseCode.DEFAULT_SUCCESS.getCode();
@@ -46,28 +46,27 @@ public class R<T> implements Serializable {
 
 
     public static R success() {
-        return new R<>(SUCCESS_CODE, ERROR_MSG, null);
+        return new R<>(SUCCESS_CODE, SUCCESS_MSG, null);
     }
 
     public static R error() {
         return new R<>(ERROR_CODE, ERROR_MSG, null);
     }
 
-    public static R error(ResponseCode responseCode, Object data) {
-        return new R<>(responseCode.getCode(), responseCode.getMsg(), data);
+    public static R error(ResponseCode responseCode) {
+        return new R<>(responseCode.getCode(), responseCode.getMsg(), null);
     }
 
     public static R error(String msg, Object data) {
         return new R<>(ERROR_CODE, msg, data);
     }
 
-    public static R error(Object data) {
-        return new R<>(ERROR_CODE, ERROR_MSG, data);
-    }
-
     public static R error(String msg) {
         return new R<>(ERROR_CODE, msg, null);
     }
 
+    public static R error(Object data) {
+        return new R<>(ERROR_CODE, ERROR_MSG, data);
+    }
 
 }

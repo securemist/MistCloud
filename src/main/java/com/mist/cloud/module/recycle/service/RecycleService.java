@@ -2,11 +2,16 @@ package com.mist.cloud.module.recycle.service;
 
 import cn.hutool.core.io.FileUtil;
 import com.mist.cloud.core.config.FileConfig;
+import com.mist.cloud.core.exception.file.FolderException;
+import com.mist.cloud.core.utils.ApplicationFileUtil;
+import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.file.context.IFileContext;
+import com.mist.cloud.module.recycle.model.ResaveFileRequest;
+import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 import com.mist.cloud.module.recycle.model.RecycleFile;
 
@@ -28,7 +33,11 @@ public class RecycleService {
     @Resource
     private IFileContext fileServiceContext;
     @Resource
+    private IUserRepository userRepository;
+    @Resource
     private FileConfig fileConfig;
+    @Resource
+    private ApplicationFileUtil applicationFileUtil;
 
     /**
      * 列出用户回收站的所有文件
@@ -43,24 +52,16 @@ public class RecycleService {
         List<File> fileList = fileRepository.getRecycledFiles(userId);
 
         for (Folder folder : folderList) {
-            RecycleFile recycleFolder = RecycleFile.builder()
-                    .id(folder.getId())
-                    .size(0L)
-                    .isFolder(true)
-                    .name(folder.getName())
-                    .deletedTime(folder.getDeletedTime())
+            RecycleFile recycleFolder = RecycleFile.builder().id(folder.getId()).size(0L).isFolder(true)
+                    .name(folder.getName()).deletedTime(folder.getDeletedTime())
                     .path(fileServiceContext.getPath(folder.getId())).build();
             recycledFileList.add(recycleFolder);
         }
 
         for (File file : fileList) {
-            RecycleFile recycleFile = RecycleFile.builder()
-                    .id(file.getId())
-                    .size(file.getSize())
-                    .name(file.getName())
-                    .isFolder(false)
-                    .deletedTime(file.getDeletedTime())
-                    .path(fileServiceContext.getPath(file.getId())).build();
+            RecycleFile recycleFile = RecycleFile.builder().id(file.getId()).size(file.getSize()).name(file.getName())
+                    .isFolder(false).deletedTime(file.getDeletedTime()).path(fileServiceContext.getPath(file.getId()))
+                    .build();
             recycledFileList.add(recycleFile);
         }
         return recycledFileList;
@@ -69,12 +70,30 @@ public class RecycleService {
 
     /**
      * 从回收站还原文件
+     *
      * @param id
      */
     public void restoreFile(Long id) {
+        // 恢复到根目录
+        Long targetFolderId = userRepository.getRootFolderId(Session.getLoginId());
+
         if (!fileRepository.isFolder(id)) {
-            fileRepository.restoreFile(id);
+            // 校验恢复的目标文件夹有没有重名文件
+            File file = fileRepository.findFile(id);
+            String fileName = applicationFileUtil.checkFileName(file.getName(), targetFolderId);
+
+            ResaveFileRequest resaveFileRequest = ResaveFileRequest.builder().sourceId(id).fileName(fileName)
+                    .targetFolderId(targetFolderId).build();
+
+            fileRepository.restoreFile(resaveFileRequest);
             return;
+        }
+
+        String folderName = folderRepository.findFolderContainRecycled(id).getName();
+
+        boolean exist = folderRepository.existSameNameFolder(targetFolderId, folderName);
+        if (exist) {
+            throw new FolderException("文件夹已存在，无法还原");
         }
         folderRepository.restoreFolder(id);
     }
@@ -82,6 +101,7 @@ public class RecycleService {
 
     /**
      * 永久删除文件
+     *
      * @param id
      */
     public void deleteFile(Long id) {
@@ -99,13 +119,14 @@ public class RecycleService {
         }
 
         // 真实删除文件
-        for (String path : fileRealPathList) {
-            FileUtil.del(path);
-        }
+        // for (String path : fileRealPathList) {
+        // FileUtil.del(path);
+        // }
     }
 
     /**
      * 清空用户回收站
+     *
      * @param userId
      */
     public void clearRecycle(Long userId) {

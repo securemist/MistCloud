@@ -25,18 +25,28 @@ public class ShareRepository implements IShareRepository {
     }
 
     @Override
-    public Share getShare(String identifier) {
-        return  shareMapper.selectShareByIdentifier(identifier);
+    public Share getShare(String uniqueKey) {
+        return  shareMapper.selectShareByIdentifier(uniqueKey);
     }
 
     @Override
-    public void deleteShare(String identifier) {
-        shareMapper.deleteShareByIdentifier(identifier);
+    public void deleteShare(String uniqueKey) {
+        shareMapper.deleteShareByIdentifier(uniqueKey);
     }
 
     @Override
     public List<Share> getAllShares(Long userId) {
         return shareMapper.selectAllSharesByUserId(userId);
+    }
+
+    @Override
+    public void updateVisitTimes(String uniqueKey) {
+        shareMapper.increaseVisitTimesByUniqueKey(uniqueKey);
+    }
+
+    @Override
+    public void updateDownloadTimes(String uniqueKey) {
+        shareMapper.increaseDownloadTimesByUniqueKey(uniqueKey);
     }
 
 }

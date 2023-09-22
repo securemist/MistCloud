@@ -3,6 +3,7 @@ package com.mist.cloud.infrastructure.entity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Builder;
 import lombok.Data;
 
@@ -29,12 +30,17 @@ public class Share {
     @ApiModelProperty(value = "文件")
     private Long fileId;
 
-
     @ApiModelProperty(value = "提取码")
     private String code;
 
     @ApiModelProperty(value = "访问人数限制")
     private Integer visitLimit;
+
+    @ApiModelProperty(value = "访问次数")
+    private Integer visitTimes;
+
+    @ApiModelProperty(value = "下载次数")
+    private Integer downloadTimes;
 
     @ApiModelProperty(value = "备注")
     private String description;
@@ -44,6 +50,5 @@ public class Share {
 
     @ApiModelProperty(value = "过期时间")
     private Date expireTime;
-
 
 }

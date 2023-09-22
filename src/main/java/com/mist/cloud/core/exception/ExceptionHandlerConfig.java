@@ -5,6 +5,7 @@ import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.constant.ResponseCode;
 import com.mist.cloud.core.exception.auth.RegisterException;
+import com.mist.cloud.core.exception.file.FileException;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.result.R;
 import com.mist.cloud.module.transmit.context.UploadTaskContext;
@@ -57,10 +58,10 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(value = NotLoginException.class)
     @ResponseBody
     public R authExceptionHandler(Exception e, HttpServletResponse response) {
-        return R.error(ResponseCode.LOGIN_FAILED, null);
+        return R.error(ResponseCode.LOGIN_FAILED);
     }
 
-    @ExceptionHandler(value = {RegisterException.class, ShareException.class, FolderException.class})
+    @ExceptionHandler(value = {RegisterException.class, ShareException.class, FolderException.class, FileException.class})
     @ResponseBody
     public R RegisterExceptionHandler(Exception e) {
         return R.error(e.getMessage());
@@ -74,6 +75,5 @@ public class ExceptionHandlerConfig {
         uploadTaskContext.cancelTask(identifierList);
         return R.error(e.getMessage());
     }
-
 
 }

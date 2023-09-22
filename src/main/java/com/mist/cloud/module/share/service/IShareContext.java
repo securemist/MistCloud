@@ -28,13 +28,13 @@ public interface IShareContext {
      * @param identifier 分享的标识
      * @return
      */
-    ShareFileInfo extractFile(String code, String identifier);
+    ShareFileInfo extractFile(String code, String uniqueKey);
 
     /**
      * 删除分享
      * @param identifier
      */
-    void deleteShare(String identifier);
+    void deleteShare(String uniqueKey);
 
     /**
      * 转存文件

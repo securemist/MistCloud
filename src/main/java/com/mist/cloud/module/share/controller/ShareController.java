@@ -1,7 +1,12 @@
 package com.mist.cloud.module.share.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.mist.cloud.core.constant.ResponseCode;
+import com.mist.cloud.core.exception.ShareException;
+import com.mist.cloud.core.exception.ShareInvalidException;
 import com.mist.cloud.core.result.R;
+import com.mist.cloud.module.file.context.FileServiceContext;
+import com.mist.cloud.module.file.model.pojo.FolderDetail;
 import com.mist.cloud.module.share.model.ShareFileInfo;
 import com.mist.cloud.module.share.model.ShareItem;
 import com.mist.cloud.module.share.model.req.CreateShareRequest;
@@ -33,26 +38,35 @@ public class ShareController {
     }
 
     @GetMapping("/extract")
-    public R listFile(@RequestParam String identifier, @RequestParam String code) {
-        ShareFileInfo shareInfo = shareContext.extractFile(code, identifier);
-        return R.error(shareInfo);
+    public R listFile(@RequestParam String uniqueKey, @RequestParam String code) {
+        try {
+            ShareFileInfo shareInfo = shareContext.extractFile(code, uniqueKey);
+            return R.success(shareInfo);
+        } catch (ShareInvalidException e) {
+            return R.error(ResponseCode.SHARE_FAILED);
+        }
     }
 
     @GetMapping("/list")
     public R listShare() {
-       List<ShareItem> list = shareContext.listShares();
+        List<ShareItem> list = shareContext.listShares();
         return R.success(list);
     }
 
     @GetMapping("/delete")
-    public R deleteShare(@RequestParam String identifier) {
-        shareContext.deleteShare(identifier);
+    public R deleteShare(@RequestParam String uniqueKey) {
+        shareContext.deleteShare(uniqueKey);
         return R.success();
     }
 
     @PostMapping("/resave")
-    public R resave(@RequestBody ResaveFileRequest resaveFileRequest){
+    public R resave(@RequestBody ResaveFileRequest resaveFileRequest) {
+        if (resaveFileRequest.getIdList().size() == 0) {
+            return R.error();
+        }
+
         shareContext.resave(resaveFileRequest.getIdList(), resaveFileRequest.getTargetFolderId());
         return R.success();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.mist.cloud.module.file.repository;
 
+import ch.qos.logback.classic.spi.LoggerContextVO;
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.entity.Folder;
@@ -109,4 +110,27 @@ public interface IFolderRepository {
      * @return
      */
     Long resaveFolder(Long folderId, Long targetFolderId, Long userId);
+
+    /**
+     * 查找文件夹名为 fileName 的文件
+     * @param folderId
+     * @param fileName
+     * @return
+     */
+    File findFile(Long folderId, String fileName);
+
+    /**
+     * 目标文件夹下是否存在同名的文件夹
+     * @param folderId
+     * @param name
+     * @return
+     */
+    boolean existSameNameFolder(Long folderId, String name);
+
+    /**
+     * 查找文件夹，
+     * @param id
+     * @return
+     */
+    Folder findFolderContainRecycled(Long folderId);
 }

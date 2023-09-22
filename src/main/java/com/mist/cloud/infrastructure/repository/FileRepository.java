@@ -1,12 +1,13 @@
 package com.mist.cloud.infrastructure.repository;
 
 import com.mist.cloud.core.config.IdGenerator;
-import com.mist.cloud.core.utils.Session;
+import com.mist.cloud.core.utils.ApplicationFileUtil;
 import com.mist.cloud.infrastructure.pojo.FileCopyReq;
 import com.mist.cloud.infrastructure.pojo.FileSelectReq;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.mapper.FileMapper;
+import com.mist.cloud.module.recycle.model.ResaveFileRequest;
 import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Component;
 
@@ -109,9 +110,8 @@ public class FileRepository implements IFileRepository {
     }
 
     @Override
-    public void restoreFile(Long id) {
-        Long rootFolderId = userRepository.getRootFolderId(Session.getLoginId());
-        fileMapper.restoreFile(id, rootFolderId);
+    public void restoreFile(ResaveFileRequest resaveFileRequest) {
+        fileMapper.restoreFile(resaveFileRequest);
     }
 
 }

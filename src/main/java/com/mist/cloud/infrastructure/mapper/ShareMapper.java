@@ -15,10 +15,13 @@ public interface ShareMapper {
 
     void insertShare(Share share);
 
-    Share selectShareByIdentifier(String identifier);
+    Share selectShareByIdentifier(String unique_key);
 
-    void deleteShareByIdentifier(String identifier);
+    void deleteShareByIdentifier(String unique_key);
 
     List<Share> selectAllSharesByUserId(Long userId);
 
+    void increaseVisitTimesByUniqueKey(String uniqueKey);
+
+    void increaseDownloadTimesByUniqueKey(String uniqueKey);
 }

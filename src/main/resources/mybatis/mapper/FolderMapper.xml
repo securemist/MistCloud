@@ -29,7 +29,7 @@
         --  让下面这个查询得到的结果是按照 @ids 默认顺序排序的
         SELECT id, name, parent_id, deleted
         FROM sys_folder
-        WHERE FIND_IN_SET(id, @ids)
+        WHERE FIND_IN_SET(id, @ids) AND deleted = 0
         ORDER BY FIND_IN_SET(id, @ids);
     </select>
 
@@ -48,11 +48,10 @@
           AND deleted = 0
     </select>
 
-    <select id="selectSubFolders" parameterType="com.mist.cloud.infrastructure.pojo.FolderSelectReq" resultMap="folderMap">
+    <select id="selectSubFolders"  resultMap="folderMap">
         SELECT *
         FROM sys_folder
-        WHERE user_id = #{userId}
-          AND parent_id = #{parentId}
+        WHERE parent_id = #{parentId}
           AND deleted = 0
     </select>
 
@@ -69,6 +68,10 @@
         WHERE f.user_id = #{userId}
           AND f.deleted = 1
           AND (SELECT deleted FROM sys_folder as p WHERE p.id = f.parent_id) = 0;
+    </select>
+
+    <select id="selectFolderContainRecycled" resultMap="folderMap">
+        SELECT * FROM sys_folder WHERE id = #{folderId}
     </select>
 
 

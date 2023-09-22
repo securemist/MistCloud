@@ -22,6 +22,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 .excludePathPatterns("/download/**")
                 .excludePathPatterns("/preview/**")
                 .excludePathPatterns("/swagger-ui/**")
-                .excludePathPatterns("/share/list");
+                .excludePathPatterns("/share/list")
+                .excludePathPatterns("/share/extract")
+                .excludePathPatterns("/share/priview");
     }
 }
