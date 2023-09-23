@@ -3,7 +3,7 @@ package com.mist.cloud.infrastructure.mapper;
 import com.mist.cloud.infrastructure.pojo.FileCopyReq;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.infrastructure.pojo.FileSelectReq;
-import com.mist.cloud.module.recycle.model.ResaveFileRequest;
+import com.mist.cloud.module.recycle.model.RestoreFileRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -41,6 +41,6 @@ public interface FileMapper {
     // 查找文件夹下的所有文件，包括回收站中的文件
     List<File> findFilesIncludeRecycled(Long id);
 
-    void restoreFile(ResaveFileRequest resaveFileRequest);
+    void restoreFile(RestoreFileRequest resaveFileRequest);
 
 }

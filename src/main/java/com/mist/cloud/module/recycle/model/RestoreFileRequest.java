@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class ResaveFileRequest {
+public class RestoreFileRequest {
     private Long sourceId;
     private String fileName;
     private Long targetFolderId;

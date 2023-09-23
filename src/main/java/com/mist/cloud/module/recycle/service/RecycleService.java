@@ -1,6 +1,5 @@
 package com.mist.cloud.module.recycle.service;
 
-import cn.hutool.core.io.FileUtil;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.utils.ApplicationFileUtil;
@@ -10,7 +9,7 @@ import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.file.context.IFileContext;
-import com.mist.cloud.module.recycle.model.ResaveFileRequest;
+import com.mist.cloud.module.recycle.model.RestoreFileRequest;
 import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 import com.mist.cloud.module.recycle.model.RecycleFile;
@@ -82,10 +81,12 @@ public class RecycleService {
             File file = fileRepository.findFile(id);
             String fileName = applicationFileUtil.checkFileName(file.getName(), targetFolderId);
 
-            ResaveFileRequest resaveFileRequest = ResaveFileRequest.builder().sourceId(id).fileName(fileName)
+            RestoreFileRequest restoreFileRequest = RestoreFileRequest.builder()
+                    .sourceId(id)
+                    .fileName(fileName)
                     .targetFolderId(targetFolderId).build();
 
-            fileRepository.restoreFile(resaveFileRequest);
+            fileRepository.restoreFile(restoreFileRequest);
             return;
         }
 

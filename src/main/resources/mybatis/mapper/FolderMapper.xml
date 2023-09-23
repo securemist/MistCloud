@@ -113,30 +113,35 @@
 
 
     <update id="restoreFolderRecursive">
+         <![CDATA[
+            SET @folder_ids = (SELECT GROUP_CONCAT(id)
+                               FROM sys_folder
+                               WHERE FIND_IN_SET(id, get_chlid_lists(#{folderId})));
 
-        SET @folder_ids = (SELECT GROUP_CONCAT(id)
-                           FROM sys_folder
-                           WHERE FIND_IN_SET(id, get_chlid_lists(#{folderId})));
+            SET @file_ids = (SELECT GROUP_CONCAT(id)
+                             FROM sys_file
+                             WHERE FIND_IN_SET(folder_id, @folder_ids));
 
-        SET @file_ids = (SELECT GROUP_CONCAT(id)
-                         FROM sys_file
-                         WHERE FIND_IN_SET(folder_id, @folder_ids));
+            UPDATE sys_folder
+            SET deleted      = 0,
+                deleted_time = null,
+                parent_id    = #{targetFolderId}
+            WHERE id = #{folderId};
 
+            UPDATE sys_folder
+            SET deleted      = 0,
+                deleted_time = null
+            WHERE FIND_IN_SET(id, @folder_ids);
 
-        UPDATE sys_folder
-        SET deleted      = 0,
-            deleted_time = null,
-            parent_id    = #{targetFolderId}
-        WHERE id = #{folderId};
-
-        UPDATE sys_file
-        SET deleted      = 0,
-            deleted_time = null
+            UPDATE sys_file
+            SET deleted      = 0,
+                deleted_time = null
             WHERE FIND_IN_SET(id, @file_ids);
+        ]]>
     </update>
 
-    <update id="deleteFolderRecursive" parameterType="java.lang.Long">
-        <![CDATA[
+    <update id="deleteFolderRecursive">
+          <![CDATA[
         SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
 
         SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));

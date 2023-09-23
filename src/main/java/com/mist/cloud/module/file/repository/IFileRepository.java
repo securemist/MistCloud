@@ -2,7 +2,7 @@ package com.mist.cloud.module.file.repository;
 
 import com.mist.cloud.infrastructure.pojo.FileSelectReq;
 import com.mist.cloud.infrastructure.entity.File;
-import com.mist.cloud.module.recycle.model.ResaveFileRequest;
+import com.mist.cloud.module.recycle.model.RestoreFileRequest;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public interface IFileRepository {
      *
      * @param resaveFileRequest
      */
-    void restoreFile(ResaveFileRequest resaveFileRequest);
+    void restoreFile(RestoreFileRequest resaveFileRequest);
 
 
 }

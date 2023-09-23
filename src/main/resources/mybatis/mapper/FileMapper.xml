@@ -57,7 +57,7 @@
     </update>
 
 
-    <update id="restoreFile" parameterType="com.mist.cloud.module.recycle.model.ResaveFileRequest">
+    <update id="restoreFile" parameterType="com.mist.cloud.module.recycle.model.RestoreFileRequest">
         UPDATE sys_file
         SET deleted      = 0,
             deleted_time = null,

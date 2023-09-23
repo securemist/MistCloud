@@ -65,9 +65,17 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
         Date expireTime = parseExpireTime(createShareRequest.getTimeLimit());
         Long userId = Session.getLoginId();
 
-        Share share = Share.builder().fileId(fileId).createTime(new Date()).code(code).expireTime(expireTime)
-                .userId(userId).visitLimit(createShareRequest.getVisitLimit()).expireTime(expireTime)
-                .description(createShareRequest.getDescription()).uniqueKey(shareLink.getUniqueKey()).build();
+        Share share = Share.builder()
+                .fileId(fileId)
+                .createTime(new Date())
+                .code(code)
+                .expireTime(expireTime)
+                .userId(userId)
+                .visitLimit(createShareRequest.getVisitLimit())
+                .expireTime(expireTime)
+                .description(createShareRequest.getDescription())
+                .uniqueKey(shareLink.getUniqueKey())
+                .build();
 
         shareRepository.createShare(share);
         return shareLink;
@@ -97,38 +105,40 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
         Long userId = Session.getLoginId();
         List<Share> shares = shareRepository.getAllShares(userId);
 
-        List<ShareItem> shareItemList = shares.stream().map(share -> {
-            ShareItem shareItem = new ShareItem();
-            Long fileId = share.getFileId();
-            shareItem.setFileId(fileId);
-            shareItem.setUrl(getCompleteUrl(share.getUniqueKey(), share.getCode()));
-            shareItem.setDescription(share.getDescription());
-            shareItem.setCode(share.getCode());
-            shareItem.setUniqueKey(share.getUniqueKey());
-            shareItem.setCreateTime(share.getCreateTime());
-            shareItem.setVisitTimes(share.getVisitTimes());
-            shareItem.setVisitLimit(share.getVisitLimit());
-            shareItem.setVisitTimes(share.getDownloadTimes());
-            shareItem.setExpireTime(share.getExpireTime());
+        List<ShareItem> shareItemList = shares.stream()
+                .map(share -> {
+                    ShareItem shareItem = new ShareItem();
+                    Long fileId = share.getFileId();
+                    shareItem.setFileId(fileId);
+                    shareItem.setUrl(getCompleteUrl(share.getUniqueKey(), share.getCode()));
+                    shareItem.setDescription(share.getDescription());
+                    shareItem.setCode(share.getCode());
+                    shareItem.setUniqueKey(share.getUniqueKey());
+                    shareItem.setCreateTime(share.getCreateTime());
+                    shareItem.setVisitTimes(share.getVisitTimes());
+                    shareItem.setVisitLimit(share.getVisitLimit());
+                    shareItem.setVisitTimes(share.getDownloadTimes());
+                    shareItem.setExpireTime(share.getExpireTime());
 
-            try {
-                if (fileRepository.isFolder(fileId)) {
-                    Folder folder = folderRepository.findFolder(fileId);
-                    shareItem.setFileName(folder.getName());
-                    shareItem.setIsFolder(true);
-                } else {
-                    File file = fileRepository.findFile(fileId);
-                    shareItem.setFileName(file.getName());
-                    shareItem.setIsFolder(false);
-                }
-            } catch (Exception e) {
-                // 分享的文件已经是被完全删除了
-                shareItem.setIsFolder(false);
-                shareItem.setFileName("文件已被删除");
-            }
+                    try {
+                        if (fileRepository.isFolder(fileId)) {
+                            Folder folder = folderRepository.findFolder(fileId);
+                            shareItem.setFileName(folder.getName());
+                            shareItem.setIsFolder(true);
+                        } else {
+                            File file = fileRepository.findFile(fileId);
+                            shareItem.setFileName(file.getName());
+                            shareItem.setIsFolder(false);
+                        }
+                    } catch (Exception e) {
+                        // 分享的文件已经是被完全删除了
+                        shareItem.setIsFolder(false);
+                        shareItem.setFileName("文件已被删除");
+                    }
 
-            return shareItem;
-        }).collect(Collectors.toList());
+                    return shareItem;
+                })
+                .collect(Collectors.toList());
 
         return shareItemList;
     }
@@ -153,15 +163,17 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
 
     /**
      * 校验提取码
+     *
      * @param share share对象
-     * @param code 用户输入的提取码
+     * @param code  用户输入的提取码
      */
     private void checkExtractCode(Share share, String code) {
         if (share == null) {
             throw new ShareInvalidException("分享已失效");
         }
 
-        if (!share.getCode().equals(code)) {
+        if (!share.getCode()
+                .equals(code)) {
             throw new ShareException("提取码错误");
         }
     }
@@ -191,6 +203,7 @@ public abstract class AbstractShareContext extends ShareCommonSupport implements
 
     /**
      * 生成返回数据
+     *
      * @param share
      * @return
      */
