@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,7 +27,9 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Component
-public class IOsupport extends UploadSupport{
+public class IOsupport  {
+    @Resource
+    private FileConfig fileConfig;
 
     public void mergeFile(Task task) throws IOException {
         String fileName = task.getFileName(); // 文件名
@@ -37,24 +38,30 @@ public class IOsupport extends UploadSupport{
         FileUtil.touch(targetFilePath);
         // 合并文件
         Stream<Path> stream = Files.list(Paths.get(folderPath));
-        List<Path> paths = stream.filter(path -> !path.getFileName().toString().equals(fileName))
+        List<Path> paths = stream.filter(path -> !path.getFileName()
+                        .toString()
+                        .equals(fileName))
                 .sorted((o1, o2) -> {
-                    String p1 = o1.getFileName().toString();
-                    String p2 = o2.getFileName().toString();
+                    String p1 = o1.getFileName()
+                            .toString();
+                    String p2 = o2.getFileName()
+                            .toString();
                     int i1 = p1.lastIndexOf("-");
                     int i2 = p2.lastIndexOf("-");
-                    return Integer.valueOf(p2.substring(i2)).compareTo(Integer.valueOf(p1.substring(i1)));
-                }).collect(Collectors.toList());
+                    return Integer.valueOf(p2.substring(i2))
+                            .compareTo(Integer.valueOf(p1.substring(i1)));
+                })
+                .collect(Collectors.toList());
 
         paths.forEach(path -> {
             try {
-                //以追加的形式写入文件
+                // 以追加的形式写入文件
                 Files.write(Paths.get(targetFilePath), Files.readAllBytes(path), StandardOpenOption.APPEND);
-                //合并后删除该块
+                // 合并后删除该块
                 Files.delete(path);
             } catch (IOException e) {
                 e.printStackTrace();
-                log.error("合并文件失败:{}, {}",task.getIdentifier(), targetFilePath);
+                log.error("合并文件失败:{}, {}", task.getIdentifier(), targetFilePath);
                 throw new RuntimeException(e);
             }
         });
@@ -63,29 +70,33 @@ public class IOsupport extends UploadSupport{
 
     public void writeChunk(ChunkVo chunk) {
         StringBuilder path = new StringBuilder(fileConfig.getUploadPath());
-        path = path.append("/").append(chunk.getIdentifier());
+        path = path.append("/")
+                .append(chunk.getIdentifier());
 
         // 创建分片
-        path = path.append("/").append(chunk.getFileName())
-                .append("-").append(chunk.getChunkNumber());
+        path = path.append("/")
+                .append(chunk.getFileName())
+                .append("-")
+                .append(chunk.getChunkNumber());
 
         // 创建文件
         FileUtil.touch(path.toString());
 
         // 写入数据
         try {
-            FileUtil.writeBytes(chunk.getFile().getBytes(), path.toString());
+            FileUtil.writeBytes(chunk.getFile()
+                    .getBytes(), path.toString());
         } catch (IOException e) {
             e.printStackTrace(); // TODO 处在文件夹任务中的文件上传如何清除残余文件
-            new FileUploadException("File chunk write failed : " + chunk.getFileName()
-                    + "-" + chunk.getChunkNumber(), chunk.getIdentifier(), e);
+            new FileUploadException("File chunk write failed : " + chunk.getFileName() + "-" + chunk.getChunkNumber(), chunk.getIdentifier(), e);
         }
     }
 
 
-    public void writeSimpleFile(MultipartFile file) throws IOException {
-        FileUtil.writeBytes(file.getBytes(), fileConfig.getBasePath() + "/" + file.getOriginalFilename());
+    public void writeSimpleFile(String path, MultipartFile file) throws IOException {
+        FileUtil.writeBytes(file.getBytes(), fileConfig.getBasePath() + path);
     }
+
 
     public boolean checkmd5(Task task, String md5) {
         if (fileConfig.checkmd5) {

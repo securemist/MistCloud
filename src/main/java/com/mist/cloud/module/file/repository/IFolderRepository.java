@@ -133,4 +133,12 @@ public interface IFolderRepository {
      * @return
      */
     Folder findFolderContainRecycled(Long folderId);
+
+    /**
+     * 指定文件夹下是否存在名为name的文件夹，如果不存在就创建，存在就返回该文件夹Id
+     * @param folderId 文件夹id
+     * @param name 要创建的文件夹名称
+     * @return
+     */
+    Long createFolderIfAbsent(Long folderId, String name);
 }

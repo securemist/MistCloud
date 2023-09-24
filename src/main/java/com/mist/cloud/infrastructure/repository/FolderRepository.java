@@ -198,4 +198,15 @@ public class FolderRepository implements IFolderRepository {
     public Folder findFolderContainRecycled(Long folderId) {
         return folderMapper.selectFolderContainRecycled(folderId);
     }
+
+    @Override
+    public Long createFolderIfAbsent(Long folderId, String name) {
+        for (Folder subFolder : findSubFolders(folderId)) {
+            if(subFolder.getName().equals(name)) {
+                return subFolder.getId();
+            }
+        }
+        folderId = createFolder(name, folderId);
+        return folderId;
+    }
 }

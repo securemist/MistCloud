@@ -91,7 +91,7 @@ public class DownloadContext {
         String folderPath = fileConfig.getDownloadPath() + currentPath + "/" + folder.getName();
         try {
             // 创建文件夹
-            FileUtils.createDirectory(Paths.get(folderPath));
+            FileUtil.mkParentDirs(folderPath);
             // 遍历文件列表，创建文件
             for (File file : files) {
                 String filePath = folderPath + "/" + file.getName();

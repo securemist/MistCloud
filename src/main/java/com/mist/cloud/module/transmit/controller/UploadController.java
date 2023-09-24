@@ -1,19 +1,22 @@
 package com.mist.cloud.module.transmit.controller;
 
-import com.mist.cloud.core.result.R;
-import com.mist.cloud.module.transmit.model.req.IdentifierItem;
 import com.mist.cloud.core.config.FileConfig;
-import com.mist.cloud.module.transmit.context.UploadTaskContext;
 import com.mist.cloud.core.exception.file.FileUploadException;
-import com.mist.cloud.module.transmit.model.vo.ChunkVo;
+import com.mist.cloud.core.result.R;
+import com.mist.cloud.module.transmit.context.UploadTaskContext;
+import com.mist.cloud.module.transmit.model.req.IdentifierItem;
 import com.mist.cloud.module.transmit.model.req.MergeFileRequest;
+import com.mist.cloud.module.transmit.model.req.SimpleUploadRequest;
+import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: securemist
@@ -31,8 +34,8 @@ public class UploadController {
 
     // 单文件上传，且不处在文件夹上传之中
     @PostMapping("/upload/file")
-    public R singleUpload(@RequestPart("file") MultipartFile file, Long folderId) throws IOException {
-        uploadTaskContext.simpleUpload(folderId, file);
+    public R singleUpload(SimpleUploadRequest simpleUploadRequest) throws IOException {
+        uploadTaskContext.simpleUpload(simpleUploadRequest);
         return R.success();
     }
 

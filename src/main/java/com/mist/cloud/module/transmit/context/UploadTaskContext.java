@@ -1,6 +1,7 @@
 package com.mist.cloud.module.transmit.context;
 
 import com.mist.cloud.core.exception.file.FileUploadException;
+import com.mist.cloud.module.transmit.model.req.SimpleUploadRequest;
 import com.mist.cloud.module.transmit.model.vo.ChunkVo;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,13 +15,6 @@ import java.util.*;
  */
 public interface UploadTaskContext {
 
-    /**
-     * 非分片的单文件上传
-     *
-     * @param folderId
-     * @param file
-     */
-    void simpleUpload(Long folderId, MultipartFile file) throws IOException;
 
     /**
      * 添加文件分片
@@ -45,5 +39,11 @@ public interface UploadTaskContext {
      * @throws FileUploadException 这个请求必须确保任务已经建立，否则抛出该异常
      */
     public void cancelTask(List<String> identifierList);
+
+    /**
+     * 简单上传不分片
+     * @param simpleUploadRequest
+     */
+    void simpleUpload(SimpleUploadRequest simpleUploadRequest) throws IOException;
 
 }

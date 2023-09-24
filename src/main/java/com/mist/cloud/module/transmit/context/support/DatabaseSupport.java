@@ -6,14 +6,11 @@ import com.mist.cloud.core.utils.FileUtils;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.module.file.repository.IFileRepository;
-import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.transmit.context.Task;
-import com.mist.cloud.module.transmit.context.support.UploadSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author: securemist
@@ -21,9 +18,11 @@ import java.util.List;
  * @Description:
  */
 @Component
-public class DatabaseSupport extends UploadSupport{
+public class DatabaseSupport {
     @Resource
     private ApplicationFileUtil applicationFileUtil;
+    @Resource
+    private IFileRepository fileRepository;
 
     public void addChunkableFile(Task task) {
         // 校验文件名。防止重名
@@ -46,7 +45,7 @@ public class DatabaseSupport extends UploadSupport{
         fileRepository.addFile(file);
     }
 
-    public void addSimpleFile(Long folderId, MultipartFile file) {
+    public void addSimpleFile(Long folderId, String readPath, MultipartFile file) {
         String fileName =  applicationFileUtil.checkFileName(file.getOriginalFilename(), folderId);
         // 所有的单文件上传全部上传到根路径
         File newFile = File.builder()
@@ -56,7 +55,7 @@ public class DatabaseSupport extends UploadSupport{
                 .size(file.getSize())
                 .type(FileUtils.getFileType(file.getName()))
                 .folderId(folderId)
-                .relativePath("/" + file.getOriginalFilename())
+                .relativePath(readPath)
                 .originName(file.getOriginalFilename())
                 .md5("")
                 .build();

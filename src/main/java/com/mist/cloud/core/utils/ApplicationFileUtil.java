@@ -30,7 +30,7 @@ public class ApplicationFileUtil {
      * @return 校验之后的文件名
      */
     public String checkFileName(String fileName, Long folderId) {
-        File file = folderRepository.findFile(folderId,fileName);
+        File file = folderRepository.findFile(folderId, fileName);
         // 没有发生重名，返回原文件名
         if (file == null) {
             return fileName;
@@ -59,4 +59,6 @@ public class ApplicationFileUtil {
 
         return fileName;
     }
+
+
 }

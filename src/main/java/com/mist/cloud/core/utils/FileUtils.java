@@ -46,28 +46,6 @@ public class FileUtils {
     }
 
     /**
-     * 上传文件
-     *
-     * @param file      文件
-     * @param base_path 存放路径
-     * @throws IOException
-     */
-    public static void upload(MultipartFile file, String base_path) throws IOException {
-
-        // 路径名
-        Path dir = Paths.get(base_path);
-        // 路径+文件名
-        Path path = Paths.get(base_path + "/" + file.getOriginalFilename());
-
-        try {
-            file.transferTo(new File(String.valueOf(path)));
-        } catch (IOException e) {
-            log.error("upload file error when tranfer to local, fileName: {}", file.getOriginalFilename());
-//            throw new FileUploadException();
-        }
-    }
-
-    /**
      * 转换容量大小单位
      * 数据库中存的是单位是 B，前端显示的是单位 MB
      *
@@ -80,132 +58,47 @@ public class FileUtils {
     }
 
 
-    public static String generatePath(String uploadFolder, ChunkVo chunk) throws FileUploadException {
-        StringBuilder sb = new StringBuilder();
-
-        String relativePath = chunk.getRelativePath();
-        sb.append(uploadFolder);
-        // 真实路径与文件名不相同，说明是上传的是文件夹中的文件，需要手动拼接文件夹路径
-        if (!relativePath.equals(chunk.getFileName())) {
-            String[] splits = relativePath.split("/");
-            for (int i = 0; i < splits.length - 1; i++) {
-                sb.append("/").append(splits[i]);
-            }
-        }
-
-        sb.append("/").append(chunk.getIdentifier());
-
-        //判断路径是否存在，不存在则创建
-        if (!Files.isWritable(Paths.get(sb.toString()))) {
-            try {
-                Files.createDirectories(Paths.get(sb.toString()));
-            } catch (IOException e) {
-                throw new FileUploadException("File chunk's folder create failed :" + sb, chunk.getIdentifier(), e);
-            }
-        }
-        return sb.append("/")
-                .append(chunk.getFileName())
-                .append("-")
-                .append(chunk.getChunkNumber()).toString();
-    }
-
 
     /**
-     * 文件合并
-     *
-     * @param targetFile 目标文件位置
-     * @param folderPath     要合并的文件所在的文件夹
-     * @param filename   文件名
-     * @return md5 文件的 md5
+     * 生成真实文件的文件名， originName_identifier.xxx 防止覆盖上传
+     * @param relativePath 存储的相对路径
+     * @param identifier 上传时的任务标识
+     * @return demo:/folderA/folderB/file_identifier.xxx
      */
-    public static void merge(String targetFile, String folderPath, String filename) throws IOException {
-        FileUtil.touch(targetFile);
-        // 合并文件
-        try {
-            Stream<Path> stream = Files.list(Paths.get(folderPath));
-            List<Path> paths = stream.filter(path -> !path.getFileName().toString().equals(filename))
-                    .sorted((o1, o2) -> {
-                        String p1 = o1.getFileName().toString();
-                        String p2 = o2.getFileName().toString();
-                        int i1 = p1.lastIndexOf("-");
-                        int i2 = p2.lastIndexOf("-");
-                        return Integer.valueOf(p2.substring(i2)).compareTo(Integer.valueOf(p1.substring(i1)));
-                    }).collect(Collectors.toList());
-
-            paths.forEach(path -> {
-                try {
-                    //以追加的形式写入文件
-                    Files.write(Paths.get(targetFile), Files.readAllBytes(path), StandardOpenOption.APPEND);
-                    //合并后删除该块
-                    Files.delete(path);
-                } catch (IOException e) {
-                    log.error(e.getMessage(), e);
-                }
-            });
-        } catch (IOException e) {
-            log.debug("合并文件出错，已删除原文件 {} , {}", folderPath, e.getMessage());
-            FileUtil.del(targetFile);
-        }
-        FileUtil.del(folderPath);
-    }
-
-    /**
-     * 创建文件，如果文件存在就覆盖掉
-     *
-     * @param path
-     */
-    public static void createFileOrOverwrite(String path) throws IOException {
-
-        //判断路径是否存在，不存在则创建
-        if (!Files.isWritable(Paths.get(path))) {
-            Files.createDirectories(Paths.get(path));
+    public static String generateRealPath(String relativePath, String identifier) {
+        int index = relativePath.lastIndexOf("/");
+        // 从路径中截取文件名
+        String fileName = "";
+        String path = "";
+        if (index == -1) { // 单文件上传，文件的 relativePath 为不带有 /
+            fileName = relativePath;
+        } else {  // 文件夹上传中的文件
+            path = relativePath.substring(0, index);
+            fileName = relativePath.substring(index + 1, relativePath.length());
         }
 
-        // 创建文件，已存在就覆盖
-//        Files.deleteIfExists(Paths.get(path));
-//        Files.createFile(Paths.get(path));
-    }
 
-    /**
-     * 删除指定路径
-     *
-     * @param dir
-     */
-    public static void deleteDirectoryIfExist(Path dir) throws IOException {
-        if (Files.exists(dir)) {
-            try (Stream<Path> pathStream = Files.walk(dir)) {
-                pathStream.sorted(Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(java.io.File::delete);
-            }
-        }
-    }
-
-    /**
-     * 创建一个目录
-     *
-     * @param folderPath 如果目录已存在就全部删除之后在创建
-     */
-    public static void createDirectory(Path path) throws IOException {
-        if (Files.exists(path)) {
-            deleteDirectory(path);
+        // 拼接新的文件名
+        StringBuilder name = new StringBuilder();
+        index = fileName.lastIndexOf(".");
+        if (index != -1) {
+            name = name.append(fileName.substring(0, index))
+                    .append("_")
+                    .append(identifier)
+                    .append(".")
+                    .append(fileName.substring(index + 1, fileName.length()));
+        } else {
+            name = name.append(fileName)
+                    .append("_")
+                    .append(identifier);
         }
 
-        Files.createDirectory(path);
-
+        String finalPath = new StringBuilder(path).append("/")
+                .append(name)
+                .toString();
+        return finalPath;
     }
 
-    public static void deleteDirectory(Path path) throws IOException {
-        Files.walk(path)
-                .sorted((p1, p2) -> -p1.compareTo(p2))
-                .forEach(p -> {
-                    try {
-                        Files.delete(p);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
 
     public static boolean checkmd5(String fileRealPath, String md5) {
         return DigestUtil.md5Hex(fileRealPath).equals(md5);

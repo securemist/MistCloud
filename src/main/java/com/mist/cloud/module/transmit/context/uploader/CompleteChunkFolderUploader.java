@@ -1,10 +1,11 @@
-package com.mist.cloud.module.transmit.context;
+package com.mist.cloud.module.transmit.context.uploader;
 
 import com.mist.cloud.core.config.IdGenerator;
-import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.exception.file.FileUploadException;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.module.file.model.pojo.FolderBrief;
+import com.mist.cloud.module.transmit.context.Task;
+import com.mist.cloud.module.transmit.context.support.UploaderSupport;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -12,10 +13,12 @@ import java.util.*;
 /**
  * @Author: securemist
  * @Datetime: 2023/9/16 22:25
- * @Description: [又臭又长] 递归创建文件夹
+ * @Description: [又臭又长] 递归创建文件夹 !!已经废弃!!
+ * <p>
+ * 文件夹中的所有文件均采用分片上传的形式
  */
 @Component
-public class CnmUploadContext extends AbstractUploadContext {
+public class CompleteChunkFolderUploader extends UploaderSupport {
     /**
      * 给文件夹内所有的子子文件夹创建记录，返回路径与文件夹id的映射
      * <p>
@@ -26,23 +29,23 @@ public class CnmUploadContext extends AbstractUploadContext {
      * "/a" -> {Long@11240} 1702649967044333569
      * "/a/c" -> {Long@11238} 1702649967044333570
      */
-    public Map<String, Long> createSubFolders(Map<String, String> identifierMap, Long parentId) throws FileUploadException {
+    public Map<String, Long> createFolders(Map<String, String> identifierMap, Long parentId) throws FileUploadException {
         // 文件路径去重
         Set<String> pathSet = collectPath(identifierMap);
         if (pathSet == null || pathSet.size() == 0) {
             return new HashMap<>();
         }
 
-        // 构造树形结构
-        Node tree = generateTree(pathSet);
-        // 数据库中创建文件夹
-        Map<String, Long> idMap = createFolders(tree, parentId);
+
+        // 创建必要的路径
+        Map<String, Long> idMap = createPath(parentId, pathSet);
 
         // 把新创建的folderId更新到task中去
         for (String identifier : identifierMap.keySet()) {
             Task task = taskExecutor.getTask(identifier);
             String relativePath = task.getRelativePath();
-            if (relativePath.substring(1, relativePath.length()).contains("/")) {
+            if (relativePath.substring(1, relativePath.length())
+                    .contains("/")) {
                 task.setFolderId(idMap.get(relativePath.substring(0, relativePath.lastIndexOf('/'))));
             }
         }
@@ -50,23 +53,12 @@ public class CnmUploadContext extends AbstractUploadContext {
         return idMap;
     }
 
-    private Set<String> collectPath(Map<String, String> identifierMap) throws FileUploadException {
-        Set<String> pathSet = new HashSet<>();
-        for (String identifier : identifierMap.keySet()) {
-            if (completedTask.contains(identifier)) {
-                return pathSet;
-            }
-
-            Task task = taskExecutor.getTask(identifier);
-            String relativePath = task.getRelativePath();
-
-            // 排除掉单文件上传的情况
-            // 这里的 relativePath 总是会带有 / 的，即使是单文件上传，也会是 /filename，需要排除这种情况
-            if (relativePath.substring(1, relativePath.length()).contains("/")) {
-                pathSet.add(relativePath);
-            }
-        }
-        return pathSet;
+    protected Map<String, Long> createPath(Long parentId, Set<String> pathSet) {
+        // 构造树形结构
+        Node tree = generateTree(pathSet);
+        // 数据库中创建文件夹
+        Map<String, Long> idMap = createFolders(tree, parentId);
+        return idMap;
     }
 
     private Map<String, Long> createFolders(Node root, Long parentId) {
@@ -87,7 +79,8 @@ public class CnmUploadContext extends AbstractUploadContext {
 
         int maxLen = 0;
         for (String path : pathSet) {
-            List<String> list0 = Arrays.asList(path.substring(1, path.lastIndexOf('/')).split("/"));
+            List<String> list0 = Arrays.asList(path.substring(1, path.lastIndexOf('/'))
+                    .split("/"));
             if (cache.contains(list0)) {
                 continue;
             }
@@ -98,8 +91,10 @@ public class CnmUploadContext extends AbstractUploadContext {
 
         String[][] pathList = new String[list.size()][maxLen];
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).size(); j++) {
-                String name = list.get(i).get(j);
+            for (int j = 0; j < list.get(i)
+                    .size(); j++) {
+                String name = list.get(i)
+                        .get(j);
                 if (name == null) {
                     name = "";
                 }
