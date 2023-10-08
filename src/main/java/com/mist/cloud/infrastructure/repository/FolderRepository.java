@@ -200,8 +200,9 @@ public class FolderRepository implements IFolderRepository {
     }
 
     @Override
-    public Long createFolderIfAbsent(Long folderId, String name) {
-        for (Folder subFolder : findSubFolders(folderId)) {
+    public synchronized Long createFolderIfAbsent(Long folderId, String name) {
+        List<Folder> folders = findSubFolders(folderId);
+        for (Folder subFolder : folders) {
             if(subFolder.getName().equals(name)) {
                 return subFolder.getId();
             }

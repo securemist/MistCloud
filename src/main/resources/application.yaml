@@ -1,3 +1,45 @@
 spring:
   profiles:
-    active: dev
+    active: test
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: gongjiatian00@qq.com
+    password: sfnknboxmnkvdfff
+    test-connection: false
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.ssl.enable: true
+      mail.display.sendmail: spring-boot-demo
+  servlet:
+    multipart:
+      max-request-size: 25MB
+      max-file-size: 25MB
+
+# swagger地址
+# localhost:8888/swagger-ui/index.html#/
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  type-aliases-package: com.mist.cloud.infrastructure
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  level:
+    com.mist.cloud.infrastructure.mapper: DEBUG
+
+sa-token:
+  token-name: satoken
+  timeout: 2592000
+  is-concurrent: true
+  is-share: true
+  token-style: random-64
+  is-log: false
+
+
+
+

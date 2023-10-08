@@ -82,12 +82,15 @@ public class AbstractUploadContext extends UploaderSupport implements UploadTask
                 // 校验md5
                 iOsupport.checkmd5(task, identifierMap.get(identifier));
 
-                // 从任务队列溢出
+                // 从任务队列移出
                 taskExecutor.removeTask(identifier);
                 completedTask.add(identifier);
 
                 // 数据库添加记录
-                task.setFolderId(folderIdMap.get(task.getRelativePath()));
+                Long folderId = folderIdMap.get(task.getRelativePath());
+                if (folderId != null) {
+                    task.setFolderId(folderId);
+                }
                 databaseSupport.addChunkableFile(task);
                 log.info("文件上传成功, 文件位置: {}", fileConfig.getBasePath() + task.getRelativePath());
             } catch (Exception e) {
