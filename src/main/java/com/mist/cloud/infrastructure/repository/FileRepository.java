@@ -10,7 +10,7 @@ import com.mist.cloud.module.recycle.model.RestoreFileRequest;
 import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

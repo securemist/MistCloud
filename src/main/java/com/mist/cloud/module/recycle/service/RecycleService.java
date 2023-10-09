@@ -14,7 +14,7 @@ import com.mist.cloud.module.user.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 import com.mist.cloud.module.recycle.model.RecycleFile;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

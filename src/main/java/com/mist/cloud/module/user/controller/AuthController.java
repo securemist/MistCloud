@@ -10,11 +10,12 @@ import com.mist.cloud.module.user.mode.req.MailLoginRequest;
 import com.mist.cloud.module.user.mode.res.LoginResponse;
 import com.mist.cloud.module.user.service.MailService;
 import com.mist.cloud.module.user.service.UserService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * @Author: securemist
@@ -23,6 +24,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/user/auth")
+@Tag(name = "用户登陆")
 public class AuthController {
     @Resource
     private UserService userService;
@@ -30,8 +32,8 @@ public class AuthController {
     private MailService mailService;
 
     @PostMapping("/login/account")
-    @ApiOperation(value = "账号密码登录")
-    @ApiImplicitParam(name = "jsonParam", value = "用户名 + 密码", dataTypeClass = JSONObject.class)
+    @Operation(summary = "账号密码登录")
+    @Parameter(name = "loginReq")
     public R login(@RequestBody LoginRequest loginReq) {
 
         Long folderId = userService.login(loginReq.getUsername(), loginReq.getPassword());
@@ -46,7 +48,8 @@ public class AuthController {
 
 
     @PostMapping("/login/email")
-    @ApiOperation(value = "邮箱登陆")
+    @Operation(summary = "邮箱登陆")
+    @Parameter(name = "mailLoginRequest")
     public R login(@RequestBody MailLoginRequest mailLoginRequest) {
         mailService.verify(mailLoginRequest.getEmail(), mailLoginRequest.getCaptcha());
 
@@ -59,13 +62,15 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    @ApiOperation(value = "退出登录")
+    @Operation(summary = "退出登录")
     public R login() {
         StpUtil.logout();
         return R.success();
     }
 
     @GetMapping("/email/getCaptcha")
+    @Operation(summary = "获取邮箱验证码")
+    @Parameter(name = "email", description = "邮箱账号")
     public R getMailCaptcha(@RequestParam String email) {
         mailService.sendMail(email);
         return R.success();

@@ -12,7 +12,7 @@ import com.mist.cloud.module.file.context.service.FileService;
 import com.mist.cloud.module.file.context.service.FolderService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

@@ -8,7 +8,7 @@ import com.mist.cloud.infrastructure.entity.User;
 import com.mist.cloud.infrastructure.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * @Author: securemist

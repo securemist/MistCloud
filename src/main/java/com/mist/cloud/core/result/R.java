@@ -2,6 +2,7 @@ package com.mist.cloud.core.result;
 
 import com.mist.cloud.core.constant.Constants;
 import com.mist.cloud.core.constant.ResponseCode;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
+@Schema(description = "通用返回结果")
 public class R<T> implements Serializable {
     private Integer code;
     private String msg;

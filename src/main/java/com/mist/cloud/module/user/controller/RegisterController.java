@@ -11,10 +11,13 @@ import com.mist.cloud.module.user.repository.IUserRepository;
 import com.mist.cloud.module.user.service.CaptchaService;
 import com.mist.cloud.module.user.service.MailService;
 import com.mist.cloud.module.user.service.UserService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
+
 import java.io.IOException;
 
 /**
@@ -24,6 +27,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/user/register")
+@Tag(name = "用户注册")
 public class RegisterController {
     @Resource
     private UserService userService;
@@ -37,7 +41,8 @@ public class RegisterController {
     private IUserRepository userRepository;
 
     @PostMapping("/checkUsername")
-    @ApiOperation(value = "校验用户名是否可注册")
+    @Operation(description = "校验用户名是否可注册")
+    @Parameter(name = "username", description = "用户名")
     public R checkUsername(@RequestBody String username) {
         String reason = userService.checkUsername(username);
         return R.success(reason);
@@ -50,16 +55,16 @@ public class RegisterController {
      * @return
      * @throws IOException
      */
-    @GetMapping("/code")
-    public R code(String uid) throws IOException {
-        AbstractCaptcha shearCaptcha = captchaService.createCode(uid);
-
-        String imgBase64 = shearCaptcha.getImageBase64Data(); // 图片验证码base64格式
-        String ans = MD5.create().digestHex(shearCaptcha.getCode()); // md5加密过的验证码答案
-
-        CaptchaResponse captchaResponse = new CaptchaResponse(uid, imgBase64, ans);
-        return R.success(captchaResponse);
-    }
+//    @GetMapping("/code")
+//    public R code(String uid) throws IOException {
+//        AbstractCaptcha shearCaptcha = captchaService.createCode(uid);
+//
+//        String imgBase64 = shearCaptcha.getImageBase64Data(); // 图片验证码base64格式
+//        String ans = MD5.create().digestHex(shearCaptcha.getCode()); // md5加密过的验证码答案
+//
+//        CaptchaResponse captchaResponse = new CaptchaResponse(uid, imgBase64, ans);
+//        return R.success(captchaResponse);
+//    }
 
 
     /**
@@ -71,6 +76,8 @@ public class RegisterController {
      * @return
      */
     @PostMapping("/mail")
+    @Operation(summary = "获取邮箱注册的验证码")
+    @Parameter(name = "mailReq")
     public R mail(@RequestBody MailRequest mailReq) {
         // 校验该邮箱是否已注册
         boolean resigtered = userRepository.checkEmailRegistered(mailReq.getEmail());
@@ -83,6 +90,8 @@ public class RegisterController {
     }
 
     @PostMapping("/exec")
+    @Operation(summary = "邮箱账户注册")
+    @Parameter(name = "registerReq")
     public R register(@RequestBody RegisterRequest registerReq) {
         // 校验邮箱验证码
         mailService.verify(registerReq.getEmail(), registerReq.getCaptcha());

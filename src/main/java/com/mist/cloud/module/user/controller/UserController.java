@@ -1,6 +1,6 @@
 package com.mist.cloud.module.user.controller;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
  * @Datetime: 2023/7/21 16:55
  * @Description:
  */
-@Api(value = "用户操作")
+@Tag(name = "用户操作")
 @RequestMapping("/user")
 @RestController
 public class UserController {
-
 
 }

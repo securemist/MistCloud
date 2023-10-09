@@ -2,7 +2,6 @@ package com.mist.cloud.infrastructure.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import java.util.Date;
@@ -18,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel("文件夹实体类")
+//@ApiModel("文件夹实体类")
 public class Folder {
 
     @JsonSerialize(using = ToStringSerializer.class)

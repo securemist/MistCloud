@@ -7,12 +7,10 @@ import com.mist.cloud.core.exception.file.FolderException;
 import com.mist.cloud.core.utils.Session;
 import com.mist.cloud.infrastructure.entity.Folder;
 import com.mist.cloud.module.share.model.resp.ShareLinkResponse;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;

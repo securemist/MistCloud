@@ -1,12 +1,17 @@
 package com.mist.cloud.module.transmit.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.core.config.FileConfig;
 import com.mist.cloud.module.file.repository.IFileRepository;
+import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.share.repository.IShareRepository;
 import com.mist.cloud.module.transmit.service.DownloadContext;
-import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Lang;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,6 +29,7 @@ import java.nio.charset.StandardCharsets;
  * @Description:
  */
 @RestController
+@Tag(name = "下载文件")
 public class DownloadController {
     @Resource
     private FileConfig fileConfig;
@@ -39,7 +43,11 @@ public class DownloadController {
     private IShareRepository shareRepository;
 
     @GetMapping("/download")
-    @ApiImplicitParam(name = "id", value = "文件(夹) id", dataTypeClass = Lang.class)
+    @Operation(summary = "下载文件")
+    @Parameters({
+            @Parameter(name = "id", description = "文件(夹) id"),
+            @Parameter(name = "uniqueKey", description = "链接标识")
+    })
     public void download(@RequestParam("id") Long fileId, @RequestParam("uniqueKey") String uniqueKey, HttpServletResponse response) throws IOException {
         String filePath = "";
         boolean isFolder = fileRepository.isFolder(fileId);

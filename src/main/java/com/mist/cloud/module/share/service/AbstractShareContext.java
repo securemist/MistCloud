@@ -22,7 +22,7 @@ import com.mist.cloud.module.share.repository.IShareRepository;
 import com.mist.cloud.module.share.service.support.ShareCommonSupport;
 import com.mist.cloud.module.user.repository.IUserRepository;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

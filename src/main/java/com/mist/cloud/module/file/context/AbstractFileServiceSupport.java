@@ -7,7 +7,7 @@ import com.mist.cloud.module.file.context.service.FolderService;
 import com.mist.cloud.module.file.context.service.ICommonService;
 import com.mist.cloud.module.user.repository.IUserRepository;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import static cn.dev33.satoken.stp.StpUtil.getLoginId;
 

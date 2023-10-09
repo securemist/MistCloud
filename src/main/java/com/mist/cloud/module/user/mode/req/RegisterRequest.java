@@ -1,5 +1,6 @@
 package com.mist.cloud.module.user.mode.req;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -8,10 +9,12 @@ import lombok.Data;
  * @Description:
  */
 @Data
+@Schema(description = "邮箱注册请求类")
 public class RegisterRequest {
-    // 登陆id
+    @Schema(description = "会话id")
     private String uid;
-    // 邮箱验证码
+
+    @Schema(description = "验证码")
     private String captcha;
 
     private String email;

@@ -3,11 +3,8 @@ package com.mist.cloud.core.utils;
 import com.mist.cloud.infrastructure.entity.File;
 import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author: securemist

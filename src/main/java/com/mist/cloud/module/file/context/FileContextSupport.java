@@ -6,7 +6,7 @@ import com.mist.cloud.module.file.repository.IFileRepository;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.user.repository.IUserRepository;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

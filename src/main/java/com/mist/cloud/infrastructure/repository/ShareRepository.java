@@ -5,7 +5,7 @@ import com.mist.cloud.infrastructure.mapper.ShareMapper;
 import com.mist.cloud.module.share.repository.IShareRepository;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

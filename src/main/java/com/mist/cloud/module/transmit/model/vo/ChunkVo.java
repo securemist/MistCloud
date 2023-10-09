@@ -1,5 +1,6 @@
 package com.mist.cloud.module.transmit.model.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -17,46 +18,36 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-public class ChunkVo implements Serializable {
+@Schema(description = "文件分片类")
+public class ChunkVo  {
 
-    /**
-     * 当前文件块，从1开始
-     */
+    @Schema(description = "当前文件块，从1开始")
     private Integer chunkNumber;
-    /**
-     * 分块大小
-     */
+
+    @Schema(description = "分块大小")
     private Long chunkSize;
-    /**
-     * 当前分块大小
-     */
+
+    @Schema(description = "当前分块大小")
     private Long currentChunkSize;
-    /**
-     * 总大小
-     */
+
+    @Schema(description = "总大小")
     private Long totalSize;
-    /**
-     * 文件标识
-     */
+
+    @Schema(description = "任务标识")
     private String identifier;
-    /**
-     * 文件名
-     */
+
+    @Schema(description = "文件名")
     private String fileName;
-    /**
-     * 总块数
-     */
+
+    @Schema(description = "总块数")
     private Integer totalChunks;
 
-    /**
-     * 真实路径
-     */
+    @Schema(description = "相对路径")
     private String relativePath;
 
-    /**
-     * 文件夹 id
-     */
+    @Schema(description = "文件夹 id")
     private Long folderId;
 
+    @Schema(description = "文件file")
     private MultipartFile file;
 }

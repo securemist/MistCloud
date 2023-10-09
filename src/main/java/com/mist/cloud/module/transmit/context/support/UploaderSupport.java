@@ -7,7 +7,7 @@ import com.mist.cloud.module.file.repository.IFolderRepository;
 import com.mist.cloud.module.transmit.context.Task;
 import com.mist.cloud.module.transmit.context.UploadTaskExecutor;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

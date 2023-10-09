@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.mist.cloud.module.file.repository.IFolderRepository;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.HashMap;
 import java.util.Set;
 

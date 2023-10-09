@@ -10,7 +10,7 @@ import com.mist.cloud.module.transmit.context.Task;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * @Author: securemist

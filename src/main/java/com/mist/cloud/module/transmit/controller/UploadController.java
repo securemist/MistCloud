@@ -8,12 +8,16 @@ import com.mist.cloud.module.transmit.model.req.IdentifierItem;
 import com.mist.cloud.module.transmit.model.req.MergeFileRequest;
 import com.mist.cloud.module.transmit.model.req.SimpleUploadRequest;
 import com.mist.cloud.module.transmit.model.vo.ChunkVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
+@Tag(name = "上传文件")
 public class UploadController {
     @Resource
     private FileConfig fileConfig;
@@ -34,18 +39,24 @@ public class UploadController {
 
     // 单文件上传，且不处在文件夹上传之中
     @PostMapping("/upload/file")
+    @Operation(summary = "简单文件上传")
+    @Parameter(name = "simpleUploadRequest")
     public R singleUpload(SimpleUploadRequest simpleUploadRequest) throws IOException {
         uploadTaskContext.simpleUpload(simpleUploadRequest);
         return R.success();
     }
 
     @PostMapping("/upload/chunk")
+    @Operation(summary = "单个分片上传")
+    @Parameter(name = "chunk")
     public R uploadChunk(ChunkVo chunk) throws FileUploadException {
         uploadTaskContext.addChunk(chunk);
         return R.success();
     }
 
     @PostMapping("/upload/mergeFile")
+    @Operation(summary = "合并文件",description = "仅限于分片上传的文件")
+    @Parameter(name = "mergeFileRequest")
     public R mergeFile(@RequestBody MergeFileRequest mergeFileRequest) throws FileUploadException, IOException {
         HashMap<String, String> identifierMap = new HashMap<>();
         for (IdentifierItem identifier : mergeFileRequest.getIdentifierList()) {
@@ -56,6 +67,8 @@ public class UploadController {
     }
 
     @PostMapping("/upload/cancel")
+    @Operation(summary = "取消上传")
+    @Parameter(name = "identifierList",description = "所有上传任务的标识")
     public R calcel2(@RequestBody List<String> identifierList) throws FileUploadException {
         throw new FileUploadException("取消上传", identifierList);
     }
