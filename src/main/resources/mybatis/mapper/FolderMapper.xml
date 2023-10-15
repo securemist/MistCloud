@@ -24,7 +24,7 @@
 
     <select id="getFolderTree" resultMap="folderMap" parameterType="java.lang.Long">
         --  这个得到是一个 id 列表
-        SET @ids =  get_chlid_lists(#{folderId});
+        SET @ids =  get_chlid_list(#{folderId});
 
         --  让下面这个查询得到的结果是按照 @ids 默认顺序排序的
         SELECT id, name, parent_id, deleted
@@ -101,7 +101,7 @@
 
     <update id="realDeleteFolderRecursive" parameterType="java.lang.Long">
         <![CDATA[
-        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
+        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_list( #{folderId} ) ));
 
         SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
 
@@ -116,7 +116,7 @@
          <![CDATA[
             SET @folder_ids = (SELECT GROUP_CONCAT(id)
                                FROM sys_folder
-                               WHERE FIND_IN_SET(id, get_chlid_lists(#{folderId})));
+                               WHERE FIND_IN_SET(id, get_chlid_list(#{folderId})));
 
             SET @file_ids = (SELECT GROUP_CONCAT(id)
                              FROM sys_file
@@ -142,7 +142,7 @@
 
     <update id="deleteFolderRecursive">
           <![CDATA[
-        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_lists( #{folderId} ) ));
+        SET @folder_ids = (SELECT GROUP_CONCAT(id) FROM sys_folder  WHERE FIND_IN_SET(id, get_chlid_list( #{folderId} ) ));
 
         SET @file_ids = (SELECT GROUP_CONCAT(id) FROM sys_file WHERE FIND_IN_SET(folder_id, @folder_ids));
 
